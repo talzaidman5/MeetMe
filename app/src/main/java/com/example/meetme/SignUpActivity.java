@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -34,6 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         findView();
         initSpinner();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         signUp_BTN_artist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
