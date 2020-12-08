@@ -104,9 +104,8 @@ public class SignUpActivity extends AppCompatActivity {
         signUp_BTN_createUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int d = Integer.parseInt(editTextAge.getText().toString());
-                User userTemp = new User(editTextName.getText().toString(),Integer.parseInt(editTextAge.getText().toString()),checkGender(),editTextCity.getText().toString(),
-                        checkHobbies(),(int) signUp_LSV_minAge.getSelectedItem(), (int) signUp_LSV_maxAge.getSelectedItem(),checkInterestingIn());
+                User userTemp = new User(editTextName.getText().toString(),editTextAge.getText().toString(),checkGender(),editTextCity.getText().toString(),
+                        checkHobbies(),Integer.parseInt(signUp_LSV_minAge.getSelectedItem().toString()), Integer.parseInt(signUp_LSV_maxAge.getSelectedItem().toString()),checkInterestingIn());
                 MainActivity.allClients.addUser(userTemp);
                 myRef.setValue(MainActivity.allClients);
             }

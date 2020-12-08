@@ -8,7 +8,7 @@ public class User {
         FEMALE
     }
     private String name;
-    private int age;
+    private String age;
     private Gender personGender;
     private String city;
     private ArrayList<String>hobbies;
@@ -18,7 +18,7 @@ public class User {
     private  String mainImage = "";
 
 
-    public User(String name, int age, Gender personGender, String city, ArrayList<String> hobbies, int minAge,
+    public User(String name, String age, Gender personGender, String city, ArrayList<String> hobbies, int minAge,
                 int maxAge, Gender personPreferenceGender) {
         this.name = name;
         this.age = age;
@@ -39,7 +39,7 @@ public class User {
         this.name = name;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
@@ -71,7 +71,7 @@ public class User {
         this.mainImage = mainImage;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 

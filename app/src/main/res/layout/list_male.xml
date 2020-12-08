@@ -27,7 +27,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:ellipsize="end"
-            android:text="@string/sponsored_content"/>
+            android:text="text"/>
 
         <LinearLayout
             android:layout_width="match_parent"
