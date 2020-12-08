@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1004621409710",
+    "project_id": "meetme-cfe1b",
+    "storage_bucket": "meetme-cfe1b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1004621409710:android:8e82c68fefe7aad4baac3f",
+        "android_client_info": {
+          "package_name": "com.example.meetme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1004621409710-gvkv0p3a14lnk6o47v2j2i2usma7vs20.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBLc8UBye8RL7UrtMIANV9uKfMiXS1YFE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1004621409710-gvkv0p3a14lnk6o47v2j2i2usma7vs20.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
