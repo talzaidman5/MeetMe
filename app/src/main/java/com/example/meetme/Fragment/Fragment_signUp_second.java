@@ -27,16 +27,16 @@ import java.util.ArrayList;
 
 public class Fragment_signUp_second extends Fragment {
 
-    private ImageButton signUp_BTN_artist,signUp_BTN_yoga,signUp_BTN_bicycle, signUp_BTN_joystick,signUp_BTN_bake,signUp_BTN_camera,signUp_BTN_guitar;
-    private ArrayList<SignUpActivity.Hobbies> hobbiesToUser= new ArrayList<>();
-    private Spinner signUp_LSV_minAge,signUp_LSV_maxAge;
-    private CheckBox InterestingInFemale,InterestingInMen;
+    private ImageButton signUp_BTN_artist, signUp_BTN_yoga, signUp_BTN_bicycle, signUp_BTN_joystick, signUp_BTN_bake, signUp_BTN_camera, signUp_BTN_guitar;
+    private ArrayList<SignUpActivity.Hobbies> hobbiesToUser = new ArrayList<>();
+    private Spinner signUp_LSV_minAge, signUp_LSV_maxAge;
+    private CheckBox InterestingInFemale, InterestingInMen;
     private Button signUp_BTN_continue;
     private EditText editTextDistance;
     public static SharedPreferences sharedpreferences;
     private Gson gson = new Gson();
     private MySheredP msp;
-    public static final String KEY_MSP  = "user";
+    public static final String KEY_MSP = "user";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,81 +44,74 @@ public class Fragment_signUp_second extends Fragment {
         findViews(view);
         msp = new MySheredP(getContext());
 
-         initSpinner();
+        initSpinner();
         signUp_BTN_artist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(signUp_BTN_artist.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.artist).getConstantState())) {
+                if (signUp_BTN_artist.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.artist).getConstantState())) {
                     signUp_BTN_artist.setBackgroundResource(R.drawable.artist_color);
                     hobbiesToUser.add(SignUpActivity.Hobbies.ARTIST);
-                }
-                else
-                    signUp_BTN_artist.setBackgroundResource( R.drawable.artist);
+                } else
+                    signUp_BTN_artist.setBackgroundResource(R.drawable.artist);
             }
         });
         signUp_BTN_bake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(signUp_BTN_bake.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.bake).getConstantState())) {
+                if (signUp_BTN_bake.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.bake).getConstantState())) {
                     signUp_BTN_bake.setBackgroundResource(R.drawable.bake_color);
                     hobbiesToUser.add(SignUpActivity.Hobbies.BACK);
-                }
-                else
-                    signUp_BTN_bake.setBackgroundResource( R.drawable.bake);
+                } else
+                    signUp_BTN_bake.setBackgroundResource(R.drawable.bake);
             }
         });
         signUp_BTN_yoga.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(signUp_BTN_yoga.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.yoga).getConstantState())) {
+                if (signUp_BTN_yoga.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.yoga).getConstantState())) {
                     signUp_BTN_yoga.setBackgroundResource(R.drawable.yoga_color);
                     hobbiesToUser.add(SignUpActivity.Hobbies.YOGA);
-                }
-                else
-                    signUp_BTN_yoga.setBackgroundResource( R.drawable.yoga);
+                } else
+                    signUp_BTN_yoga.setBackgroundResource(R.drawable.yoga);
             }
         });
         signUp_BTN_bicycle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(signUp_BTN_bicycle.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.bicycle).getConstantState())) {
+                if (signUp_BTN_bicycle.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.bicycle).getConstantState())) {
                     signUp_BTN_bicycle.setBackgroundResource(R.drawable.bicycle_color);
                     hobbiesToUser.add(SignUpActivity.Hobbies.BICYCLE);
-                }
-                else
-                    signUp_BTN_bicycle.setBackgroundResource( R.drawable.bicycle);
+                } else
+                    signUp_BTN_bicycle.setBackgroundResource(R.drawable.bicycle);
             }
         });
         signUp_BTN_joystick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(signUp_BTN_joystick.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.joystick).getConstantState())) {
+                if (signUp_BTN_joystick.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.joystick).getConstantState())) {
                     signUp_BTN_joystick.setBackgroundResource(R.drawable.joystick_color);
                     hobbiesToUser.add(SignUpActivity.Hobbies.JOYSTICK);
-                }
-                else
-                    signUp_BTN_joystick.setBackgroundResource( R.drawable.joystick);
+                } else
+                    signUp_BTN_joystick.setBackgroundResource(R.drawable.joystick);
             }
         });
         signUp_BTN_guitar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(signUp_BTN_guitar.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.guitar).getConstantState())) {
+                if (signUp_BTN_guitar.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.guitar).getConstantState())) {
                     signUp_BTN_guitar.setBackgroundResource(R.drawable.guitar_color);
                     hobbiesToUser.add(SignUpActivity.Hobbies.GUITAR);
-                }
-                else
-                    signUp_BTN_guitar.setBackgroundResource( R.drawable.guitar);
+                } else
+                    signUp_BTN_guitar.setBackgroundResource(R.drawable.guitar);
             }
         });
         signUp_BTN_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(signUp_BTN_camera.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.camera).getConstantState())) {
+                if (signUp_BTN_camera.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.camera).getConstantState())) {
                     signUp_BTN_camera.setBackgroundResource(R.drawable.camera_color);
                     hobbiesToUser.add(SignUpActivity.Hobbies.CAMERA);
-                }
-                else
+                } else
                     signUp_BTN_camera.setBackgroundResource(R.drawable.camera);
             }
         });
@@ -127,7 +120,7 @@ public class Fragment_signUp_second extends Fragment {
             public void onClick(View v) {
                 Gson gson = new Gson();
                 String temp = changeToString(hobbiesToUser);
-                gson.toJson(checkInterestingIn()+temp+signUp_LSV_minAge.getSelectedItem().toString()+signUp_LSV_maxAge.getSelectedItem().toString()+
+                gson.toJson(checkInterestingIn() + temp + signUp_LSV_minAge.getSelectedItem().toString() + signUp_LSV_maxAge.getSelectedItem().toString() +
                         editTextDistance.getText().toString());
                 putOnMSP(gson);
 
@@ -142,31 +135,29 @@ public class Fragment_signUp_second extends Fragment {
                 ft.commit();
             }
         });
-
-
         return view;
     }
 
     private String changeToString(ArrayList<SignUpActivity.Hobbies> hobbiesToUser) {
-        String temp= null;
-        for (SignUpActivity.Hobbies hobbies:hobbiesToUser) {
-            temp+=hobbies+" ";
+        String temp = null;
+        for (SignUpActivity.Hobbies hobbies : hobbiesToUser) {
+            temp += hobbies + " ";
         }
         return temp;
     }
 
     private void findViews(View view) {
-        signUp_BTN_continue=view.findViewById(R.id.signUp_BTN_end);
+        signUp_BTN_continue = view.findViewById(R.id.signUp_BTN_end);
         signUp_BTN_artist = view.findViewById(R.id.signUp_BTN_artist);
         signUp_BTN_yoga = view.findViewById(R.id.signUp_BTN_yoga);
-        signUp_BTN_bicycle  = view.findViewById(R.id.signUp_BTN_bicycle);
+        signUp_BTN_bicycle = view.findViewById(R.id.signUp_BTN_bicycle);
         signUp_BTN_joystick = view.findViewById(R.id.signUp_BTN_joystick);
         signUp_BTN_bake = view.findViewById(R.id.signUp_BTN_bake);
         signUp_BTN_camera = view.findViewById(R.id.signUp_BTN_camera);
         signUp_BTN_guitar = view.findViewById(R.id.signUp_BTN_guitar);
         signUp_LSV_minAge = view.findViewById(R.id.signUp_LSV_minAge);
-        signUp_LSV_maxAge= view.findViewById(R.id.signUp_LSV_maxAge);
-        InterestingInFemale= view.findViewById(R.id.InterestingInFemale);
+        signUp_LSV_maxAge = view.findViewById(R.id.signUp_LSV_maxAge);
+        InterestingInFemale = view.findViewById(R.id.InterestingInFemale);
         InterestingInMen = view.findViewById(R.id.InterestingInMen);
         editTextDistance = view.findViewById(R.id.editTextDistance);
     }
@@ -181,17 +172,20 @@ public class Fragment_signUp_second extends Fragment {
         signUp_LSV_maxAge.setAdapter(adapterMaxAge);
 
     }
+
     private String checkInterestingIn() {
-        if(InterestingInFemale.isChecked())
+        if (InterestingInFemale.isChecked())
             return User.Gender.FEMALE.toString();
         return User.Gender.MALE.toString();
     }
-    private String getFromMSP(){
-        String data  = msp.getString(KEY_MSP, "NA");
+
+    private String getFromMSP() {
+        String data = msp.getString(KEY_MSP, "NA");
 //        MainActivity.allClients = new AllClients(data);
         return data;
     }
-    private void putOnMSP(Gson gson){
-        msp.putString(KEY_MSP,gson);
+
+    private void putOnMSP(Gson gson) {
+        msp.putString(KEY_MSP, gson);
     }
 }
