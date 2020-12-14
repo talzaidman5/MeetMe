@@ -19,7 +19,7 @@
 
         <TextView
             style="@style/headerTextPrimary"
-            android:text="Login"
+            android:text="התחברות למשתמש קיים"
             android:layout_marginTop="20dp"/>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputEmail"
