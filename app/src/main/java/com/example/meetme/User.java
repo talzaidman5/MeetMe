@@ -3,6 +3,12 @@ package com.example.meetme;
 import java.util.ArrayList;
 
 public class User {
+    public User(String temp) {
+
+        this.name=temp;
+
+    }
+
     public enum Gender {
         MALE,
         FEMALE
@@ -11,15 +17,19 @@ public class User {
     private String age;
     private Gender personGender;
     private String city;
-    private ArrayList<String>hobbies;
+    private ArrayList<SignUpActivity.Hobbies> hobbies;
     private int minAge;
     private int maxAge;
     private Gender personPreferenceGender;
     private  String mainImage = "";
+    private String email;
+    private String profession;
+    private String status;
+    private String password;
 
 
-    public User(String name, String age, Gender personGender, String city, ArrayList<String> hobbies, int minAge,
-                int maxAge, Gender personPreferenceGender) {
+    public User(String name, String age, Gender personGender, String city, ArrayList<SignUpActivity.Hobbies> hobbies, int minAge,
+                int maxAge, Gender personPreferenceGender,String email, String password) {
         this.name = name;
         this.age = age;
         this.personGender = personGender;
@@ -28,12 +38,17 @@ public class User {
         this.minAge = minAge;
         this.maxAge = maxAge;
         this.personPreferenceGender = personPreferenceGender;
+        this.email = email;
+        this.password = password;
     }
     public User(){}
     public String getName() {
         return name;
     }
 
+    public String getPassword() {
+        return password;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -51,7 +66,7 @@ public class User {
         this.city = city;
     }
 
-    public void setHobbies(ArrayList<String> hobbies) {
+    public void setHobbies(ArrayList<SignUpActivity.Hobbies> hobbies) {
         this.hobbies = hobbies;
     }
 
@@ -83,7 +98,7 @@ public class User {
         return city;
     }
 
-    public ArrayList<String> getHobbies() {
+    public ArrayList<SignUpActivity.Hobbies> getHobbies() {
         return hobbies;
     }
 
@@ -101,5 +116,9 @@ public class User {
 
     public String getMainImage() {
         return mainImage;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

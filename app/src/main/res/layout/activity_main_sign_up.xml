@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/white">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/headerTextPrimary"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:id="@+id/title"
+        android:textSize="30dp"
+        android:text="צור חשבון חדש" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/title"
+        android:id="@+id/main_signUp_fragment"
+        android:background="#45454545"></FrameLayout>
+
+
+</RelativeLayout>

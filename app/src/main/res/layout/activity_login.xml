@@ -26,7 +26,7 @@
             style="@style/parent"
             android:layout_marginTop="20dp">
             <EditText
-                android:id="@+id/editTextEmail"
+                android:id="@+id/login_EDT_Email"
                 style="@style/modifiedEditText"
                 android:inputType="textEmailAddress"
                 android:background="@color/white"
@@ -39,7 +39,7 @@
             style="@style/parent"
             android:layout_marginTop="20dp">
             <EditText
-                android:id="@+id/editTextPassword"
+                android:id="@+id/login_EDT_Password"
                 style="@style/modifiedEditText"
                 android:hint="סיסמא:"
                 android:maxLines="1"
