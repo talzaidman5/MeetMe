@@ -1,13 +1,12 @@
 package com.example.meetme;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.widget.ImageView;
+
 import java.util.ArrayList;
 
 public class User {
-    public User(String temp) {
-
-        this.name=temp;
-
-    }
 
     public enum Gender {
         MALE,
@@ -21,15 +20,19 @@ public class User {
     private int minAge;
     private int maxAge;
     private Gender personPreferenceGender;
-    private  String mainImage = "";
+    private String mainImage;
     private String email;
     private String profession;
     private String status;
     private String password;
+    private int distance;
+    private String height;
+    private String preferenceHeight;
+
 
 
     public User(String name, String age, Gender personGender, String city, ArrayList<SignUpActivity.Hobbies> hobbies, int minAge,
-                int maxAge, Gender personPreferenceGender,String email, String password) {
+                int maxAge, Gender personPreferenceGender,String email, String password,int distance, String height, String preferenceHeight) {
         this.name = name;
         this.age = age;
         this.personGender = personGender;
@@ -40,6 +43,9 @@ public class User {
         this.personPreferenceGender = personPreferenceGender;
         this.email = email;
         this.password = password;
+        this.distance = distance;
+        this.height = height;
+        this.preferenceHeight = preferenceHeight;
     }
     public User(){}
     public String getName() {
@@ -48,6 +54,46 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPreferenceHeight() {
+        return preferenceHeight;
+    }
+
+    public void setPreferenceHeight(String preferenceHeight) {
+        this.preferenceHeight = preferenceHeight;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
     }
 
     public void setName(String name) {
@@ -121,4 +167,13 @@ public class User {
     public String getEmail() {
         return email;
     }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
 }

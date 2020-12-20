@@ -20,7 +20,6 @@ import android.widget.Spinner;
 import com.example.meetme.R;
 import com.example.meetme.SignUpActivity;
 import com.example.meetme.User;
-import com.example.meetme.utils.MySheredP;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -32,17 +31,15 @@ public class Fragment_signUp_second extends Fragment {
     private Spinner signUp_LSV_minAge, signUp_LSV_maxAge;
     private CheckBox InterestingInFemale, InterestingInMen;
     private Button signUp_BTN_continue;
-    private EditText editTextDistance;
+    private EditText editTextDistance,editTextInterestingInHeight;
     public static SharedPreferences sharedpreferences;
     private Gson gson = new Gson();
-    private MySheredP msp;
     public static final String KEY_MSP = "user";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up_second, container, false);
         findViews(view);
-        msp = new MySheredP(getContext());
 
         initSpinner();
         signUp_BTN_artist.setOnClickListener(new View.OnClickListener() {
@@ -118,11 +115,12 @@ public class Fragment_signUp_second extends Fragment {
         signUp_BTN_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Gson gson = new Gson();
-                String temp = changeToString(hobbiesToUser);
-                gson.toJson(checkInterestingIn() + temp + signUp_LSV_minAge.getSelectedItem().toString() + signUp_LSV_maxAge.getSelectedItem().toString() +
-                        editTextDistance.getText().toString());
-                putOnMSP(gson);
+                FragmentFirstSignUp.user.setPersonPreferenceGender(checkInterestingIn());
+                FragmentFirstSignUp.user.setHobbies(hobbiesToUser);
+                FragmentFirstSignUp.user.setPreferenceHeight(editTextInterestingInHeight.getText().toString());
+                FragmentFirstSignUp.user.setMinAge(Integer.parseInt(signUp_LSV_minAge.getSelectedItem().toString()));
+                FragmentFirstSignUp.user.setMaxAge(Integer.parseInt(signUp_LSV_maxAge.getSelectedItem().toString()));
+                FragmentFirstSignUp.user.setDistance(Integer.parseInt(editTextDistance.getText().toString()));
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
@@ -138,13 +136,7 @@ public class Fragment_signUp_second extends Fragment {
         return view;
     }
 
-    private String changeToString(ArrayList<SignUpActivity.Hobbies> hobbiesToUser) {
-        String temp = null;
-        for (SignUpActivity.Hobbies hobbies : hobbiesToUser) {
-            temp += hobbies + " ";
-        }
-        return temp;
-    }
+
 
     private void findViews(View view) {
         signUp_BTN_continue = view.findViewById(R.id.signUp_BTN_end);
@@ -160,6 +152,7 @@ public class Fragment_signUp_second extends Fragment {
         InterestingInFemale = view.findViewById(R.id.InterestingInFemale);
         InterestingInMen = view.findViewById(R.id.InterestingInMen);
         editTextDistance = view.findViewById(R.id.editTextDistance);
+        editTextInterestingInHeight = view.findViewById(R.id.editTextInterestingInHeight);
     }
 
     private void initSpinner() {
@@ -173,19 +166,11 @@ public class Fragment_signUp_second extends Fragment {
 
     }
 
-    private String checkInterestingIn() {
+    private User.Gender checkInterestingIn() {
         if (InterestingInFemale.isChecked())
-            return User.Gender.FEMALE.toString();
-        return User.Gender.MALE.toString();
+            return User.Gender.FEMALE;
+        return User.Gender.MALE;
     }
 
-    private String getFromMSP() {
-        String data = msp.getString(KEY_MSP, "NA");
-//        MainActivity.allClients = new AllClients(data);
-        return data;
-    }
 
-    private void putOnMSP(Gson gson) {
-        msp.putString(KEY_MSP, gson);
-    }
 }

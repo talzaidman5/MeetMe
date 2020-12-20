@@ -10,8 +10,6 @@
     android:layout_marginBottom="20dp"
     android:background="@color/white">
 
-
-
     <LinearLayout
         style="@style/linearParent"
         android:layout_gravity="center"
@@ -26,7 +24,7 @@
             style="@style/parent"
             android:layout_marginTop="20dp">
             <EditText
-                android:id="@+id/login_EDT_Email"
+                android:id="@+id/signUp_EDT_Email"
                 style="@style/modifiedEditText"
                 android:inputType="textEmailAddress"
                 android:background="@color/white"
@@ -48,16 +46,18 @@
 
         <TextView
             style="@style/viewParent"
-            android:text="Forgot Password?"
+            android:text="שכחת את הסיסמא?"
             android:textColor="@color/primaryTextColor"
             android:textSize="12sp"
             android:layout_gravity="end"
-            android:onClick="viewForgotPAssword"
+            android:onClick="viewForgotPassword"
+            android:id="@+id/viewForgotPassword"
+            android:clickable="true"
             android:layout_marginTop="10dp"/>
 
         <Button
             android:id="@+id/cirLoginButton"
-            android:text="Login"
+            android:text="התחבר"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:layout_height="wrap_content"

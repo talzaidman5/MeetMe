@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="230dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -28,28 +29,51 @@
                 android:id="@+id/article_LBL_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:padding="2dp"
                 android:background="#ADFFFFFF"
                 android:textColor="#000000"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:ellipsize="end"
-                android:minLines="2"
-                android:maxLines="2"
+                android:minLines="1"
+                android:maxLines="1"
                 android:text="TITLE"/>
 
             <TextView
                 android:id="@+id/article_LBL_subTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:padding="2dp"
                 android:background="#ADFFFFFF"
                 android:textColor="#000000"
                 android:textSize="14sp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="TITLE"/>
-
+            <TextView
+                android:id="@+id/article_LBL_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:background="#ADFFFFFF"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="TITLE"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ADFFFFFF"
+                android:layout_gravity="left"
+                android:maxLines="1">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="שלח הודעה"
+                android:textSize="12dp"
+                android:id="@+id/list_for_all_BTN_openChat"
+                ></Button></LinearLayout>
         </LinearLayout>
 
     </RelativeLayout>

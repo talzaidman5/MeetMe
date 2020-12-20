@@ -34,7 +34,7 @@
                 android:layout_marginTop="10dp">
 
                 <EditText
-                    android:id="@+id/login_EDT_Email"
+                    android:id="@+id/signUp_EDT_Email"
                     style="@style/modifiedEditText"
                     android:background="@color/white"
                     android:hint="כתובת מייל:"
@@ -63,7 +63,8 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:id="@+id/signUp_LIN_gender">
 
                     <TextView
                         style="@style/modifiedEditText"
@@ -113,6 +114,17 @@
                     style="@style/modifiedEditText"
                     android:hint="עיר מגורים:"
                     android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputHeight"
+                style="@style/parent">
+
+                <EditText
+                    android:id="@+id/editTextHeight"
+                    style="@style/modifiedEditText"
+                    android:hint="גובה:"
+                    android:inputType="number"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout

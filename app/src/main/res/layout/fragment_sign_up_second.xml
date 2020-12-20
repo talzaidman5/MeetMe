@@ -175,11 +175,22 @@
         style="@style/parent"
         android:layout_below="@+id/textInputMinMaxAge"
         android:layout_marginTop="10dp">
-
         <EditText
             android:id="@+id/editTextDistance"
             style="@style/modifiedEditText"
             android:hint="מרחק מקסימלי:"
+            android:inputType="number"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputHeight"
+        style="@style/parent"
+        android:layout_below="@+id/textInputDistance"
+        android:layout_marginTop="10dp">
+        <EditText
+            android:id="@+id/editTextInterestingInHeight"
+            style="@style/modifiedEditText"
+            android:hint="גובה רצוי:"
             android:inputType="number"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>

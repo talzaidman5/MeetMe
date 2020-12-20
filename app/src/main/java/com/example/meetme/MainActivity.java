@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         activity_main_BTN_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                readFromDB();
                 LoginActivity loginActivity = new LoginActivity();
                 loginActivity.show(getSupportFragmentManager(),"exe");
             }
