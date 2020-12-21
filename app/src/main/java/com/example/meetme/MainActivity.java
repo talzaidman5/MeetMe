@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,15 +24,20 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("message");
+    public static FirebaseAuth mFireBaseAuth;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+
     private Button activity_main_BTN_login, activity_main_BTN_signUp,activity_main_BTN_about;
     public static AllClients allClients= new AllClients();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
+        initFirebase();
         readFromDB();
 
         activity_main_BTN_login = findViewById(R.id.activity_main_BTN_login);
@@ -54,6 +60,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void initFirebase() {
+        mFireBaseAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("message");
     }
 
     private void readFromDB() {

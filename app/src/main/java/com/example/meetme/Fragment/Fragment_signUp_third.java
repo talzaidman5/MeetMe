@@ -17,12 +17,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.meetme.AllClients;
+import com.example.meetme.LoginActivity;
 import com.example.meetme.MainActivity;
 import com.example.meetme.MatchingActivity;
 import com.example.meetme.R;
 import com.example.meetme.SignUpActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -66,11 +72,7 @@ public class Fragment_signUp_third extends Fragment {
                 if (MainActivity.allClients == null) {
                     MainActivity.allClients = new AllClients();
                 }
-                uploadImage();
-                MainActivity.allClients.addUser(FragmentFirstSignUp.user);
-                myRef.setValue(MainActivity.allClients);
-                Intent intent = new Intent(getContext(), MatchingActivity.class);
-                startActivity(intent);
+                uploadImageAndRegister();
             }
         });
         sign_up_thirdIMG_1.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +111,28 @@ public class Fragment_signUp_third extends Fragment {
 //         putOnMSP(gson);
 
         return view;
+    }
+
+
+    public void registerUser() {
+        MainActivity.mFireBaseAuth.createUserWithEmailAndPassword(FragmentFirstSignUp.user.getEmail(), FragmentFirstSignUp.user.getPassword())
+                .addOnCompleteListener(Fragment_signUp_third.this.getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            MainActivity.allClients.addUser(FragmentFirstSignUp.user);
+                            myRef.setValue(MainActivity.allClients);
+                            FirebaseUser user = MainActivity.mFireBaseAuth.getCurrentUser();
+                            Intent intent = new Intent(getContext(), MatchingActivity.class);
+                            startActivity(intent);
+                        } else {
+                            if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                Toast.makeText(getContext(), "This email is exists", Toast.LENGTH_LONG).show();
+                            } else
+                                Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
 
     private void findViews(View view) {
@@ -157,7 +181,7 @@ public class Fragment_signUp_third extends Fragment {
         startActivityForResult(Intent.createChooser(intent, "Select Image from here..."), PICK_IMAGE_REQUEST);
     }
 
-    private void uploadImage() {
+    private void uploadImageAndRegister() {
         if (filePath != null) {
 
             // Code for showing progressDialog while uploading
@@ -182,6 +206,7 @@ public class Fragment_signUp_third extends Fragment {
                     });
                     progressDialog.dismiss();
                     Toast.makeText(getContext(), "תמונה הועלתה!", Toast.LENGTH_SHORT).show();
+                    registerUser();
                 }
             })
                     .addOnFailureListener(new OnFailureListener() {

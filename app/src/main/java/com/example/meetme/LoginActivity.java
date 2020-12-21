@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -54,13 +55,7 @@ public class LoginActivity extends AppCompatDialogFragment {
         cirLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkDetails()) {
-                    currentUserEmail = login_EDT_Email.getText().toString();
-                    Intent intent = new Intent(LoginActivity.this.getContext(), MatchingActivity.class);
-                    startActivity(intent);
-                } else
-                    Toast.makeText(getContext(), "שגיאה באחד הנתונים!", Toast.LENGTH_SHORT).show();
-
+                userExists();
             }
         });
         viewForgotPassword.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +83,33 @@ public class LoginActivity extends AppCompatDialogFragment {
                 // Failed to read value
             }
         });
+    }
+
+    private void userExists() {
+        String mail = login_EDT_Email.getText().toString().trim();
+        String cus_password = login_EDT_Password.getText().toString();
+        if (mail.isEmpty()) {
+            login_EDT_Email.setError("Invalid email");
+            login_EDT_Email.requestFocus();
+        } else if (cus_password.isEmpty()) {
+            login_EDT_Password.setError("Invalid password");
+            login_EDT_Password.requestFocus();
+        } else {
+            MainActivity.mFireBaseAuth
+                    .signInWithEmailAndPassword(mail, cus_password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                currentUserEmail = login_EDT_Email.getText().toString();
+                                Intent intent = new Intent(LoginActivity.this.getContext(), MatchingActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(getContext(), "שגיאה באחד הנתונים!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
     }
 
     private boolean checkDetails() {
