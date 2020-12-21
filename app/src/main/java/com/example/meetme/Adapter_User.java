@@ -27,6 +27,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+import com.squareup.picasso.Picasso;
+
 public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int FEMALE = 0;
@@ -52,8 +54,8 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     // specify the row layout file and click for each row
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_for_all, parent, false);
-            return new ViewHolder_For_All(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_for_all, parent, false);
+        return new ViewHolder_For_All(view);
     }
 
     @Override
@@ -61,36 +63,38 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         User user = getItem(position);
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-            ViewHolder_For_All mHolder = (ViewHolder_For_All) holder;
-            mHolder.article_LBL_title.setText(user.getName());
-            mHolder.article_LBL_subTitle.setText(user.getAge() + "");
-            mHolder.article_LBL_city.setText(user.getCity());
-            mHolder.article_IMG_back.setBackgroundColor(Color.GRAY);
-            String urlImage;
-            urlImage = checkClient(LoginActivity.currentUserEmail);
-            mHolder.article_IMG_back.setBackgroundColor(Color.GRAY);
-            mHolder.list_for_all_BTN_openChat.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, ChatActivity1.class);
-                    context.startActivity(intent);
-                }
-            });
-            Glide.with(context)
-                    .load(urlImage)
-                    .apply(RequestOptions.placeholderOf(R.drawable.bake))
-                    .into(new SimpleTarget<Drawable>() {
-                        @Override
-                        public void onResourceReady(@NonNull Drawable resource,
-                                                    @Nullable Transition<? super Drawable> transition) {
-
-                            mHolder.article_IMG_back.setBackground(resource);
-                        }
-                    });
+        ViewHolder_For_All mHolder = (ViewHolder_For_All) holder;
+        mHolder.article_LBL_title.setText(user.getName());
+        mHolder.article_LBL_subTitle.setText(user.getAge() + "");
+        mHolder.article_LBL_city.setText(user.getCity());
+        this.getImageFromStorage(mHolder.article_IMG_back, user);
+        String urlImage;
+        urlImage = checkClient(LoginActivity.currentUserEmail);
+        mHolder.list_for_all_BTN_openChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ChatActivity1.class);
+                context.startActivity(intent);
+            }
+        });
+//        Glide.with(context)
+//                .load(urlImage)
+//                .apply(RequestOptions.placeholderOf(R.drawable.bake))
+//                .into(new SimpleTarget<Drawable>() {
+//                    @Override
+//                    public void onResourceReady(@NonNull Drawable resource,
+//                                                @Nullable Transition<? super Drawable> transition) {
+//
+//                        mHolder.article_IMG_back.setBackground(resource);
+//                    }
+//                });
 
 
     }
 
+    private void getImageFromStorage(ImageView image, User user) {
+        Picasso.with(this.context).load(user.getMainImage()).into(image);
+    }
 
     private String checkClient(String currentUserEmail) {
         for (User user : MainActivity.allClients.allClientsInDB) {
@@ -119,7 +123,7 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     static class ViewHolder_For_All extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageView article_IMG_back;
-        public TextView article_LBL_title,article_LBL_city;
+        public TextView article_LBL_title, article_LBL_city;
         public TextView article_LBL_subTitle;
         public Button list_for_all_BTN_openChat;
 

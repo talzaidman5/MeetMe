@@ -156,6 +156,7 @@ public class Fragment_signUp_third extends Fragment {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Image from here..."), PICK_IMAGE_REQUEST);
     }
+
     private void uploadImage() {
         if (filePath != null) {
 
@@ -164,10 +165,8 @@ public class Fragment_signUp_third extends Fragment {
             progressDialog.setTitle("טוען...");
             progressDialog.show();
 
-            // Defining the child of storageReference
-          //  imageUrl = "images/"+ UUID.randomUUID().toString();
             StorageReference ref = storageReference.child(FragmentFirstSignUp.user.getEmail());
-            FragmentFirstSignUp.user.setMainImage(filePath.toString());
+//            FragmentFirstSignUp.user.setMainImage(filePath.toString());
 
             ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -175,28 +174,32 @@ public class Fragment_signUp_third extends Fragment {
                         UploadTask.TaskSnapshot taskSnapshot) {
                     // Image uploaded successfully
                     // Dismiss dialog
+                    ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            FragmentFirstSignUp.user.setMainImage(String.valueOf(uri));
+                        }
+                    });
                     progressDialog.dismiss();
-                    Toast.makeText(getContext(),"תמונה הועלתה!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "תמונה הועלתה!", Toast.LENGTH_SHORT).show();
                 }
             })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onFailure(@NonNull Exception e)
-                        {
+                        public void onFailure(@NonNull Exception e) {
                             // Error, Image not uploaded
                             progressDialog.dismiss();
-                            Toast.makeText(getContext(),"Failed " + e.getMessage(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(
                             new OnProgressListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onProgress(
-                                        UploadTask.TaskSnapshot taskSnapshot)
-                                {
+                                        UploadTask.TaskSnapshot taskSnapshot) {
                                     double progress
                                             = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                                    progressDialog.setMessage("הועלה " + (int)progress + "%");
+                                    progressDialog.setMessage("הועלה " + (int) progress + "%");
                                 }
                             });
         }
