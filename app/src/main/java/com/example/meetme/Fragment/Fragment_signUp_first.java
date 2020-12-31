@@ -75,6 +75,13 @@ public class Fragment_signUp_first extends Fragment {
     }
 
     private void openNextSignUpPage() {
+        user = new User(editTextName.getText().toString(),
+                editTextAge.getText().toString(),
+                checkGender(), editTextCity.getText().toString()
+                , null, 0, 0, null,
+                editTextEmail.getText().toString(),
+                editTextPassword.getText().toString(), 0,
+                editTextHeight.getText().toString(), "0");
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
 
@@ -83,8 +90,6 @@ public class Fragment_signUp_first extends Fragment {
         ft.replace(R.id.main_signUp_fragment, fragment);
         ft.addToBackStack(null);
         ft.commit();
-        user = new User(editTextName.getText().toString(), editTextAge.getText().toString(), checkGender(), editTextCity.getText().toString()
-                , null, 0, 0, null, editTextEmail.getText().toString(), editTextPassword.getText().toString(), 0, editTextHeight.getText().toString(), "0");
     }
 
     private void findView(View view) {

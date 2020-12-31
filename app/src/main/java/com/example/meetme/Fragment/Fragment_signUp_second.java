@@ -126,8 +126,6 @@ public class Fragment_signUp_second extends Fragment {
                 Fragment_signUp_first.user.setMinAge(Integer.parseInt(signUp_LSV_minAge.getSelectedItem().toString()));
                 Fragment_signUp_first.user.setMaxAge(Integer.parseInt(signUp_LSV_maxAge.getSelectedItem().toString()));
                 Fragment_signUp_first.user.setDistance(Integer.parseInt(editTextDistance.getText().toString()));
-                MainActivity.allClients.addUser(Fragment_signUp_first.user);
-                myRef.setValue(MainActivity.allClients);
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
@@ -142,8 +140,6 @@ public class Fragment_signUp_second extends Fragment {
         });
         return view;
     }
-
-
 
     private void findViews(View view) {
         signUp_BTN_continue = view.findViewById(R.id.signUp_BTN_end);
