@@ -22,6 +22,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -37,6 +39,7 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private ArrayList<User> articles;
     private FirebaseStorage storage;
     private StorageReference storageReference;
+    FirebaseUser currentUser;
     private Bitmap bitmap;
 
     public Adapter_User(Context context, ArrayList<User> articles) {
@@ -69,7 +72,8 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mHolder.article_LBL_city.setText(user.getCity());
         this.getImageFromStorage(mHolder.article_IMG_back, user);
         String urlImage;
-        urlImage = checkClient(LoginActivity.currentUserEmail);
+        this.currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        urlImage = checkClient(currentUser.getEmail());
         mHolder.list_for_all_BTN_openChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,19 +81,6 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 context.startActivity(intent);
             }
         });
-//        Glide.with(context)
-//                .load(urlImage)
-//                .apply(RequestOptions.placeholderOf(R.drawable.bake))
-//                .into(new SimpleTarget<Drawable>() {
-//                    @Override
-//                    public void onResourceReady(@NonNull Drawable resource,
-//                                                @Nullable Transition<? super Drawable> transition) {
-//
-//                        mHolder.article_IMG_back.setBackground(resource);
-//                    }
-//                });
-
-
     }
 
     private void getImageFromStorage(ImageView image, User user) {

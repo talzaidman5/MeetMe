@@ -33,7 +33,6 @@ public class LoginActivity extends AppCompatDialogFragment {
     private EditText login_EDT_Email, login_EDT_Password;
     private Button cirLoginButton;
     private TextView viewForgotPassword;
-    public static String currentUserEmail;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("message");
 
@@ -45,42 +44,27 @@ public class LoginActivity extends AppCompatDialogFragment {
         view = inflater.inflate(R.layout.activity_login, null);
         builder.setView(view);
         final AlertDialog dialog = builder.create();
-        login_EDT_Email = view.findViewById(R.id.signUp_EDT_Email);
-        login_EDT_Password = view.findViewById(R.id.login_EDT_Password);
-        cirLoginButton = view.findViewById(R.id.cirLoginButton);
-        viewForgotPassword = (TextView) view.findViewById(R.id.viewForgotPassword);
 
+        initViews();
+        return dialog;
+    }
 
-        readFromDB();
-        cirLoginButton.setOnClickListener(new View.OnClickListener() {
+    private void initViews() {
+        this.login_EDT_Email = view.findViewById(R.id.signUp_EDT_Email);
+        this.login_EDT_Password = view.findViewById(R.id.login_EDT_Password);
+        this.cirLoginButton = view.findViewById(R.id.cirLoginButton);
+        this.viewForgotPassword = (TextView) view.findViewById(R.id.viewForgotPassword);
+
+        this.cirLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 userExists();
             }
         });
-        viewForgotPassword.setOnClickListener(new View.OnClickListener() {
+        this.viewForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendEmail();
-            }
-        });
-
-        return dialog;
-    }
-
-    private void readFromDB() {
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                MainActivity.allClients = dataSnapshot.getValue(AllClients.class);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
             }
         });
     }
@@ -101,7 +85,6 @@ public class LoginActivity extends AppCompatDialogFragment {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                currentUserEmail = login_EDT_Email.getText().toString();
                                 Intent intent = new Intent(LoginActivity.this.getContext(), MatchingActivity.class);
                                 startActivity(intent);
                             } else {
@@ -110,22 +93,6 @@ public class LoginActivity extends AppCompatDialogFragment {
                         }
                     });
         }
-    }
-
-    private boolean checkDetails() {
-
-        for (User tempUser : MainActivity.allClients.allClientsInDB) {
-            if (tempUser != null) {
-                if (tempUser.getEmail().equals(login_EDT_Email.getText().toString()))
-                    if (tempUser.getPassword().equals(login_EDT_Password.getText().toString()))
-                        return true;
-            }
-        }
-        return false;
-    }
-
-    public void viewForgotPassword(View view) {
-        sendEmail();
     }
 
     protected void sendEmail() {

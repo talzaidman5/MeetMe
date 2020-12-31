@@ -13,8 +13,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,11 +49,8 @@ public class MainActivity extends AppCompatActivity {
         activity_main_BTN_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                readFromDB();
-                LoginActivity loginActivity = new LoginActivity();
-                loginActivity.show(getSupportFragmentManager(),"exe");
+                userExists();
             }
-
         });
         activity_main_BTN_signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 allClients = dataSnapshot.getValue(AllClients.class);
-
             }
 
             @Override
@@ -83,5 +81,18 @@ public class MainActivity extends AppCompatActivity {
                 // Failed to read value
             }
         });
+    }
+
+    private void userExists() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            LoginActivity loginActivity = new LoginActivity();
+            loginActivity.show(getSupportFragmentManager(),"exe");
+        } else{
+            Toast.makeText(getApplicationContext(),
+                    "ברוכים השבים!", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(MainActivity.this, MatchingActivity.class);
+            startActivity(intent);
+        }
     }
 }
