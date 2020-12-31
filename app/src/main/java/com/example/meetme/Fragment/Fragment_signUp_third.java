@@ -42,7 +42,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Fragment_signUp_third extends Fragment {
 
-    private ImageView sign_up_thirdIMG_1, sign_up_third_IMG_2, sign_up_third_IMG_3, sign_up_third_IMG_4, sign_up_third_IMG_5, sign_up_third_IMG_6;
+    private ImageView sign_up_thirdIMG_1, sign_up_third_IMG_2, sign_up_third_IMG_3, sign_up_third_IMG_4, sign_up_third_IMG_5, sign_up_third_IMG_6,image;
     private ArrayList<SignUpActivity.Hobbies> hobbiesToUser = new ArrayList<>();
     private CircleImageView sign_up_IMG_logo;
     private final int PICK_IMAGE_REQUEST = 22;
@@ -50,7 +50,6 @@ public class Fragment_signUp_third extends Fragment {
     private Button signUp_BTN_end;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference("Users");
-    public ImageView image;
     private Bitmap bitmap;
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -66,17 +65,20 @@ public class Fragment_signUp_third extends Fragment {
         signUp_BTN_end.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                registerUser();
                 if (MainActivity.allClients == null) {
                     MainActivity.allClients = new AllClients();
                 }
-                uploadImageAndRegister();
+            //    uploadImageAndRegisterLogo();
             }
         });
         sign_up_thirdIMG_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SelectImage(sign_up_thirdIMG_1);
-                uploadImageAndRegister();
+               //uploadImageAndRegister();
+
 
             }
         });
@@ -84,21 +86,22 @@ public class Fragment_signUp_third extends Fragment {
             @Override
             public void onClick(View v) {
                 SelectImage(sign_up_third_IMG_2);
-
+               // uploadImageAndRegister();
             }
         });
         sign_up_third_IMG_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SelectImage(sign_up_third_IMG_3);
-
             }
         });
 
         sign_up_IMG_logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                uploadImageAndRegisterLogo();
                 SelectImage(sign_up_IMG_logo);
+
             }
         });
         return view;
@@ -147,7 +150,6 @@ public class Fragment_signUp_third extends Fragment {
             // Get the Uri of data
             filePath = data.getData();
             try {
-                // Setting image on image view using Bitmap
                 bitmap = MediaStore
                         .Images
                         .Media
@@ -164,25 +166,23 @@ public class Fragment_signUp_third extends Fragment {
     private void SelectImage(ImageView imageToChange) {
 
         image = imageToChange;
-        // Defining Implicit Intent to mobile gallery
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Image from here..."), PICK_IMAGE_REQUEST);
     }
 
-    private void uploadImageAndRegister() {
+    private void uploadImageAndRegisterLogo() {
         if (filePath != null) {
 
-            // Code for showing progressDialog while uploading
             ProgressDialog progressDialog = new ProgressDialog(getContext());
             progressDialog.setTitle("טוען...");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child(Fragment_signUp_first.user.getEmail());
-//            FragmentFirstSignUp.user.setMainImage(filePath.toString());
+            StorageReference ref = storageReference.child(Fragment_signUp_first.user.getEmail()+"_profile");
+            String str=Fragment_signUp_first.user.getEmail()+"_profile";
 
-            ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            ref.child(str).putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -193,27 +193,64 @@ public class Fragment_signUp_third extends Fragment {
                     });
                     progressDialog.dismiss();
                     Toast.makeText(getContext(), "תמונה הועלתה!", Toast.LENGTH_SHORT).show();
-                    registerUser();
+                //      registerUser();
                 }
             })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // Error, Image not uploaded
+                        public void onFailure(@NonNull Exception e) {// Error, Image not uploaded
                             progressDialog.dismiss();
                             Toast.makeText(getContext(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
-                    .addOnProgressListener(
-                            new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onProgress(
                                         UploadTask.TaskSnapshot taskSnapshot) {
-                                    double progress
-                                            = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                                     progressDialog.setMessage("הועלה " + (int) progress + "%");
                                 }
                             });
+        }
+    }
+    private void uploadImageAndRegister() {
+        if (filePath != null) {
+
+            ProgressDialog progressDialog = new ProgressDialog(getContext());
+            progressDialog.setTitle("טוען...");
+            progressDialog.show();
+
+            StorageReference ref = storageReference.child(Fragment_signUp_first.user.getEmail());
+
+            ref.child(Fragment_signUp_first.user.getEmail()).putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Fragment_signUp_first.user.setMainImage(String.valueOf(uri));
+                        }
+                    });
+                    progressDialog.dismiss();
+                    Toast.makeText(getContext(), "תמונה הועלתה!", Toast.LENGTH_SHORT).show();
+               //     registerUser();
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {// Error, Image not uploaded
+                            progressDialog.dismiss();
+                            Toast.makeText(getContext(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(
+                                UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                            progressDialog.setMessage("הועלה " + (int) progress + "%");
+                        }
+                    });
         }
     }
 
