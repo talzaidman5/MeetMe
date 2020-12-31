@@ -2,13 +2,11 @@ package com.example.meetme;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
-import com.example.meetme.Fragment.FragmentFirstSignUp;
+import com.example.meetme.Fragment.Fragment_signUp_first;
 import com.example.meetme.Fragment.Fragment_signUp_second;
 
 
@@ -19,7 +17,7 @@ public class SignUpActivity extends AppCompatActivity {
         ARTIST,YOGA,BICYCLE, JOYSTICK, BACK, CAMERA,GUITAR;
     }
     private FrameLayout main_signUp_fragment;
-    private FragmentFirstSignUp fragmentFirstSignUp;
+    private Fragment_signUp_first fragmentSignUpFirst;
     private Fragment_signUp_second fragment_signUp_second;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +29,11 @@ public class SignUpActivity extends AppCompatActivity {
 
         if(isDone){
             fragment_signUp_second = new Fragment_signUp_second();
-            getSupportFragmentManager().beginTransaction().add(R.id.main_signUp_fragment, fragmentFirstSignUp).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.main_signUp_fragment, fragmentSignUpFirst).commit();
         }
         else {
-            fragmentFirstSignUp = new FragmentFirstSignUp();
-            getSupportFragmentManager().beginTransaction().add(R.id.main_signUp_fragment, fragmentFirstSignUp).commit();
+            fragmentSignUpFirst = new Fragment_signUp_first();
+            getSupportFragmentManager().beginTransaction().add(R.id.main_signUp_fragment, fragmentSignUpFirst).commit();
         }
     }
 

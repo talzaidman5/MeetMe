@@ -20,7 +20,7 @@ import com.example.meetme.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class FragmentFirstSignUp extends Fragment {
+public class Fragment_signUp_first extends Fragment {
     private Button signUp_BTN_continue;
     private EditText editTextEmail, editTextPassword, editTextName, editTextAge, editTextCity,editTextHeight;
     private CheckBox signUp_female, signUp_men;

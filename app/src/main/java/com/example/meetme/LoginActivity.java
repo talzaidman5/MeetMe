@@ -31,7 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 public class LoginActivity extends AppCompatDialogFragment {
     private View view;
     private EditText login_EDT_Email, login_EDT_Password;
-    private Button cirLoginButton;
+    private Button cirLoginButton,login_BTN_signUp;
     private TextView viewForgotPassword;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("message");
@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatDialogFragment {
         this.login_EDT_Password = view.findViewById(R.id.login_EDT_Password);
         this.cirLoginButton = view.findViewById(R.id.cirLoginButton);
         this.viewForgotPassword = (TextView) view.findViewById(R.id.viewForgotPassword);
+        this.login_BTN_signUp = view.findViewById(R.id.login_BTN_signUp);
 
         this.cirLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +66,13 @@ public class LoginActivity extends AppCompatDialogFragment {
             @Override
             public void onClick(View v) {
                 sendEmail();
+            }
+        });
+        this.login_BTN_signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), SignUpActivity.class);
+                startActivity(intent);
             }
         });
     }

@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.meetme.AllClients;
-import com.example.meetme.LoginActivity;
 import com.example.meetme.MainActivity;
 import com.example.meetme.MatchingActivity;
 import com.example.meetme.R;
@@ -35,11 +34,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -57,7 +54,7 @@ public class Fragment_signUp_third extends Fragment {
     private Bitmap bitmap;
     private FirebaseStorage storage;
     private StorageReference storageReference;
-
+  //  private ArrayList<>allImagesArrayList = new ArrayList();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up_third, container, false);
@@ -79,6 +76,7 @@ public class Fragment_signUp_third extends Fragment {
             @Override
             public void onClick(View v) {
                 SelectImage(sign_up_thirdIMG_1);
+                uploadImageAndRegister();
 
             }
         });
@@ -103,24 +101,16 @@ public class Fragment_signUp_third extends Fragment {
                 SelectImage(sign_up_IMG_logo);
             }
         });
-
-//        Gson gson = new Gson();
-//        gson.toJson(sign_up_thirdIMG_1.getDrawable().toString()+sign_up_third_IMG_2.getDrawable().toString()+
-//                sign_up_third_IMG_3.getDrawable().toString()+sign_up_third_IMG_4.getDrawable().toString()+
-//                sign_up_third_IMG_5.getDrawable().toString()+sign_up_third_IMG_6.getDrawable().toString());
-//         putOnMSP(gson);
-
         return view;
     }
 
-
     public void registerUser() {
-        MainActivity.mFireBaseAuth.createUserWithEmailAndPassword(FragmentFirstSignUp.user.getEmail(), FragmentFirstSignUp.user.getPassword())
+        MainActivity.mFireBaseAuth.createUserWithEmailAndPassword(Fragment_signUp_first.user.getEmail(), Fragment_signUp_first.user.getPassword())
                 .addOnCompleteListener(Fragment_signUp_third.this.getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            MainActivity.allClients.addUser(FragmentFirstSignUp.user);
+                            MainActivity.allClients.addUser(Fragment_signUp_first.user);
                             myRef.setValue(MainActivity.allClients);
                             FirebaseUser user = MainActivity.mFireBaseAuth.getCurrentUser();
                             Intent intent = new Intent(getContext(), MatchingActivity.class);
@@ -189,19 +179,16 @@ public class Fragment_signUp_third extends Fragment {
             progressDialog.setTitle("טוען...");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child(FragmentFirstSignUp.user.getEmail());
+            StorageReference ref = storageReference.child(Fragment_signUp_first.user.getEmail());
 //            FragmentFirstSignUp.user.setMainImage(filePath.toString());
 
             ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
-                public void onSuccess(
-                        UploadTask.TaskSnapshot taskSnapshot) {
-                    // Image uploaded successfully
-                    // Dismiss dialog
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            FragmentFirstSignUp.user.setMainImage(String.valueOf(uri));
+                            Fragment_signUp_first.user.setMainImage(String.valueOf(uri));
                         }
                     });
                     progressDialog.dismiss();
