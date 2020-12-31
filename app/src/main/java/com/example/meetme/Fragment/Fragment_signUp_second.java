@@ -115,12 +115,12 @@ public class Fragment_signUp_second extends Fragment {
         signUp_BTN_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentFirstSignUp.user.setPersonPreferenceGender(checkInterestingIn());
-                FragmentFirstSignUp.user.setHobbies(hobbiesToUser);
-                FragmentFirstSignUp.user.setPreferenceHeight(editTextInterestingInHeight.getText().toString());
-                FragmentFirstSignUp.user.setMinAge(Integer.parseInt(signUp_LSV_minAge.getSelectedItem().toString()));
-                FragmentFirstSignUp.user.setMaxAge(Integer.parseInt(signUp_LSV_maxAge.getSelectedItem().toString()));
-                FragmentFirstSignUp.user.setDistance(Integer.parseInt(editTextDistance.getText().toString()));
+                Fragment_signUp_first.user.setPersonPreferenceGender(checkInterestingIn());
+                Fragment_signUp_first.user.setHobbies(hobbiesToUser);
+                Fragment_signUp_first.user.setPreferenceHeight(editTextInterestingInHeight.getText().toString());
+                Fragment_signUp_first.user.setMinAge(Integer.parseInt(signUp_LSV_minAge.getSelectedItem().toString()));
+                Fragment_signUp_first.user.setMaxAge(Integer.parseInt(signUp_LSV_maxAge.getSelectedItem().toString()));
+                Fragment_signUp_first.user.setDistance(Integer.parseInt(editTextDistance.getText().toString()));
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
