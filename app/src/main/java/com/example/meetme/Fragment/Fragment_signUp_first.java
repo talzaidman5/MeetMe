@@ -1,9 +1,11 @@
 package com.example.meetme.Fragment;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,20 +16,25 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.meetme.MainActivity;
+import com.example.meetme.MatchingActivity;
 import com.example.meetme.R;
 import com.example.meetme.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Fragment_signUp_first extends Fragment {
     private Button signUp_BTN_continue;
-    private EditText editTextEmail, editTextPassword, editTextName, editTextAge, editTextCity,editTextHeight;
+    private EditText editTextEmail, editTextPassword, editTextName, editTextAge, editTextCity, editTextHeight;
     private CheckBox signUp_female, signUp_men;
     private LinearLayout signUp_LIN_gender;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference myRef = database.getReference("message");
-    private Fragment_signUp_second fragmentFirstSignUp;
     private Spinner signUp_LSV_Status;
     public static User user;
 
@@ -42,20 +49,42 @@ public class Fragment_signUp_first extends Fragment {
         signUp_BTN_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-
-                Fragment fragment = new Fragment_signUp_second();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                ft.replace(R.id.main_signUp_fragment, fragment);
-                ft.addToBackStack(null);
-                ft.commit();
-                user = new User(editTextName.getText().toString(), editTextAge.getText().toString() ,checkGender() , editTextCity.getText().toString()
-                        , null ,0,0,null,editTextEmail.getText().toString(),editTextPassword.getText().toString(),0,editTextHeight.getText().toString(),"0");
+                registerUser();
             }
         });
         return view;
+    }
+
+    public void registerUser() {
+        String email = editTextEmail.getText().toString();
+        String password = editTextPassword.getText().toString();
+        MainActivity.mFireBaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(Fragment_signUp_first.this.getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            openNextSignUpPage();
+                        } else {
+                            if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                Toast.makeText(getContext(), "המייל שהזנת כבר קיים", Toast.LENGTH_LONG).show();
+                            } else
+                                Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
+    private void openNextSignUpPage() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+
+        Fragment fragment = new Fragment_signUp_second();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.main_signUp_fragment, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
+        user = new User(editTextName.getText().toString(), editTextAge.getText().toString(), checkGender(), editTextCity.getText().toString()
+                , null, 0, 0, null, editTextEmail.getText().toString(), editTextPassword.getText().toString(), 0, editTextHeight.getText().toString(), "0");
     }
 
     private void findView(View view) {
@@ -78,8 +107,4 @@ public class Fragment_signUp_first extends Fragment {
             return User.Gender.FEMALE;
         else return User.Gender.MALE;
     }
-
-
-
-
 }

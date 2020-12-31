@@ -17,9 +17,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
+import com.example.meetme.MainActivity;
 import com.example.meetme.R;
 import com.example.meetme.SignUpActivity;
 import com.example.meetme.User;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -32,6 +35,8 @@ public class Fragment_signUp_second extends Fragment {
     private CheckBox InterestingInFemale, InterestingInMen;
     private Button signUp_BTN_continue;
     private EditText editTextDistance,editTextInterestingInHeight;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference myRef = database.getReference("Users");
     public static SharedPreferences sharedpreferences;
     private Gson gson = new Gson();
     public static final String KEY_MSP = "user";
@@ -121,6 +126,8 @@ public class Fragment_signUp_second extends Fragment {
                 Fragment_signUp_first.user.setMinAge(Integer.parseInt(signUp_LSV_minAge.getSelectedItem().toString()));
                 Fragment_signUp_first.user.setMaxAge(Integer.parseInt(signUp_LSV_maxAge.getSelectedItem().toString()));
                 Fragment_signUp_first.user.setDistance(Integer.parseInt(editTextDistance.getText().toString()));
+                MainActivity.allClients.addUser(Fragment_signUp_first.user);
+                myRef.setValue(MainActivity.allClients);
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);

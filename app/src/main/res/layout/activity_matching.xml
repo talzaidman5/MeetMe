@@ -28,6 +28,7 @@
     <Button
         android:id="@+id/matching_BTN_logout"
         android:layout_width="wrap_content"
+        android:background="@drawable/login_button_bk2"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

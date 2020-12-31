@@ -71,9 +71,9 @@
               android:id="@+id/login_BTN_signUp"
             android:textColor="@color/primaryTextColor"
             android:text="אין לך חשבון? הירשם"
+            android:background="@drawable/login_button_bk2"
             android:onClick="viewRegisterClicked"
             android:layout_marginTop="25dp"
-            android:background="#ffff"
             android:gravity="center_horizontal" />
 
 

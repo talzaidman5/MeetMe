@@ -49,7 +49,7 @@ public class Fragment_signUp_third extends Fragment {
     private Uri filePath;
     private Button signUp_BTN_end;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference myRef = database.getReference("message");
+    private DatabaseReference myRef = database.getReference("Users");
     public ImageView image;
     private Bitmap bitmap;
     private FirebaseStorage storage;

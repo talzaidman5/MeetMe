@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private Button activity_main_BTN_login, activity_main_BTN_signUp,activity_main_BTN_about;
     public static AllClients allClients= new AllClients();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private void initFirebase() {
         mFireBaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("message");
+        myRef = database.getReference("Users");
     }
 
     private void readFromDB() {
