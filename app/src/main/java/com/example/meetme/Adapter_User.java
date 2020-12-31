@@ -2,28 +2,43 @@ package com.example.meetme;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.button.MaterialButton;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+import com.squareup.picasso.Picasso;
+
 public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final int  FEMALE= 0;
-    private final int MALE  = 1;
-
+    private final int FEMALE = 0;
+    private final int MALE = 1;
     private Context context;
     private ArrayList<User> articles;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+    private Bitmap bitmap;
+
     public Adapter_User(Context context, ArrayList<User> articles) {
         this.context = context;
         this.articles = articles;
@@ -39,63 +54,56 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     // specify the row layout file and click for each row
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == FEMALE) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_female, parent, false);
-            return new ViewHolder_Female(view);
-        } else if (viewType == MALE) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_male, parent, false);
-            return new ViewHolder_Male(view);
-        }
-
-
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_female, parent, false);
-        ViewHolder_Female myViewHolderNormal = new ViewHolder_Female(view);
-        return myViewHolderNormal;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_for_all, parent, false);
+        return new ViewHolder_For_All(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         User user = getItem(position);
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        ViewHolder_For_All mHolder = (ViewHolder_For_All) holder;
+        mHolder.article_LBL_title.setText(user.getName());
+        mHolder.article_LBL_subTitle.setText(user.getAge() + "");
+        mHolder.article_LBL_city.setText(user.getCity());
+        this.getImageFromStorage(mHolder.article_IMG_back, user);
+        String urlImage;
+        urlImage = checkClient(LoginActivity.currentUserEmail);
+        mHolder.list_for_all_BTN_openChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ChatActivity1.class);
+                context.startActivity(intent);
+            }
+        });
+//        Glide.with(context)
+//                .load(urlImage)
+//                .apply(RequestOptions.placeholderOf(R.drawable.bake))
+//                .into(new SimpleTarget<Drawable>() {
+//                    @Override
+//                    public void onResourceReady(@NonNull Drawable resource,
+//                                                @Nullable Transition<? super Drawable> transition) {
+//
+//                        mHolder.article_IMG_back.setBackground(resource);
+//                    }
+//                });
 
-        if (holder instanceof ViewHolder_Female) {
-            ViewHolder_Female mHolder = (ViewHolder_Female) holder;
-            mHolder.article_LBL_title.setText(user.getName());
-            mHolder.article_LBL_subTitle.setText(user.getAge()+"");
-
-
-//            if (user.getContent().equals("")) {
-//                mHolder.article_LBL_title.setTextColor(Color.RED);
-//            } else {
-//                mHolder.article_LBL_title.setTextColor(Color.BLACK);
-//            }
-
-            Glide
-                    .with(context)
-                    .load(user.getMainImage())
-                    .centerCrop()
-                    .into(mHolder.article_IMG_back);
-        } else if (holder instanceof ViewHolder_Male) {
-            ViewHolder_Male mHolder = (ViewHolder_Male) holder;
-            mHolder.article_LBL_title.setText(user.getName());
-            mHolder.article_LBL_subTitle.setText(user.getAge());
-
-
-//            if (user.getContent().equals("")) {
-//                mHolder.article_LBL_title.setTextColor(Color.RED);
-//            } else {
-//                mHolder.article_LBL_title.setTextColor(Color.BLACK);
-//            }
-
-            Glide
-                    .with(context)
-                    .load(user.getMainImage())
-                    .centerCrop()
-                    .into(mHolder.article_IMG_back);
-
-           // mHolder.article_BTN_click.setText(user.getButton());
-        }
 
     }
+
+    private void getImageFromStorage(ImageView image, User user) {
+        Picasso.with(this.context).load(user.getMainImage()).into(image);
+    }
+
+    private String checkClient(String currentUserEmail) {
+        for (User user : MainActivity.allClients.allClientsInDB) {
+            if (user.getEmail().equals(currentUserEmail))
+                return user.getMainImage();
+        }
+        return null;
+    }
+
 
     private User getItem(int position) {
         return articles.get(position);
@@ -112,40 +120,21 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return FEMALE;
     }
 
-    static class ViewHolder_Female extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class ViewHolder_For_All extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageView article_IMG_back;
-        public TextView article_LBL_title;
+        public TextView article_LBL_title, article_LBL_city;
         public TextView article_LBL_subTitle;
+        public Button list_for_all_BTN_openChat;
 
-        public ViewHolder_Female(View itemView) {
-            super(itemView);
-            itemView.setOnClickListener(this);
-//            article_IMG_back = itemView.findViewById(R.id.article_IMG_back);
-//            article_LBL_title = itemView.findViewById(R.id.article_LBL_title);
-//            article_LBL_subTitle = itemView.findViewById(R.id.article_LBL_subTitle);
-        }
-
-        @Override
-        public void onClick(View view) {
-            Log.d("onclick", "onClick " + getLayoutPosition());
-        }
-    }
-
-    static class ViewHolder_Male extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        public ImageView article_IMG_back;
-        public TextView article_LBL_title;
-        public TextView article_LBL_subTitle;
-        public MaterialButton article_BTN_click;
-
-        public ViewHolder_Male(View itemView) {
+        public ViewHolder_For_All(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             article_IMG_back = itemView.findViewById(R.id.article_IMG_back);
             article_LBL_title = itemView.findViewById(R.id.article_LBL_title);
             article_LBL_subTitle = itemView.findViewById(R.id.article_LBL_subTitle);
-            article_BTN_click = itemView.findViewById(R.id.article_BTN_click);
+            article_LBL_city = itemView.findViewById(R.id.article_LBL_city);
+            list_for_all_BTN_openChat = itemView.findViewById(R.id.list_for_all_BTN_openChat);
         }
 
         @Override
@@ -153,4 +142,5 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             Log.d("onclick", "onClick " + getLayoutPosition());
         }
     }
+
 }

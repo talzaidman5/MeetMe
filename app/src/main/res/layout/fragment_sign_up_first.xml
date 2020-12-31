@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/lin1"
+            android:layout_below="@+id/sign_up_IMG_logo"
+            android:orientation="vertical"
+            android:gravity="right">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputName"
+                style="@style/parent">
+
+                <EditText
+                    android:id="@+id/editTextName"
+                    style="@style/modifiedEditText"
+                    android:hint="שם מלא:"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputEmail"
+                style="@style/parent"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/signUp_EDT_Email"
+                    style="@style/modifiedEditText"
+                    android:background="@color/white"
+                    android:hint="כתובת מייל:"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputPassword"
+                style="@style/parent">
+
+                <EditText
+                    android:id="@+id/login_EDT_Password"
+                    style="@style/modifiedEditText"
+                    android:hint="סיסמא:"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputGender"
+                style="@style/parent"
+                android:gravity="right">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/signUp_LIN_gender">
+
+                    <TextView
+                        style="@style/modifiedEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="מין: "></TextView>
+
+                    <CheckBox
+                        android:id="@+id/signUp_female"
+                        style="@style/modifiedEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="אישה" />
+
+                    <CheckBox
+                        android:id="@+id/signUp_men"
+                        style="@style/modifiedEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
+                        android:checked="false"
+                        android:text="גבר" />
+
+                </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputAge"
+                style="@style/parent">
+
+                <EditText
+                    android:id="@+id/editTextAge"
+                    style="@style/modifiedEditText"
+                    android:hint="גיל:"
+                    android:inputType="number"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputCity"
+                style="@style/parent">
+
+                <EditText
+                    android:id="@+id/editTextCity"
+                    style="@style/modifiedEditText"
+                    android:hint="עיר מגורים:"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputHeight"
+                style="@style/parent">
+
+                <EditText
+                    android:id="@+id/editTextHeight"
+                    style="@style/modifiedEditText"
+                    android:hint="גובה:"
+                    android:inputType="number"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputStatus"
+                style="@style/parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/editTextStatus"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:hint="מצב משפחתי:"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1" />
+
+                <Spinner
+                    android:id="@+id/signUp_LSV_Status"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"></Spinner>
+                </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/bottomLin"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/signUp_BTN_end"
+            android:layout_width="110dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/login_button_bk2"
+            android:text="המשך" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/points"
+            android:layout_marginLeft="80dp"
+            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/point_black"></ImageView>
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/point"></ImageView>
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/point"></ImageView>
+        </LinearLayout>
+    </RelativeLayout>
+    </RelativeLayout>
