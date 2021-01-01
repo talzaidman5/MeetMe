@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,13 +75,14 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mHolder.article_LBL_subTitle.setText(user.getAge() + "");
         mHolder.article_LBL_city.setText(user.getCity());
         this.getImageFromStorage(mHolder.article_IMG_back, user);
-        String urlImage;
-        this.currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        urlImage = checkClient(currentUser.getEmail());
         mHolder.list_for_all_BTN_openChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ChatActivity1.class);
+                intent.putExtra("id", user.getId());
+                intent.putExtra("name", user.getName());
+                intent.putExtra("image", user.getMainImage().toString());
+                intent.putExtra("email", user.getEmail());
                 context.startActivity(intent);
             }
         });
@@ -91,6 +93,7 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 .addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
+                        user.setMainImage(uri);
                         Picasso.with(context).load(uri).into(image);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -100,15 +103,6 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             }
         });
     }
-
-    private String checkClient(String currentUserEmail) {
-        for (User user : MainActivity.allClients.allClientsInDB) {
-            if (user.getEmail().equals(currentUserEmail))
-                return user.getMainImage();
-        }
-        return null;
-    }
-
 
     private User getItem(int position) {
         return articles.get(position);
