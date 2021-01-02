@@ -2,10 +2,8 @@ package com.example.meetme.Fragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,16 +17,12 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.meetme.MainActivity;
-import com.example.meetme.MatchingActivity;
 import com.example.meetme.R;
-import com.example.meetme.User;
+import com.example.meetme.Entity.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class Fragment_signUp_first extends Fragment {
     private Button signUp_BTN_continue;

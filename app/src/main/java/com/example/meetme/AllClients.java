@@ -1,5 +1,7 @@
 package com.example.meetme;
 
+import com.example.meetme.Entity.User;
+
 import java.util.ArrayList;
 
 public class AllClients {

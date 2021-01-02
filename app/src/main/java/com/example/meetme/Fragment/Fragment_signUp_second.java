@@ -17,10 +17,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
-import com.example.meetme.MainActivity;
 import com.example.meetme.R;
 import com.example.meetme.SignUpActivity;
-import com.example.meetme.User;
+import com.example.meetme.Entity.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;

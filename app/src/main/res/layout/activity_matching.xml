@@ -25,6 +25,7 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/matching_profileImage"
+                android:layout_alignParentLeft="true"
                 android:foregroundGravity="left"
                 android:layout_width="30dp"
                 android:layout_height="30dp">
@@ -46,6 +47,7 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/matching_viewPager"
+        android:layout_below="@id/matching_AppBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >

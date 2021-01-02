@@ -11,10 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.meetme.Adapter_User;
+import com.example.meetme.Adapter.Adapter_User;
 import com.example.meetme.MainActivity;
 import com.example.meetme.R;
-import com.example.meetme.User;
+import com.example.meetme.Entity.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

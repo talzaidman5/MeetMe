@@ -1,8 +1,10 @@
-package com.example.meetme;
+package com.example.meetme.Entity;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.widget.ImageView;
+
+import com.example.meetme.SignUpActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;

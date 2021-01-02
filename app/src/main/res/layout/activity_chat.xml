@@ -4,10 +4,11 @@
 
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="#e6e6e6">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/chat_appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -28,5 +29,41 @@
         </android.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/chat_messages"
+        android:layout_below="@id/chat_appBar"
+        android:layout_above="@id/chat_bottom"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/chat_bottom"
+        android:padding="5dp"
+        android:background="#fff"
+        android:layout_alignParentBottom="true">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/chat_text_send"
+            android:layout_toRightOf="@+id/chat_btn_send"
+            android:background="@android:color/transparent"
+            android:hint="Type your message"
+            android:layout_centerVertical="true"></EditText>
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_action_name"
+            android:id="@+id/chat_btn_send"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"></ImageButton>
+
+    </RelativeLayout>
 
 </RelativeLayout>
