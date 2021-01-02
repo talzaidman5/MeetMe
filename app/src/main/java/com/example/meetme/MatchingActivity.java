@@ -1,61 +1,125 @@
 package com.example.meetme;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
+import com.example.meetme.Fragment.ChatFragment;
 import com.example.meetme.Fragment.Fragment_signUp_third;
+import com.example.meetme.Fragment.MatchingFragment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MatchingActivity extends AppCompatActivity {
-    private RecyclerView matching_LST_news;
-    private Button matchine_BTN_logout;
+    private CircleImageView profileImage;
+    private FirebaseStorage storage;
+    private Toolbar toolbar;
+    private StorageReference storageReference;
     private ArrayList<User> users;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matching);
         getSupportActionBar().hide();
 
-        matching_LST_news = findViewById(R.id.matching_LST_news);
-        matchine_BTN_logout = findViewById(R.id.matching_BTN_logout);
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
-        matchine_BTN_logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.mFireBaseAuth.signOut();
-                Intent intent = new Intent(MatchingActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+
+        profileImage = findViewById(R.id.matching_profileImage);
+        toolbar = findViewById(R.id.matching_Toolbar);
+        setActionBar(toolbar);
 
         if (MainActivity.allClients.getAllClientsInDB() != null)
             users = MainActivity.allClients.getAllClientsInDB();
         else
             Toast.makeText(MatchingActivity.this, "אין נתונים", Toast.LENGTH_SHORT).show();
 
-        ArrayList<User> allUsers = new ArrayList<>();
-//        User user = new User();
+        TabLayout tabLayout = findViewById(R.id.matching_tabLayout);
+        ViewPager viewPager = findViewById(R.id.matching_viewPager);
+
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter.addFragment(new MatchingFragment(), "התאמות");
+        viewPagerAdapter.addFragment(new ChatFragment(),"שיחות");
+
+        viewPager.setAdapter(viewPagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         User user = returnUserFromMail(currentUser.getEmail());
-        if (user != null) {
-            allUsers = checkUsers(user);
-            Adapter_User adapter_article = new Adapter_User(this, allUsers);
-            matching_LST_news.setLayoutManager(new LinearLayoutManager(this));
-            matching_LST_news.setItemAnimator(new DefaultItemAnimator());
-            matching_LST_news.setAdapter(adapter_article);
+        getImageFromStorage(this.profileImage,user);
+        getActionBar().setDisplayShowTitleEnabled(true);
+        getActionBar().setTitle("ההתאמות שלך");
+        getActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_logout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(MatchingActivity.this,MainActivity.class));
+                finish();
+                return true;
+        }
+        return false;
+    }
+
+    private void getImageFromStorage(ImageView image, User user) {
+        if (user != null){
+            storageReference.child(user.getEmail()).child("profile").getDownloadUrl()
+                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            user.setMainImage(uri);
+                            Picasso.with(MatchingActivity.this).load(uri).into(image);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
         }
     }
 
@@ -67,15 +131,37 @@ public class MatchingActivity extends AppCompatActivity {
         return null;
     }
 
-    private ArrayList<User> checkUsers(User user) {
-        ArrayList<User> allUsers = new ArrayList<>();
-        for (User userTemp : MainActivity.allClients.allClientsInDB) {
-            if (userTemp.getPersonGender().equals(user.getPersonPreferenceGender()) &&
-                    userTemp.getHeight().equals(user.getPreferenceHeight()) &&
-                    user.getPersonGender().equals(userTemp.getPersonPreferenceGender()) &&
-                    user.getHeight().equals(userTemp.getPreferenceHeight()))
-                allUsers.add(userTemp);
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        private ArrayList<Fragment> fragments;
+        private ArrayList<String> titles;
+
+        ViewPagerAdapter(FragmentManager fm){
+            super(fm);
+            this.fragments = new ArrayList<>();
+            this.titles = new ArrayList<>();
         }
-        return allUsers;
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        public void addFragment(Fragment frag, String title){
+            fragments.add(frag);
+            titles.add(title);
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position){
+            return titles.get(position);
+        }
     }
 }

@@ -3,35 +3,55 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/matching_layout"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MatchingActivity">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:text="ההתאמות שלך"
-        android:textColor="#000000"
-        android:textSize="30dp"></TextView>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/matching_LST_news"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/matching_BTN_logout"
-        android:layout_below="@id/title"
-        android:layout_marginTop="30dp" />
+        android:id="@+id/matching_AppBar"
+        android:layout_alignParentTop="true"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/matching_BTN_logout"
-        android:layout_width="wrap_content"
-        android:background="@drawable/login_button_bk2"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="התנתק" />
+        <android.widget.Toolbar
+            android:id="@+id/matching_Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@color/design_default_color_primary"
+            android:theme="@style/Base.CardView"
+            app:popupTheme="@style/TextAppearance.AppCompat.Widget.PopupMenu.Small">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/matching_profileImage"
+                android:foregroundGravity="left"
+                android:layout_width="30dp"
+                android:layout_height="30dp">
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+        </android.widget.Toolbar>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/matching_tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/design_default_color_primary_dark"
+            app:tabSelectedTextColor="#fff"
+            app:tabIndicatorColor="#fff"
+            app:tabTextColor="#fff">
+        </com.google.android.material.tabs.TabLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/matching_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    </androidx.viewpager.widget.ViewPager>
+
+
+
 
 </RelativeLayout>

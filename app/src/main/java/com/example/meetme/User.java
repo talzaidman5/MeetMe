@@ -4,9 +4,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.widget.ImageView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class User {
+public class User{
 
     public enum Gender {
         MALE,
@@ -20,7 +21,8 @@ public class User {
     private int minAge;
     private int maxAge;
     private Gender personPreferenceGender;
-    private String mainImage;
+    private Uri mainImage;
+    private String id;
     private String email;
     private String profession;
     private String status;
@@ -31,9 +33,10 @@ public class User {
 
 
 
-    public User(String name, String age, Gender personGender, String city, ArrayList<SignUpActivity.Hobbies> hobbies, int minAge,
+    public User(String id, String name, String age, Gender personGender, String city, ArrayList<SignUpActivity.Hobbies> hobbies, int minAge,
                 int maxAge, Gender personPreferenceGender,String email, String password,int distance, String height, String preferenceHeight) {
         this.name = name;
+        this.id = id;
         this.age = age;
         this.personGender = personGender;
         this.city = city;
@@ -92,6 +95,10 @@ public class User {
         return distance;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public void setDistance(int distance) {
         this.distance = distance;
     }
@@ -128,7 +135,7 @@ public class User {
         this.personPreferenceGender = personPreferenceGender;
     }
 
-    public void setMainImage(String mainImage) {
+    public void setMainImage(Uri mainImage) {
         this.mainImage = mainImage;
     }
 
@@ -152,6 +159,10 @@ public class User {
         return minAge;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public int getMaxAge() {
         return maxAge;
     }
@@ -160,7 +171,7 @@ public class User {
         return personPreferenceGender;
     }
 
-    public String getMainImage() {
+    public Uri getMainImage() {
         return mainImage;
     }
 

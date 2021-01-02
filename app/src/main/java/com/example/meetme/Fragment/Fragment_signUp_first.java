@@ -63,7 +63,8 @@ public class Fragment_signUp_first extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            openNextSignUpPage();
+                            String uid = MainActivity.mFireBaseAuth.getCurrentUser().getUid();
+                            openNextSignUpPage(uid);
                         } else {
                             if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                                 Toast.makeText(getContext(), "המייל שהזנת כבר קיים", Toast.LENGTH_LONG).show();
@@ -74,8 +75,8 @@ public class Fragment_signUp_first extends Fragment {
                 });
     }
 
-    private void openNextSignUpPage() {
-        user = new User(editTextName.getText().toString(),
+    private void openNextSignUpPage(String uid) {
+        user = new User(uid,editTextName.getText().toString(),
                 editTextAge.getText().toString(),
                 checkGender(), editTextCity.getText().toString()
                 , null, 0, 0, null,
