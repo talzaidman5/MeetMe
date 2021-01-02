@@ -64,7 +64,7 @@ public class MatchingActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.matching_Toolbar);
         setActionBar(toolbar);
 
-        if (MainActivity.allClients.getAllClientsInDB() != null)
+        if (MainActivity.allClients != null)
             users = MainActivity.allClients.getAllClientsInDB();
         else
             Toast.makeText(MatchingActivity.this, "אין נתונים", Toast.LENGTH_SHORT).show();
@@ -112,7 +112,7 @@ public class MatchingActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             user.setMainImage(uri);
-                            Picasso.with(MatchingActivity.this).load(uri).into(image);
+                            Picasso.get().load(uri).into(image);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -124,9 +124,11 @@ public class MatchingActivity extends AppCompatActivity {
     }
 
     private User returnUserFromMail(String currentUserEmail) {
-        for (User userTemp : MainActivity.allClients.allClientsInDB) {
-            if (userTemp.getEmail().equals(currentUserEmail))
-                return userTemp;
+        if(MainActivity.allClients!=null) {
+            for (User userTemp : MainActivity.allClients.allClientsInDB) {
+                if (userTemp.getEmail().equals(currentUserEmail))
+                    return userTemp;
+            }
         }
         return null;
     }

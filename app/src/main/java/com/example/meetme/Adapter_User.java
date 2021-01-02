@@ -1,13 +1,18 @@
 package com.example.meetme;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
+import android.os.Bundle;
+import android.os.Message;
 import android.os.Parcelable;
+import android.provider.SyncStateContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,17 +23,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mylibrary.MainActivityLibrary;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -41,6 +51,10 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private StorageReference storageReference;
     FirebaseUser currentUser;
     private Bitmap bitmap;
+    ArrayList<String> allImages = new ArrayList<>();
+
+    private int imagesLoadIndex = 0;
+    private int numOfImages;
 
     public Adapter_User(Context context, ArrayList<User> articles) {
         this.context = context;
@@ -84,7 +98,56 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 context.startActivity(intent);
             }
         });
+        mHolder.article_IMG_imageProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getUrls(user.getEmail());
+            }
+        });
     }
+
+    public void getUrls(String emailUser) {
+        final StorageReference reference = storageReference.child(emailUser);
+        reference.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
+            @Override
+            public void onSuccess(ListResult listResult) {
+                readImagesFromStorage(listResult);
+            }
+        });
+    }
+
+    private void readImagesFromStorage(ListResult listResult) {
+        numOfImages = listResult.getItems().size();
+        for(int i = 0 ; i < numOfImages ; i++){
+            loadOneImage(listResult.getItems().get(i));
+        }
+    }
+
+    private void loadOneImage(StorageReference storageReference) {
+        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                allImages.add(uri.toString());
+                imagesLoadIndex+=1;
+                if (imagesLoadIndex == numOfImages){
+                    openImagesPage();
+                }
+            }
+        });
+    }
+
+    private void openImagesPage() {
+        MainActivityLibrary.initImages((Activity) context);
+        MainActivityLibrary.openAlbum((Activity) context,allImages);
+
+//        AppCompatActivity activity = (AppCompatActivity) context;
+//        Bundle bundle = new Bundle();
+//        bundle.putStringArrayList("From Activity", allImages);
+//        AllImagesOfUser allImagesOfUser = new AllImagesOfUser();
+//        allImagesOfUser.setArguments(bundle);
+//        allImagesOfUser.show(activity.getSupportFragmentManager(), "exe");
+    }
+
 
     private void getImageFromStorage(ImageView image, User user, ProgressBar progressBar) {
         storageReference.child(user.getEmail()).child("profile").getDownloadUrl()
@@ -92,7 +155,7 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     @Override
                     public void onSuccess(Uri uri) {
                         user.setMainImage(uri);
-                        Picasso.with(context).load(uri).into(image);
+                        Picasso.get().load(uri).into(image);
                         progressBar.setVisibility(View.INVISIBLE);
                     }
                 }).addOnFailureListener(new OnFailureListener() {

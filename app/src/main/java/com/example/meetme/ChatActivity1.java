@@ -64,7 +64,7 @@ public class ChatActivity1 extends AppCompatActivity {
                 finish();
             }
         });
-        Picasso.with(ChatActivity1.this).load(chatUserImage).into(this.profileImage);
+        Picasso.get().load(chatUserImage).into(this.profileImage);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         this.currentUser = getCurrentUser(firebaseUser.getEmail());
