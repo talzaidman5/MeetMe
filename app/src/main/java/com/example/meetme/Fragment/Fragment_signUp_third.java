@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -93,6 +94,7 @@ public class Fragment_signUp_third extends Fragment {
                     MainActivity.allClients = new AllClients();
                 }
                 uploadImages();
+
             }
         });
 
@@ -199,6 +201,8 @@ public class Fragment_signUp_third extends Fragment {
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                         double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                         progressDialog.setMessage("הועלה " + (int) progress + "%");
+                        ProgressBar progressBar = new ProgressBar(getContext(), null, android.R.attr.progressBarStyleSmall);
+                        progressDialog.setView(progressBar);
                     }
                 });
     }

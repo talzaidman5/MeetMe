@@ -13,16 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -73,7 +69,8 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mHolder.article_LBL_title.setText(user.getName());
         mHolder.article_LBL_subTitle.setText(user.getAge() + "");
         mHolder.article_LBL_city.setText(user.getCity());
-        this.getImageFromStorage(mHolder.article_IMG_back, user);
+        mHolder.article_PRB_progressBar1.setVisibility(View.VISIBLE);
+        this.getImageFromStorage(mHolder.article_IMG_imageProfile, user,mHolder.article_PRB_progressBar1);
         String urlImage;
         this.currentUser = FirebaseAuth.getInstance().getCurrentUser();
         urlImage = checkClient(currentUser.getEmail());
@@ -86,12 +83,14 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         });
     }
 
-    private void getImageFromStorage(ImageView image, User user) {
+    private void getImageFromStorage(ImageView image, User user, ProgressBar progressBar) {
         storageReference.child(user.getEmail()).child("profile").getDownloadUrl()
                 .addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
                         Picasso.with(context).load(uri).into(image);
+                        progressBar.setVisibility(View.INVISIBLE);
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -127,19 +126,21 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     static class ViewHolder_For_All extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public ImageView article_IMG_back;
+        public ImageView article_IMG_imageProfile;
         public TextView article_LBL_title, article_LBL_city;
         public TextView article_LBL_subTitle;
         public Button list_for_all_BTN_openChat;
+        public ProgressBar article_PRB_progressBar1;
 
         public ViewHolder_For_All(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            article_IMG_back = itemView.findViewById(R.id.article_IMG_back);
+            article_IMG_imageProfile = itemView.findViewById(R.id.article_IMG_imageProfile);
             article_LBL_title = itemView.findViewById(R.id.article_LBL_title);
             article_LBL_subTitle = itemView.findViewById(R.id.article_LBL_subTitle);
             article_LBL_city = itemView.findViewById(R.id.article_LBL_city);
             list_for_all_BTN_openChat = itemView.findViewById(R.id.list_for_all_BTN_openChat);
+            article_PRB_progressBar1 = itemView.findViewById(R.id.article_PRB_progressBar1);
         }
 
         @Override
