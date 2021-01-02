@@ -50,7 +50,7 @@ public class UserChat_Adapter extends RecyclerView.Adapter<UserChat_Adapter.View
         holder.chat_LBL_name.setText(user.getName());
 
         if(user.getMainImage() != null){
-            Picasso.with(mContext).load(user.getMainImage()).into(holder.chat_IMG_imageProfile);
+            Picasso.get().load(user.getMainImage()).into(holder.chat_IMG_imageProfile);
         } else {
             holder.chat_IMG_imageProfile.setImageResource(R.mipmap.ic_launcher);
         }

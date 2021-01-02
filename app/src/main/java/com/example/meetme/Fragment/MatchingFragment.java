@@ -48,9 +48,11 @@ public class MatchingFragment extends Fragment {
     }
 
     private User returnUserFromMail(String currentUserEmail) {
-        for (User userTemp : MainActivity.allClients.getAllClientsInDB()) {
-            if (userTemp.getEmail().equals(currentUserEmail))
-                return userTemp;
+        if(MainActivity.allClients!=null) {
+            for (User userTemp : MainActivity.allClients.getAllClientsInDB()) {
+                if (userTemp.getEmail().equals(currentUserEmail))
+                    return userTemp;
+            }
         }
         return null;
     }

@@ -17,13 +17,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MeetMe">
-        <activity android:name=".AboutActivity"></activity>
+        <activity android:name=".AllImagesOfUser"></activity>
+        <activity android:name=".AboutActivity" />
         <activity android:name=".ChatActivity1" />
-        <activity android:name=".Fragment.Fragment_signUp_first"
+        <activity
+            android:name=".Fragment.Fragment_signUp_first"
             tools:ignore="Instantiatable" />
         <activity android:name=".MatchingActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".LoginActivity"
+        <activity
+            android:name=".LoginActivity"
             tools:ignore="Instantiatable" />
         <activity android:name=".MainActivity">
             <intent-filter>

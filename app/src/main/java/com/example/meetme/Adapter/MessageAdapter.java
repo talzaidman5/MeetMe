@@ -64,7 +64,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             holder.chat_LBL_message.setText(chat.getMessage());
 
             if(imageUrl != null){
-                Picasso.with(mContext).load(imageUrl).into(holder.chat_IMG_imageProfile);
+                Picasso.get().load(imageUrl).into(holder.chat_IMG_imageProfile);
             } else {
                 holder.chat_IMG_imageProfile.setImageResource(R.mipmap.ic_launcher);
             }
