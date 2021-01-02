@@ -1,9 +1,17 @@
 package com.example.meetme;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ChatActivity1 extends AppCompatActivity {
 
     CircleImageView profileImage;
-    TextView userName;
+    Toolbar toolbar;
     User currentUser;
     String chatUserName;
     String chatUserId;
@@ -25,26 +33,60 @@ public class ChatActivity1 extends AppCompatActivity {
     String chatUserEmail;
 
     FirebaseUser firebaseUser;
-    DatabaseReference reference;
+    DatabaseReference databaseReference;
+    FirebaseUser chatUser;
 
+    Intent intent;
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        getSupportActionBar().hide();
 
         profileImage = findViewById(R.id.chat_profileImage);
-        userName = findViewById(R.id.chat_userName);
+        toolbar = findViewById(R.id.chat_Toolbar);
+        setActionBar(toolbar);
+
+        intent = getIntent();
+        chatUserName = intent.getStringExtra("name");
+        chatUserId = intent.getStringExtra("id");
+        chatUserImage = Uri.parse(getIntent().getStringExtra("image"));
+        chatUserEmail = intent.getStringExtra("email");
+
+        getActionBar().setDisplayShowTitleEnabled(true);
+        getActionBar().setTitle(chatUserName);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        Picasso.with(ChatActivity1.this).load(chatUserImage).into(this.profileImage);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         this.currentUser = getCurrentUser(firebaseUser.getEmail());
 
-        chatUserName = getIntent().getStringExtra("name");
-        chatUserId = getIntent().getStringExtra("id");
-        chatUserImage = Uri.parse(getIntent().getStringExtra("image"));
-        chatUserEmail = getIntent().getStringExtra("email");
+    }
 
-        Picasso.with(ChatActivity1.this).load(chatUserImage).into(this.profileImage);
-        this.userName.setText(chatUserName);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_logout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(ChatActivity1.this,MainActivity.class));
+                finish();
+                return true;
+        }
+        return false;
     }
 
     private User getCurrentUser(String email) {

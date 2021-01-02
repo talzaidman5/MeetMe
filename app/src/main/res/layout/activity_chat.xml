@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
 
     android:layout_width="match_parent"
@@ -11,33 +11,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.Toolbar
+        <android.widget.Toolbar
             android:id="@+id/chat_Toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/design_default_color_primary"
             android:theme="@style/Base.CardView"
             app:popupTheme="@style/TextAppearance.AppCompat.Widget.PopupMenu.Small">
-            
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/chat_profileImage"
                 android:layout_width="30dp"
                 android:layout_height="30dp">
             </de.hdodenhof.circleimageview.CircleImageView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/chat_userName"
-                android:layout_marginLeft="25dp"
-                android:text="username"
-                android:textColor="#fff"
-                android:textStyle="bold"
-                android:layout_marginStart="25dp">
-            </TextView>
-
-        </androidx.appcompat.widget.Toolbar>
+        </android.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-</LinearLayout>
+</RelativeLayout>

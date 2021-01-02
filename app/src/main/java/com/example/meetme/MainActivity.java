@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public static FirebaseAuth mFireBaseAuth;
     FirebaseDatabase database;
     DatabaseReference myRef;
+    FirebaseUser firebaseUser;
 
     private Button activity_main_BTN_login, activity_main_BTN_signUp,activity_main_BTN_about;
     public static AllClients allClients= new AllClients();
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         initFirebase();
         readFromDB();
 
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         activity_main_BTN_login = findViewById(R.id.activity_main_BTN_login);
         activity_main_BTN_signUp= findViewById(R.id.activity_main_BTN_signUp);
         activity_main_BTN_about= findViewById(R.id.activity_main_BTN_about);
@@ -83,8 +85,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void userExists() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
+        if (firebaseUser == null) {
             LoginActivity loginActivity = new LoginActivity();
             loginActivity.show(getSupportFragmentManager(),"exe");
         } else{

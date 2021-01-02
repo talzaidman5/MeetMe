@@ -11,8 +11,12 @@
 
     <style name="loginParent" parent="parent">
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/loginBkColor</item>
+        <item name="android:background">@color/design_default_color_primary</item>
         <item name="android:focusableInTouchMode">true</item>
+    </style>
+    
+    <style name="MenuStyle" parent="Theme.AppCompat.Light">
+        <item name="android:background">@android:color/white</item>
     </style>
 
     <style name="headerText" parent="parent">
