@@ -57,17 +57,14 @@ public class ChatFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 usersList.clear();
-
                 for(DataSnapshot snap : snapshot.getChildren()){
                     Chat chat = snap.getValue(Chat.class);
-                    if(chat.getSender().equals(fuser.getUid())){
+                    if(chat.getSender().equals(fuser.getUid()))
                         usersList.add(chat.getReceiver());
-                    }
-                    if(chat.getReceiver().equals(fuser.getUid())){
-                        usersList.add(chat.getSender());
-                    }
-                }
 
+                    if(chat.getReceiver().equals(fuser.getUid()))
+                        usersList.add(chat.getSender());
+                }
                 readChats();
             }
 

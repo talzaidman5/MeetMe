@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meetme.ChatActivity1;
 import com.example.meetme.Entity.User;
+import com.example.meetme.MainActivity;
 import com.example.meetme.R;
 import com.example.mylibrary.MainActivityLibrary;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -95,50 +96,52 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mHolder.article_IMG_imageProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getImagesUrls(user.getEmail());
+                getImagesUrls(user);
             }
         });
     }
 
-    public void getImagesUrls(String emailUser) {
-        final StorageReference reference = storageReference.child(emailUser);
+    public void getImagesUrls(User user) {
+        final StorageReference reference = storageReference.child(user.getEmail());
         reference.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
             public void onSuccess(ListResult listResult) {
-                readImagesFromStorage(listResult);
+                readImagesFromStorage(listResult,user);
             }
         });
     }
 
-    private void readImagesFromStorage(ListResult listResult) {
+    private void readImagesFromStorage(ListResult listResult, User user) {
         numOfImages = listResult.getItems().size();
         for(int i = 0 ; i < numOfImages ; i++){
-            loadOneImage(listResult.getItems().get(i));
+            loadOneImage(listResult.getItems().get(i),user);
         }
     }
 
-    private void loadOneImage(StorageReference storageReference) {
+    private void loadOneImage(StorageReference storageReference,User user) {
         storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 allImages.add(uri.toString());
                 imagesLoadIndex+=1;
                 if (imagesLoadIndex == numOfImages){
-                    openImagesPage();
+                    openImagesPage(user);
                 }
             }
         });
     }
 
-    private void openImagesPage() {
+    private void openImagesPage(User user) {
         MainActivityLibrary.initImages((Activity) context);
+        MainActivityLibrary.changeTitle("התמונות של "+user.getName());
+        MainActivityLibrary.changeButtonText("חזור");
+        MainActivityLibrary.numberOfImageInRow(1,570,570);
         MainActivityLibrary.openAlbum((Activity) context,allImages);
     }
 
 
     private void getImageFromStorage(ImageView image, User user, ProgressBar progressBar) {
-        storageReference.child(user.getEmail()).child("profile").getDownloadUrl()
-                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageReference.child(user.getEmail()).child("profile").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
                         user.setMainImage(uri);
@@ -148,7 +151,6 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
             }
         });
     }
@@ -164,7 +166,6 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         } else if (getItem(position).getPersonGender() == User.Gender.FEMALE) {
             return FEMALE;
         }
-
         return FEMALE;
     }
 
