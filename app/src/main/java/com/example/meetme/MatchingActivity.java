@@ -10,6 +10,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -68,8 +70,8 @@ public class MatchingActivity extends AppCompatActivity {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragment(new MatchingFragment(), "התאמות");
         viewPagerAdapter.addFragment(new ChatFragment(),"שיחות");
-
         viewPager.setAdapter(viewPagerAdapter);
+        tabLayout.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.gray1)));
         tabLayout.setupWithViewPager(viewPager);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -77,6 +79,7 @@ public class MatchingActivity extends AppCompatActivity {
         getImageFromStorage(this.profileImage,user);
         getActionBar().setDisplayShowTitleEnabled(true);
         getActionBar().setTitle("ההתאמות שלך");
+        getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.gray2)));
         getActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
