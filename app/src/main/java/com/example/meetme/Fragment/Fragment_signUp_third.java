@@ -64,7 +64,6 @@ public class Fragment_signUp_third extends Fragment {
     private int imageName = 0;
     private int numOfImages = 0;
 
-    //  private ArrayList<>allImagesArrayList = new ArrayList();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up_third, container, false);
@@ -94,7 +93,6 @@ public class Fragment_signUp_third extends Fragment {
                     MainActivity.allClients = new AllClients();
                 }
                 uploadImages();
-
             }
         });
 
@@ -142,7 +140,6 @@ public class Fragment_signUp_third extends Fragment {
                 numOfImages+=1;
                 images.put(image, filePath);
             } catch (IOException e) {
-                // Log the exception
                 e.printStackTrace();
             }
         }

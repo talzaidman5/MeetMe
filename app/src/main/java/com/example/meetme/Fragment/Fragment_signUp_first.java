@@ -31,6 +31,8 @@ public class Fragment_signUp_first extends Fragment {
     private LinearLayout signUp_LIN_gender;
     private Spinner signUp_LSV_Status;
     public static User user;
+    private Boolean checkDetails = true;
+    private Boolean statusMale = false, statusFemale = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,27 +52,30 @@ public class Fragment_signUp_first extends Fragment {
     }
 
     public void registerUser() {
-        String email = editTextEmail.getText().toString();
-        String password = editTextPassword.getText().toString();
-        MainActivity.mFireBaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(Fragment_signUp_first.this.getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            String uid = MainActivity.mFireBaseAuth.getCurrentUser().getUid();
-                            openNextSignUpPage(uid);
-                        } else {
-                            if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                Toast.makeText(getContext(), "המייל שהזנת כבר קיים", Toast.LENGTH_LONG).show();
-                            } else
-                                Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+        if (checkAllDetails()) {
+
+            String email = editTextEmail.getText().toString();
+            String password = editTextPassword.getText().toString();
+            MainActivity.mFireBaseAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(Fragment_signUp_first.this.getActivity(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                String uid = MainActivity.mFireBaseAuth.getCurrentUser().getUid();
+                                openNextSignUpPage(uid);
+                            } else {
+                                if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                    Toast.makeText(getContext(), "המייל שהזנת כבר קיים", Toast.LENGTH_LONG).show();
+                                } else
+                                    Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 
     private void openNextSignUpPage(String uid) {
-        user = new User(uid,editTextName.getText().toString(),
+        user = new User(uid, editTextName.getText().toString(),
                 editTextAge.getText().toString(),
                 checkGender(), editTextCity.getText().toString()
                 , null, 0, 0, null,
@@ -85,6 +90,114 @@ public class Fragment_signUp_first extends Fragment {
         ft.replace(R.id.main_signUp_fragment, fragment);
         ft.addToBackStack(null);
         ft.commit();
+
+    }
+
+
+    private boolean checkAllDetails() {
+        checkDetails = true;
+        if (editTextEmail.getText().toString().matches("")) {
+            editTextEmail.setError("אנא הקלד כתובת מייל");
+            checkDetails = false;
+        }
+        if (!checkIsAlpha(editTextName.getText().toString())) {
+            checkDetails = false;
+            editTextName.setError("הקלד רק אותיות");
+        }
+
+        if (editTextPassword.getText().toString().matches("")) {
+            editTextPassword.setError("אנא הקלד סיסמא");
+            checkDetails = false;
+        }
+        if (editTextPassword.getText().toString().length() < 6) {
+            editTextPassword.setError("אורך הסיסמא צריך להיות לפחות 6 תווים");
+            checkDetails = false;
+        }
+        if (editTextAge.getText().toString().equals("")) {
+            editTextAge.setError("אנא הקלד את גילך");
+            checkDetails = false;
+        }
+        if (editTextHeight.getText().toString().equals("")) {
+            editTextHeight.setError("אנא הקלד את גילך");
+            checkDetails = false;
+        }
+        if (!checkIsIfNumber(editTextAge.getText().toString())) {
+            editTextAge.setError("אנא הקלד את גילך במספרים בלבד");
+            checkDetails = false;
+        }
+        if (editTextName.getText().toString().matches("")) {
+            editTextName.setError("אנא הקלד שם");
+            checkDetails = false;
+        }
+        if (!checkIsAlpha(editTextName.getText().toString())) {
+            checkDetails = false;
+            editTextName.setError("הקלד רק אותיות");
+        }
+        if (editTextHeight.getText().toString().length() < 2) {
+            editTextHeight.setError("אורך הגובה לפחות שתי אותיות");
+            checkDetails = false;
+        }
+        if (!checkIsIfNumber(editTextHeight.getText().toString())) {
+            editTextHeight.setError("אנא הקלד רק מספרים");
+            checkDetails = false;
+        }
+        if (editTextCity.getText().toString().matches("")) {
+            editTextCity.setError("אנא הקלד שם");
+            checkDetails = false;
+        } else {
+            if (!checkIsAlpha(editTextCity.getText().toString())) {
+                checkDetails = false;
+                editTextCity.setError("הקלד רק אותיות");
+            }
+        }
+        if (editTextCity.getText().toString().length() < 2) {
+            editTextCity.setError("אורך שם העיר לפחות שתי אותיות");
+            checkDetails = false;
+        }
+        signUp_female.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!statusMale) {
+                    signUp_men.setEnabled(false);
+                    statusMale = true;
+                } else {
+                    signUp_men.setEnabled(true);
+                    signUp_female.setEnabled(true);
+                    statusMale = false;
+                }
+            }
+        });
+        signUp_men.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!statusFemale) {
+                    signUp_men.setEnabled(true);
+                    signUp_female.setEnabled(false);
+                    statusFemale = true;
+                } else {
+                    signUp_female.setEnabled(true);
+                    signUp_men.setEnabled(true);
+                    statusFemale = false;
+                }
+            }
+        });
+        return checkDetails;
+    }
+
+    public boolean checkIsAlpha(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            if (!(str.charAt(i) >= 'a' && str.charAt(i) <= 'z') || (str.charAt(i) >= 'A' && str.charAt(i) <= 'Z'))
+                return false;
+        }
+        return true;
+    }
+
+    public boolean checkIsIfNumber(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            if (!(str.charAt(i) >= '0' && str.charAt(i) <= '9'))
+                return false;
+        }
+        return true;
     }
 
     private void findView(View view) {

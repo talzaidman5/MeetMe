@@ -39,6 +39,7 @@ public class Fragment_signUp_second extends Fragment {
     public static SharedPreferences sharedpreferences;
     private Gson gson = new Gson();
     public static final String KEY_MSP = "user";
+    private boolean checkDetails = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -119,22 +120,24 @@ public class Fragment_signUp_second extends Fragment {
         signUp_BTN_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment_signUp_first.user.setPersonPreferenceGender(checkInterestingIn());
-                Fragment_signUp_first.user.setHobbies(hobbiesToUser);
-                Fragment_signUp_first.user.setPreferenceHeight(editTextInterestingInHeight.getText().toString());
-                Fragment_signUp_first.user.setMinAge(Integer.parseInt(signUp_LSV_minAge.getSelectedItem().toString()));
-                Fragment_signUp_first.user.setMaxAge(Integer.parseInt(signUp_LSV_maxAge.getSelectedItem().toString()));
-                Fragment_signUp_first.user.setDistance(Integer.parseInt(editTextDistance.getText().toString()));
+                if (checkAllDetails()) {
+                    Fragment_signUp_first.user.setPersonPreferenceGender(checkInterestingIn());
+                    Fragment_signUp_first.user.setHobbies(hobbiesToUser);
+                    Fragment_signUp_first.user.setPreferenceHeight(editTextInterestingInHeight.getText().toString());
+                    Fragment_signUp_first.user.setMinAge(Integer.parseInt(signUp_LSV_minAge.getSelectedItem().toString()));
+                    Fragment_signUp_first.user.setMaxAge(Integer.parseInt(signUp_LSV_maxAge.getSelectedItem().toString()));
+                    Fragment_signUp_first.user.setDistance(Integer.parseInt(editTextDistance.getText().toString()));
 
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
 
-                Fragment fragment = new Fragment_signUp_third();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                ft.replace(R.id.main_signUp_fragment, fragment);
-                ft.addToBackStack(null);
-                ft.commit();
+                    Fragment fragment = new Fragment_signUp_third();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    ft.replace(R.id.main_signUp_fragment, fragment);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
             }
         });
         return view;
@@ -174,5 +177,39 @@ public class Fragment_signUp_second extends Fragment {
         return User.Gender.MALE;
     }
 
+    private boolean checkAllDetails() {
+         checkDetails = true;
+        if(signUp_LSV_minAge.getSelectedItem().equals("מינימלי")){
+            checkDetails = false;
+        }
+        if(signUp_LSV_minAge.getSelectedItem().equals("מקסימלי")){
+            checkDetails = false;
+        }
+        if (editTextDistance.getText().toString().matches("")) {
+            editTextDistance.setError("אנא הקלד מרחק");
+            checkDetails = false;
+        } else {
+            if (!checkIsIfNumber(editTextDistance.getText().toString())) {
+                checkDetails = false;
+                editTextDistance.setError("הקלד רק מספרים");
+            }
+        }
+        if (editTextInterestingInHeight.getText().toString().matches("")) {
+            editTextInterestingInHeight.setError("אנא הקלד מרחק");
+            checkDetails = false;
+        }
+        if(!checkIsIfNumber(editTextInterestingInHeight.getText().toString())) {
+            editTextInterestingInHeight.setError("אנא הקלד רק מספרים");
+            checkDetails = false;
+        }
+        return checkDetails;
+    }
+    public boolean checkIsIfNumber(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            if (!(str.charAt(i) >= '0' && str.charAt(i) <= '9'))
+                return false;
+        }
+        return true;
+    }
 
 }

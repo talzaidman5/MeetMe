@@ -17,6 +17,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -43,7 +45,7 @@ public class MatchingActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private StorageReference storageReference;
     private ArrayList<User> users;
-
+    private Button logout;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,16 @@ public class MatchingActivity extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.matching_tabLayout);
         ViewPager viewPager = findViewById(R.id.matching_viewPager);
+        logout = findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(MatchingActivity.this,MainActivity.class));
+                finish();
 
+            }
+        });
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragment(new MatchingFragment(), "התאמות");
         viewPagerAdapter.addFragment(new ChatFragment(),"שיחות");
