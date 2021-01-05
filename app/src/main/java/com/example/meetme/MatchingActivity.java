@@ -72,9 +72,11 @@ public class MatchingActivity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MatchingActivity.this,MainActivity.class));
-                finish();
+//                FirebaseAuth.getInstance().signOut();
+//                startActivity(new Intent(MatchingActivity.this,MainActivity.class));
+//                finish();
+                Intent intent = new Intent(MatchingActivity.this, MyProfileActivity.class);
+                startActivity(intent);
 
             }
         });

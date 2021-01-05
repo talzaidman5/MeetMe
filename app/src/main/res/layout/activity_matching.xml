@@ -48,9 +48,9 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/matching_viewPager"
         android:layout_below="@id/matching_AppBar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/logout">
 
     </androidx.viewpager.widget.ViewPager>
 

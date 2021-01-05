@@ -32,6 +32,7 @@ public class MyProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_profile);
         FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
         findViews();
+        getSupportActionBar().hide();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         User user = returnUserFromMail(fUser.getEmail());
