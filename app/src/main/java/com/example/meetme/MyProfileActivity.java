@@ -18,7 +18,7 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class MyProfileActivity extends AppCompatActivity {
-    private TextView myProfile_TXT_mail, myProfile_TXT_age, myProfile_TXT_name, myProfile_TXT_city,myProfile_TXT_height,myProfile_TXT_gender,
+    private TextView myProfile_TXT_mail, myProfile_TXT_age, myProfile_TXT_name, myProfile_TXT_city, myProfile_TXT_height, myProfile_TXT_gender,
             login_EDT_interestingInGender;
     private ImageView myProfile_IMG_profileImage;
     private StorageReference storageReference;
@@ -34,26 +34,35 @@ public class MyProfileActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         User user = returnUserFromMail(fUser.getEmail());
-        myProfile_TXT_mail.setText(user.getEmail());
-        myProfile_TXT_age.setText(user.getAge());
-        myProfile_TXT_name.setText(user.getFirstName());
-        myProfile_TXT_city.setText(user.getCity());
-        myProfile_TXT_height.setText(user.getHeight());
-        myProfile_TXT_gender.setText(user.getPersonGender().toString());
-        login_EDT_interestingInGender.setText(user.getPersonPreferenceGender().toString());
+        if (user != null) {
+            myProfile_TXT_mail.setText(user.getEmail());
+            myProfile_TXT_age.setText(user.getAge());
+            myProfile_TXT_name.setText((user.getFirstName()+" "+user.getLastName()));
+            myProfile_TXT_city.setText(user.getCity());
+            myProfile_TXT_height.setText(user.getHeight());
+            if (user.getPersonGender().equals(User.Gender.FEMALE))
+                myProfile_TXT_gender.setText(R.string.female);
+            else
+                myProfile_TXT_gender.setText(R.string.male);
+            if (user.getPersonPreferenceGender().equals(User.Gender.FEMALE))
+                login_EDT_interestingInGender.setText(R.string.female);
+            else
+                login_EDT_interestingInGender.setText(R.string.male);
 
-        storageReference.child(user.getEmail()).child("profile").getDownloadUrl()
-                .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        user.setMainImage(uri);
-                        Picasso.get().load(uri).into(myProfile_IMG_profileImage);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
-        });
+
+            storageReference.child(user.getEmail()).child("profile").getDownloadUrl()
+                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            user.setMainImage(uri);
+                            Picasso.get().load(uri).into(myProfile_IMG_profileImage);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                }
+            });
+        }
     }
 
     private void findViews() {
