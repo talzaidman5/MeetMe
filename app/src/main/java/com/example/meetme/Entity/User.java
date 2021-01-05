@@ -1,12 +1,9 @@
 package com.example.meetme.Entity;
 
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.widget.ImageView;
 
 import com.example.meetme.SignUpActivity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class User{
@@ -15,7 +12,8 @@ public class User{
         MALE,
         FEMALE
     }
-    private String name;
+    private String firstName;
+    private String lastName;
     private String age;
     private Gender personGender;
     private String city;
@@ -35,9 +33,10 @@ public class User{
 
 
 
-    public User(String id, String name, String age, Gender personGender, String city, ArrayList<SignUpActivity.Hobbies> hobbies, int minAge,
+    public User(String id, String firstName,String lastName, String age, Gender personGender, String city, ArrayList<SignUpActivity.Hobbies> hobbies, int minAge,
                 int maxAge, Gender personPreferenceGender,String email, String password,int distance, String height, String preferenceHeight) {
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.id = id;
         this.age = age;
         this.personGender = personGender;
@@ -53,8 +52,16 @@ public class User{
         this.preferenceHeight = preferenceHeight;
     }
     public User(){}
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPassword() {
@@ -105,8 +112,8 @@ public class User{
         this.distance = distance;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public void setAge(String age) {

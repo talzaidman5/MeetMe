@@ -26,8 +26,8 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 public class Fragment_signUp_first extends Fragment {
     private Button signUp_BTN_continue;
-    private EditText editTextEmail, editTextPassword, editTextName, editTextAge, editTextCity, editTextHeight;
-    private CheckBox signUp_female, signUp_men;
+    private EditText editTextEmail, editTextPassword, signUp_EDT_LastName,editTextFirstName, editTextAge, editTextCity, editTextHeight;
+    private CheckBox signUp_female, signUp_men;       
     private LinearLayout signUp_LIN_gender;
     private Spinner signUp_LSV_Status;
     public static User user;
@@ -41,7 +41,33 @@ public class Fragment_signUp_first extends Fragment {
         ArrayAdapter<CharSequence> adapterStatus = ArrayAdapter.createFromResource(getContext(), R.array.status, android.R.layout.simple_spinner_item);
         adapterStatus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         signUp_LSV_Status.setAdapter(adapterStatus);
-
+        signUp_female.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!statusMale) {
+                    signUp_men.setEnabled(false);
+                    statusMale = true;
+                } else {
+                    signUp_men.setEnabled(true);
+                    signUp_female.setEnabled(true);
+                    statusMale = false;
+                }
+            }
+        });
+        signUp_men.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!statusFemale) {
+                    signUp_men.setEnabled(true);
+                    signUp_female.setEnabled(false);
+                    statusFemale = true;
+                } else {
+                    signUp_female.setEnabled(true);
+                    signUp_men.setEnabled(true);
+                    statusFemale = false;
+                }
+            }
+        });
         signUp_BTN_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +101,7 @@ public class Fragment_signUp_first extends Fragment {
     }
 
     private void openNextSignUpPage(String uid) {
-        user = new User(uid, editTextName.getText().toString(),
+        user = new User(uid, editTextFirstName.getText().toString(),  signUp_EDT_LastName.getText().toString(),
                 editTextAge.getText().toString(),
                 checkGender(), editTextCity.getText().toString()
                 , null, 0, 0, null,
@@ -100,11 +126,7 @@ public class Fragment_signUp_first extends Fragment {
             editTextEmail.setError("אנא הקלד כתובת מייל");
             checkDetails = false;
         }
-        if (!checkIsAlpha(editTextName.getText().toString())) {
-            checkDetails = false;
-            editTextName.setError("הקלד רק אותיות");
-        }
-
+      
         if (editTextPassword.getText().toString().matches("")) {
             editTextPassword.setError("אנא הקלד סיסמא");
             checkDetails = false;
@@ -125,14 +147,23 @@ public class Fragment_signUp_first extends Fragment {
             editTextAge.setError("אנא הקלד את גילך במספרים בלבד");
             checkDetails = false;
         }
-        if (editTextName.getText().toString().matches("")) {
-            editTextName.setError("אנא הקלד שם");
+        if (editTextFirstName.getText().toString().matches("")) {
+            editTextFirstName.setError("אנא הקלד שם");
             checkDetails = false;
         }
-        if (!checkIsAlpha(editTextName.getText().toString())) {
+        if (!checkIsAlpha(editTextFirstName.getText().toString())) {
             checkDetails = false;
-            editTextName.setError("הקלד רק אותיות");
+            editTextFirstName.setError("הקלד רק אותיות");
         }
+        if (signUp_EDT_LastName.getText().toString().matches("")) {
+            signUp_EDT_LastName.setError("אנא הקלד שם");
+            checkDetails = false;
+        }
+        if (!checkIsAlpha(signUp_EDT_LastName.getText().toString())) {
+            checkDetails = false;
+            signUp_EDT_LastName.setError("הקלד רק אותיות");
+        }
+
         if (editTextHeight.getText().toString().length() < 2) {
             editTextHeight.setError("אורך הגובה לפחות שתי אותיות");
             checkDetails = false;
@@ -154,39 +185,13 @@ public class Fragment_signUp_first extends Fragment {
             editTextCity.setError("אורך שם העיר לפחות שתי אותיות");
             checkDetails = false;
         }
-        signUp_female.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!statusMale) {
-                    signUp_men.setEnabled(false);
-                    statusMale = true;
-                } else {
-                    signUp_men.setEnabled(true);
-                    signUp_female.setEnabled(true);
-                    statusMale = false;
-                }
-            }
-        });
-        signUp_men.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!statusFemale) {
-                    signUp_men.setEnabled(true);
-                    signUp_female.setEnabled(false);
-                    statusFemale = true;
-                } else {
-                    signUp_female.setEnabled(true);
-                    signUp_men.setEnabled(true);
-                    statusFemale = false;
-                }
-            }
-        });
+
         return checkDetails;
     }
 
     public boolean checkIsAlpha(String str) {
         for (int i = 0; i < str.length(); i++) {
-            if (!(str.charAt(i) >= 'a' && str.charAt(i) <= 'z') || (str.charAt(i) >= 'A' && str.charAt(i) <= 'Z'))
+            if (!((str.charAt(i) >= 'a' && str.charAt(i) <= 'z') || (str.charAt(i) >= 'A' && str.charAt(i) <= 'Z')))
                 return false;
         }
         return true;
@@ -204,11 +209,12 @@ public class Fragment_signUp_first extends Fragment {
         signUp_BTN_continue = view.findViewById(R.id.signUp_BTN_end);
         editTextEmail = view.findViewById(R.id.signUp_EDT_Email);
         editTextPassword = view.findViewById(R.id.login_EDT_Password);
-        editTextName = view.findViewById(R.id.editTextName);
+        signUp_EDT_LastName = view.findViewById(R.id.signUp_EDT_LastName);
+        editTextFirstName = view.findViewById(R.id.editTextFirstName);
         signUp_female = view.findViewById(R.id.signUp_female);
         signUp_men = view.findViewById(R.id.signUp_men);
         editTextAge = view.findViewById(R.id.editTextAge);
-        editTextCity = view.findViewById(R.id.editTextCity);
+        editTextCity = view.findViewById(R.id.textInputCity);
         signUp_LSV_Status = view.findViewById(R.id.signUp_LSV_Status);
         signUp_LSV_Status = view.findViewById(R.id.signUp_LSV_Status);
         editTextHeight = view.findViewById(R.id.editTextHeight);

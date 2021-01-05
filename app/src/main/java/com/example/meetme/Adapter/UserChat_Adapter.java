@@ -2,7 +2,6 @@ package com.example.meetme.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meetme.ChatActivity1;
-import com.example.meetme.Entity.Chat;
 import com.example.meetme.Entity.User;
 import com.example.meetme.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -47,7 +43,7 @@ public class UserChat_Adapter extends RecyclerView.Adapter<UserChat_Adapter.View
     @Override
     public void onBindViewHolder(@NonNull UserChat_Adapter.ViewHolder_For_All holder, int position) {
         User user = mUsers.get(position);
-        holder.chat_LBL_name.setText(user.getName());
+        holder.chat_LBL_name.setText(user.getFirstName());
 
         if(user.getMainImage() != null){
             Picasso.get().load(user.getMainImage()).into(holder.chat_IMG_imageProfile);
@@ -60,7 +56,7 @@ public class UserChat_Adapter extends RecyclerView.Adapter<UserChat_Adapter.View
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ChatActivity1.class);
                 intent.putExtra("id", user.getId());
-                intent.putExtra("name", user.getName());
+                intent.putExtra("name", user.getFirstName());
                 intent.putExtra("image", user.getMainImage().toString());
                 intent.putExtra("email", user.getEmail());
                 mContext.startActivity(intent);

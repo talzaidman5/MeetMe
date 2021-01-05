@@ -13,7 +13,7 @@
         android:gravity="center"
         android:layout_alignParentTop="true"
         android:id="@+id/title"
-        android:textColor="#000000"
+        android:textColor="@color/gray2"
         android:text="העדפות אישיות"></TextView>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -25,16 +25,6 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/editTextInterestingIn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:hint="מעוניין ב:"
-                android:inputType="text"
-                android:maxLines="1"
-                android:textColor="#000000" />
 
             <CheckBox
                 android:id="@+id/InterestingInFemale"
@@ -52,7 +42,16 @@
                 android:layout_marginRight="30dp"
                 android:text="גבר" />
 
-
+            <TextView
+                android:id="@+id/editTextInterestingIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:hint="מעוניין ב:"
+                android:layout_marginRight="11dp"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="#000000" />
         </LinearLayout>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -65,11 +64,7 @@
         android:layout_below="@+id/textInputInterestingIn"
         android:orientation="horizontal">
 
-        <TextView
-            style="@style/modifiedEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="תחביבים: "></TextView>
+
 
         <ImageButton
             android:id="@+id/signUp_BTN_artist"
@@ -106,7 +101,12 @@
             android:layout_marginRight="10dp"
             android:background="@drawable/bake" />
 
-
+        <TextView
+            style="@style/modifiedEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="11dp"
+            android:text="תחביבים: "></TextView>
     </LinearLayout>
 
     <LinearLayout
@@ -141,16 +141,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="right"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/editTextMinAge"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:hint="טווח גילאים:"
-                android:inputType="textEmailAddress"
-                android:maxLines="1" />
 
             <Spinner
                 android:id="@+id/signUp_LSV_minAge"
@@ -167,33 +160,75 @@
                 android:id="@+id/signUp_LSV_maxAge"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"></Spinner>
+
+            <TextView
+                android:id="@+id/editTextMinAge"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="טווח גילאים:"
+                android:layout_gravity="right"
+                android:inputType="textEmailAddress"
+                android:layout_marginRight="11dp"
+                android:maxLines="1" />
         </LinearLayout>
     </com.google.android.material.textfield.TextInputLayout>
 
+
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputDistance"
-        style="@style/parent"
-        android:layout_below="@+id/textInputMinMaxAge"
-        android:layout_marginTop="10dp">
-        <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/black"
+        android:gravity="right"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/textInputMinMaxAge"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:outlineAmbientShadowColor="#000000"
+        android:id="@+id/editTextDistance1"
+        android:hint="מרחק מקסימלי">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="18dp"
             android:id="@+id/editTextDistance"
-            style="@style/modifiedEditText"
-            android:hint="מרחק מקסימלי:"
-            android:inputType="number"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:inputType="textCapSentences"
+            android:gravity="right"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout >
+
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputHeight"
-        style="@style/parent"
-        android:layout_below="@+id/textInputDistance"
-        android:layout_marginTop="10dp">
-        <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/black"
+        android:gravity="right"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:outlineAmbientShadowColor="#000000"
+        android:layout_below="@+id/editTextDistance1"
+        android:hint="גובה רצוי">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="18dp"
             android:id="@+id/editTextInterestingInHeight"
-            style="@style/modifiedEditText"
-            android:hint="גובה רצוי:"
-            android:inputType="number"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:inputType="textCapSentences"
+            android:gravity="right"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout >
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -240,4 +275,4 @@
                 android:src="@drawable/point"></ImageView>
         </LinearLayout>
     </RelativeLayout>
-    </RelativeLayout>
+</RelativeLayout>

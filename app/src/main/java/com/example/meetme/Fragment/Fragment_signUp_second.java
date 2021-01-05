@@ -31,15 +31,12 @@ public class Fragment_signUp_second extends Fragment {
     private ImageButton signUp_BTN_artist, signUp_BTN_yoga, signUp_BTN_bicycle, signUp_BTN_joystick, signUp_BTN_bake, signUp_BTN_camera, signUp_BTN_guitar;
     private ArrayList<SignUpActivity.Hobbies> hobbiesToUser = new ArrayList<>();
     private Spinner signUp_LSV_minAge, signUp_LSV_maxAge;
-    private CheckBox InterestingInFemale, InterestingInMen;
+    private CheckBox InterestingInFemale, InterestingInMale;
     private Button signUp_BTN_continue;
     private EditText editTextDistance,editTextInterestingInHeight;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference myRef = database.getReference("Users");
-    public static SharedPreferences sharedpreferences;
-    private Gson gson = new Gson();
-    public static final String KEY_MSP = "user";
     private boolean checkDetails = false;
+    private Boolean statusMale = false, statusFemale = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -117,6 +114,33 @@ public class Fragment_signUp_second extends Fragment {
                     signUp_BTN_camera.setBackgroundResource(R.drawable.camera);
             }
         });
+        InterestingInFemale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!statusMale) {
+                    InterestingInMale.setEnabled(false);
+                    statusMale = true;
+                } else {
+                    InterestingInMale.setEnabled(true);
+                    InterestingInFemale.setEnabled(true);
+                    statusMale = false;
+                }
+            }
+        });
+        InterestingInMale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!statusFemale) {
+                    InterestingInMale.setEnabled(true);
+                    InterestingInFemale.setEnabled(false);
+                    statusFemale = true;
+                } else {
+                    InterestingInFemale.setEnabled(true);
+                    InterestingInMale.setEnabled(true);
+                    statusFemale = false;
+                }
+            }
+        });
         signUp_BTN_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +179,7 @@ public class Fragment_signUp_second extends Fragment {
         signUp_LSV_minAge = view.findViewById(R.id.signUp_LSV_minAge);
         signUp_LSV_maxAge = view.findViewById(R.id.signUp_LSV_maxAge);
         InterestingInFemale = view.findViewById(R.id.InterestingInFemale);
-        InterestingInMen = view.findViewById(R.id.InterestingInMen);
+        InterestingInMale = view.findViewById(R.id.InterestingInMen);
         editTextDistance = view.findViewById(R.id.editTextDistance);
         editTextInterestingInHeight = view.findViewById(R.id.editTextInterestingInHeight);
     }

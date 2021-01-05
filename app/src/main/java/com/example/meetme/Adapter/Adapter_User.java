@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meetme.ChatActivity1;
 import com.example.meetme.Entity.User;
-import com.example.meetme.MainActivity;
 import com.example.meetme.R;
 import com.example.mylibrary.MainActivityLibrary;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -76,7 +74,7 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         ViewHolder_For_All mHolder = (ViewHolder_For_All) holder;
-        mHolder.article_LBL_title.setText(user.getName());
+        mHolder.article_LBL_title.setText(user.getFirstName());
         mHolder.article_LBL_subTitle.setText(user.getAge() + "");
         mHolder.article_LBL_city.setText(user.getCity());
         mHolder.article_PRB_progressBar1.setVisibility(View.VISIBLE);
@@ -87,7 +85,7 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             public void onClick(View v) {
                 Intent intent = new Intent(context, ChatActivity1.class);
                 intent.putExtra("id", user.getId());
-                intent.putExtra("name", user.getName());
+                intent.putExtra("name", user.getFirstName());
                 intent.putExtra("image", user.getMainImage().toString());
                 intent.putExtra("email", user.getEmail());
                 context.startActivity(intent);
@@ -133,7 +131,7 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private void openImagesPage(User user) {
         MainActivityLibrary.initImages((Activity) context);
-        MainActivityLibrary.changeTitle("התמונות של "+user.getName());
+        MainActivityLibrary.changeTitle("התמונות של "+user.getFirstName());
         MainActivityLibrary.changeButtonText("חזור");
         MainActivityLibrary.numberOfImageInRow(1,570,570);
         MainActivityLibrary.openAlbum((Activity) context,allImages);

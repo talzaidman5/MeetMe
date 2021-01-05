@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,10 +17,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-import java.io.InputStream;
-
 public class MyProfileActivity extends AppCompatActivity {
-    private TextView myProfile_TXT_mail, myProfile_TXT_age, myProfile_TXT_name, myProfile_TXT_city;
+    private TextView myProfile_TXT_mail, myProfile_TXT_age, myProfile_TXT_name, myProfile_TXT_city,myProfile_TXT_height,myProfile_TXT_gender,
+            login_EDT_interestingInGender;
     private ImageView myProfile_IMG_profileImage;
     private StorageReference storageReference;
     private FirebaseStorage storage;
@@ -38,8 +36,12 @@ public class MyProfileActivity extends AppCompatActivity {
         User user = returnUserFromMail(fUser.getEmail());
         myProfile_TXT_mail.setText(user.getEmail());
         myProfile_TXT_age.setText(user.getAge());
-        myProfile_TXT_name.setText(user.getName());
+        myProfile_TXT_name.setText(user.getFirstName());
         myProfile_TXT_city.setText(user.getCity());
+        myProfile_TXT_height.setText(user.getHeight());
+        myProfile_TXT_gender.setText(user.getPersonGender().toString());
+        login_EDT_interestingInGender.setText(user.getPersonPreferenceGender().toString());
+
         storageReference.child(user.getEmail()).child("profile").getDownloadUrl()
                 .addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
@@ -60,6 +62,10 @@ public class MyProfileActivity extends AppCompatActivity {
         myProfile_TXT_name = findViewById(R.id.myProfile_TXT_name);
         myProfile_TXT_city = findViewById(R.id.myProfile_TXT_address);
         myProfile_IMG_profileImage = findViewById(R.id.myProfile_IMG_profileImage);
+        myProfile_TXT_height = findViewById(R.id.myProfile_TXT_height);
+        myProfile_TXT_gender = findViewById(R.id.myProfile_TXT_gender);
+        login_EDT_interestingInGender = findViewById(R.id.login_EDT_interestingInGender);
+
     }
 
     private User returnUserFromMail(String currentUserEmail) {
