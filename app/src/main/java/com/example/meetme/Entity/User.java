@@ -27,7 +27,7 @@ public class User{
     private String profession;
     private String status;
     private String password;
-    private int distance;
+    private float distance;
     private String height;
     private String preferenceHeight;
 
@@ -100,7 +100,7 @@ public class User{
         this.preferenceHeight = preferenceHeight;
     }
 
-    public int getDistance() {
+    public float getDistance() {
         return distance;
     }
 
@@ -108,7 +108,7 @@ public class User{
         this.id = id;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(float distance) {
         this.distance = distance;
     }
 

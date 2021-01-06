@@ -175,7 +175,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColorHint="@color/black"
@@ -183,25 +183,36 @@
         android:layout_marginTop="5dp"
         android:layout_below="@id/textInputMinMaxAge"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:outlineAmbientShadowColor="#000000"
         android:id="@+id/editTextDistance1"
         android:hint="מרחק מקסימלי">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="0"
             android:textSize="18dp"
-            android:id="@+id/editTextDistance"
-            android:inputType="textCapSentences"
-            android:gravity="right"
-            android:background="@android:drawable/dialog_holo_light_frame"
-            />
+            android:id="@+id/distance2"
+            android:gravity="center"
+            android:textColor="@color/black"></TextView>
 
-    </com.google.android.material.textfield.TextInputLayout >
+        <com.google.android.material.slider.Slider
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextDistance"
+            android:valueFrom="0.0"
+            android:valueTo="30.0">
+        </com.google.android.material.slider.Slider>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="מרחק רצוי:"
+            android:textSize="15dp"
+            android:layout_marginRight="8dp"
+            android:textColor="@color/black"></TextView>
+    </LinearLayout>
+
+
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -222,7 +233,7 @@
             android:layout_marginLeft="5dp"
             android:textSize="18dp"
             android:id="@+id/editTextInterestingInHeight"
-            android:inputType="textCapSentences"
+            android:inputType="number"
             android:gravity="right"
             android:background="@android:drawable/dialog_holo_light_frame"
             />

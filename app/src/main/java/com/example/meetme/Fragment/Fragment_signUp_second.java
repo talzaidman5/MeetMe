@@ -3,6 +3,7 @@ package com.example.meetme.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,10 +17,12 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.meetme.R;
 import com.example.meetme.SignUpActivity;
 import com.example.meetme.Entity.User;
+import com.google.android.material.slider.Slider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
@@ -33,17 +36,31 @@ public class Fragment_signUp_second extends Fragment {
     private Spinner signUp_LSV_minAge, signUp_LSV_maxAge;
     private CheckBox InterestingInFemale, InterestingInMale;
     private Button signUp_BTN_continue;
-    private EditText editTextDistance,editTextInterestingInHeight;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private EditText editTextInterestingInHeight;
+    private Slider editTextDistance;
     private boolean checkDetails = false;
     private Boolean statusMale = false, statusFemale = false;
-
+    private float distance;
+    private TextView distance2;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up_second, container, false);
         findViews(view);
 
         initSpinner();
+        editTextDistance.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
+            @Override
+            public void onStartTrackingTouch(@NonNull Slider slider) {
+             distance = slider.getValue();
+                distance2.setText((int)(distance)+"");
+            }
+
+            @Override
+            public void onStopTrackingTouch(@NonNull Slider slider) {
+                distance = slider.getValue();
+                distance2.setText((int)(distance)+"");
+            }
+        });
         signUp_BTN_artist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,7 +167,7 @@ public class Fragment_signUp_second extends Fragment {
                     Fragment_signUp_first.user.setPreferenceHeight(editTextInterestingInHeight.getText().toString());
                     Fragment_signUp_first.user.setMinAge(Integer.parseInt(signUp_LSV_minAge.getSelectedItem().toString()));
                     Fragment_signUp_first.user.setMaxAge(Integer.parseInt(signUp_LSV_maxAge.getSelectedItem().toString()));
-                    Fragment_signUp_first.user.setDistance(Integer.parseInt(editTextDistance.getText().toString()));
+                    Fragment_signUp_first.user.setDistance(distance);
 
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
@@ -180,6 +197,7 @@ public class Fragment_signUp_second extends Fragment {
         signUp_LSV_maxAge = view.findViewById(R.id.signUp_LSV_maxAge);
         InterestingInFemale = view.findViewById(R.id.InterestingInFemale);
         InterestingInMale = view.findViewById(R.id.InterestingInMen);
+        distance2 = view.findViewById(R.id.distance2);
         editTextDistance = view.findViewById(R.id.editTextDistance);
         editTextInterestingInHeight = view.findViewById(R.id.editTextInterestingInHeight);
     }
@@ -209,15 +227,15 @@ public class Fragment_signUp_second extends Fragment {
         if(signUp_LSV_minAge.getSelectedItem().equals("מקסימלי")){
             checkDetails = false;
         }
-        if (editTextDistance.getText().toString().matches("")) {
-            editTextDistance.setError("אנא הקלד מרחק");
-            checkDetails = false;
-        } else {
-            if (!checkIsIfNumber(editTextDistance.getText().toString())) {
-                checkDetails = false;
-                editTextDistance.setError("הקלד רק מספרים");
-            }
-        }
+//        if (editTextDistance.getText().toString().matches("")) {
+//            editTextDistance.setError("אנא הקלד מרחק");
+//            checkDetails = false;
+//        } else {
+//            if (!checkIsIfNumber(editTextDistance.getText().toString())) {
+//                checkDetails = false;
+//                editTextDistance.setError("הקלד רק מספרים");
+//            }
+//        }
         if (editTextInterestingInHeight.getText().toString().matches("")) {
             editTextInterestingInHeight.setError("אנא הקלד מרחק");
             checkDetails = false;
