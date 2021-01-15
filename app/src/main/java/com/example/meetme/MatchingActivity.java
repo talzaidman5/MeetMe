@@ -69,16 +69,12 @@ public class MatchingActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.matching_tabLayout);
         ViewPager viewPager = findViewById(R.id.matching_viewPager);
         logout = findViewById(R.id.logout);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                FirebaseAuth.getInstance().signOut();
-//                startActivity(new Intent(MatchingActivity.this,MainActivity.class));
-//                finish();
-                Intent intent = new Intent(MatchingActivity.this, MyProfileActivity.class);
-                startActivity(intent);
-
-            }
+        logout.setOnClickListener(view -> {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(MatchingActivity.this,MainActivity.class));
+                finish();
+//            Intent intent = new Intent(MatchingActivity.this, MyProfileActivity.class);
+//            startActivity(intent);
         });
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragment(new MatchingFragment(), "התאמות");
@@ -90,8 +86,7 @@ public class MatchingActivity extends AppCompatActivity {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         User user = returnUserFromMail(currentUser.getEmail());
         getImageFromStorage(this.profileImage,user);
-        getActionBar().setDisplayShowTitleEnabled(true);
-        getActionBar().setTitle("ההתאמות שלך");
+        getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.gray2)));
         getActionBar().setDisplayHomeAsUpEnabled(false);
     }

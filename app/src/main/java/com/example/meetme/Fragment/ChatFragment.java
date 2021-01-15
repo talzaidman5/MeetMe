@@ -61,8 +61,7 @@ public class ChatFragment extends Fragment {
                     Chat chat = snap.getValue(Chat.class);
                     if(chat.getSender().equals(fuser.getUid()))
                         usersList.add(chat.getReceiver());
-
-                    if(chat.getReceiver().equals(fuser.getUid()))
+                    else if(chat.getReceiver().equals(fuser.getUid()))
                         usersList.add(chat.getSender());
                 }
                 readChats();
@@ -88,7 +87,7 @@ public class ChatFragment extends Fragment {
                         if (user.getId().equals(id)){
                             if (mUsers.size() != 0){
                                 for (User user1:mUsers){
-                                    if (!user.getId().equals(user1.getId())){
+                                    if (!user.getId().equals(user1.getId()) && !mUsers.contains(user)){
                                         mUsers.add(user);
                                     }
                                 }

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:background="#e6e6e6">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -17,7 +18,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/grad"
             android:theme="@style/Base.CardView"
-            app:popupTheme="@style/TextAppearance.AppCompat.Widget.PopupMenu.Small">
+            app:popupTheme="@style/TextAppearance.AppCompat.Widget.PopupMenu.Small"
+            android:gravity="right">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/chat_profileImage"
@@ -43,6 +45,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/chat_bottom"
         android:padding="5dp"
+        android:layout_centerVertical="true"
         android:background="#fff"
         android:layout_alignParentBottom="true">
 
@@ -50,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/chat_text_send"
-            android:layout_toRightOf="@+id/chat_btn_send"
+            android:layout_toLeftOf="@+id/chat_btn_send"
             android:background="@android:color/transparent"
             android:hint="Type your message"
             android:layout_centerVertical="true"></EditText>
@@ -62,6 +65,8 @@
             android:id="@+id/chat_btn_send"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"></ImageButton>
+
+
 
     </RelativeLayout>
 

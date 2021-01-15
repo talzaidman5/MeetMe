@@ -6,6 +6,8 @@
     android:id="@+id/toolbar"
     android:background="@color/design_default_color_primary_dark"
     android:theme="@style/Base.CardView"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true"
     app:popupTheme="@style/MenuStyle">
 
 </android.widget.Toolbar>
