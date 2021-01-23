@@ -93,6 +93,7 @@ public class Fragment_signUp_third extends Fragment {
                     MainActivity.allClients = new AllClients();
                 }
                 uploadImages();
+
             }
         });
 
@@ -184,6 +185,7 @@ public class Fragment_signUp_third extends Fragment {
                     MainActivity.allClients.addUser(Fragment_signUp_first.user);
                     myRef.setValue(MainActivity.allClients);
                     Intent intent = new Intent(getContext(), MatchingActivity.class);
+                    getActivity().finish();
                     startActivity(intent);
                 }
             }

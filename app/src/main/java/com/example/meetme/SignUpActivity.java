@@ -14,7 +14,7 @@ public class SignUpActivity extends AppCompatActivity {
     public static boolean isDone=false;
 
     public enum Hobbies {
-        ARTIST,YOGA,BICYCLE, JOYSTICK, BACK, CAMERA,GUITAR;
+        ARTIST,YOGA,BICYCLE, JOYSTICK, BAKE, CAMERA,GUITAR;
     }
     private FrameLayout main_signUp_fragment;
     private Fragment_signUp_first fragmentSignUpFirst;

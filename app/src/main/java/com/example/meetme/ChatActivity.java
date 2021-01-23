@@ -2,13 +2,23 @@ package com.example.meetme;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -30,31 +40,32 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ChatActivity1 extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
 
-    CircleImageView profileImage;
-    Toolbar toolbar;
-    EditText editText;
-    ImageButton sendBtn;
+    private CircleImageView profileImage;
+    private Toolbar toolbar;
+    private EditText editText;
+    private ImageButton sendBtn;
 
-    MessageAdapter messageAdapter;
-    List<Chat> mChat;
+    private MessageAdapter messageAdapter;
+    private List<Chat> mChat;
 
-    RecyclerView allMessages;
+    private RecyclerView allMessages;
 
-    User currentUser;
-    String chatUserName;
-    String chatUserId;
-    Uri chatUserImage;
-    String chatUserEmail;
-    FirebaseUser firebaseUser;
-
+    private User currentUser;
+    private String chatUserName;
+    private String chatUserId;
+    private Uri chatUserImage;
+    private String chatUserEmail;
+    private FirebaseUser firebaseUser;
+    private ImageView imageViewBackground;
     Intent intent;
 
     @SuppressLint("WrongViewCast")
@@ -65,6 +76,7 @@ public class ChatActivity1 extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         getSupportActionBar().hide();
 
+        imageViewBackground = findViewById(R.id.chat_background);
         profileImage = findViewById(R.id.chat_profileImage);
         allMessages = findViewById(R.id.chat_messages);
         allMessages.setHasFixedSize(true);
@@ -82,7 +94,7 @@ public class ChatActivity1 extends AppCompatActivity {
         chatUserId = intent.getStringExtra("id");
         chatUserImage = Uri.parse(getIntent().getStringExtra("image"));
         chatUserEmail = intent.getStringExtra("email");
-
+        setBackgroundColor();
         getActionBar().setDisplayShowTitleEnabled(true);
         getActionBar().setTitle(chatUserName);
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -98,41 +110,48 @@ public class ChatActivity1 extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         this.currentUser = getCurrentUser(firebaseUser.getEmail());
 
-        readMessages(firebaseUser.getUid(),chatUserId,chatUserImage);
+        readMessages(firebaseUser.getUid(), chatUserId, chatUserImage);
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String msg = editText.getText().toString();
-                if(!msg.equals("")){
-                    sendMessage(firebaseUser.getUid(),chatUserId,msg);
+                if (!msg.equals("")) {
+                    sendMessage(firebaseUser.getUid(), chatUserId, msg);
                     hideKeyboard();
-                }else{
-                    Toast.makeText(ChatActivity1.this,"לא ניתן לשלוח הודעה ריקה", Toast.LENGTH_SHORT);
+                } else {
+                    Toast.makeText(ChatActivity.this, "לא ניתן לשלוח הודעה ריקה", Toast.LENGTH_SHORT);
                 }
                 editText.setText("");
             }
         });
     }
 
-    private void hideKeyboard(){
-        InputMethodManager inputManager = (InputMethodManager) ChatActivity1.this.getSystemService(ChatActivity1.this.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+    private void setBackgroundColor() {
+        String bgUrl = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("backgroundImageUrl", "");
+        if (!bgUrl.equals("")) {
+            Picasso.get().load(bgUrl).into(imageViewBackground);
+        }
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager) ChatActivity.this.getSystemService(ChatActivity.this.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     private User getCurrentUser(String email) {
         for (User user : MainActivity.allClients.allClientsInDB) {
-            if (user.getEmail().equals(firebaseUser.getEmail())){
+            if (user.getEmail().equals(firebaseUser.getEmail())) {
                 return user;
             }
         }
-        return  null;
+        return null;
     }
 
-    private void sendMessage(String sender, String receiver, String message){
+    private void sendMessage(String sender, String receiver, String message) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
-        HashMap<String,Object> hashMap = new HashMap<>();
+        HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("sender", sender);
         hashMap.put("receiver", receiver);
         hashMap.put("message", message);
@@ -140,7 +159,7 @@ public class ChatActivity1 extends AppCompatActivity {
         reference.child("Chats").push().setValue(hashMap);
     }
 
-    private void readMessages(String myid, String chatUserId, Uri ImageUrl){
+    private void readMessages(String myid, String chatUserId, Uri ImageUrl) {
         mChat = new ArrayList<>();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
@@ -155,7 +174,7 @@ public class ChatActivity1 extends AppCompatActivity {
                         mChat.add(chat);
                     }
 
-                    messageAdapter = new MessageAdapter(ChatActivity1.this,mChat,ImageUrl);
+                    messageAdapter = new MessageAdapter(ChatActivity.this, mChat, ImageUrl);
                     allMessages.setAdapter(messageAdapter);
                 }
             }

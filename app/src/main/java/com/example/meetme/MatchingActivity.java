@@ -64,7 +64,7 @@ public class MatchingActivity extends AppCompatActivity {
         if (MainActivity.allClients != null)
             users = MainActivity.allClients.getAllClientsInDB();
         else
-            Toast.makeText(MatchingActivity.this, "אין נתונים", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MatchingActivity.this, "No data", Toast.LENGTH_SHORT).show();
 
         TabLayout tabLayout = findViewById(R.id.matching_tabLayout);
         ViewPager viewPager = findViewById(R.id.matching_viewPager);
@@ -73,8 +73,6 @@ public class MatchingActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(MatchingActivity.this,MainActivity.class));
                 finish();
-//            Intent intent = new Intent(MatchingActivity.this, MyProfileActivity.class);
-//            startActivity(intent);
         });
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragment(new MatchingFragment(), "התאמות");
@@ -104,6 +102,9 @@ public class MatchingActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(MatchingActivity.this,MainActivity.class));
                 finish();
+                return true;
+            case R.id.menu_profile:
+                startActivity(new Intent(MatchingActivity.this,MyProfileActivity.class));
                 return true;
         }
         return false;

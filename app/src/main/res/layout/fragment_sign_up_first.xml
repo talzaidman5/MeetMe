@@ -20,16 +20,8 @@
         android:gravity="right"
         android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/black"
-            android:gravity="right"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:outlineAmbientShadowColor="#000000"
-            android:hint="שם פרטי">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:textColor="@color/black"
@@ -38,23 +30,11 @@
                 android:layout_marginLeft="5dp"
                 android:textSize="18dp"
                 android:inputType="textCapSentences"
-                android:gravity="right"
-                android:id="@+id/editTextFirstName"
-                android:background="@android:drawable/dialog_holo_light_frame"
-                />
+                android:gravity="left"
+                android:hint="First name"
+                android:id="@+id/editTextFirstName" />
 
-        </com.google.android.material.textfield.TextInputLayout >
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/black"
-            android:gravity="right"
-            android:inputType="textCapSentences"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:outlineAmbientShadowColor="@color/black"
-            android:hint="שם משפחה">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:textColor="@color/black"
@@ -63,22 +43,11 @@
             android:layout_marginLeft="5dp"
             android:textSize="18dp"
             android:inputType="textCapSentences"
-            android:gravity="right"
+            android:gravity="left"
+            android:hint="Family name"
             android:id="@+id/signUp_EDT_LastName"
-            android:background="@android:drawable/dialog_holo_light_frame"
             />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/black"
-            android:gravity="right"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:outlineAmbientShadowColor="@color/black"
-            android:hint="כתובת מייל"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:textColor="@color/black"
@@ -88,23 +57,11 @@
                 android:textSize="18dp"
                 android:id="@+id/signUp_EDT_Email"
                 android:inputType="textEmailAddress"
-                android:gravity="right"
-                android:background="@android:drawable/dialog_holo_light_frame"
+                android:gravity="left"
+                android:hint="Email address"
                 />
 
-        </com.google.android.material.textfield.TextInputLayout >
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/black"
-            android:gravity="right"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:outlineAmbientShadowColor="@color/black"
-            android:hint="סיסמא"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:textColor="@color/black"
@@ -112,35 +69,32 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
                 android:textSize="18dp"
-                android:gravity="right"
                 android:inputType="textPassword"
                 android:id="@+id/login_EDT_Password"
-                android:background="@android:drawable/dialog_holo_light_frame"
-                />
+                android:gravity="left"
+                android:hint="Password" />
 
-        </com.google.android.material.textfield.TextInputLayout >
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/signUp_LIN_gender"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColorHint="@color/black"
-            android:gravity="right"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:outlineAmbientShadowColor="@color/black"
-            android:id="@+id/login_EDT_gender">
-                <LinearLayout
-                    android:id="@+id/signUp_LIN_gender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+            android:orientation="horizontal"
+            android:layout_gravity="left">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/black"
+                android:text="Gender: "></TextView>
                     <CheckBox
                         android:id="@+id/signUp_female"
                         style="@style/modifiedEditText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="false"
-                        android:text="אישה" />
+                        android:text="Female" />
+
 
                     <CheckBox
                         android:id="@+id/signUp_men"
@@ -149,28 +103,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
                         android:checked="false"
-                        android:text="גבר" />
-
-                    <TextView
-                        style="@style/modifiedEditText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="מין: "></TextView>
+                        android:text="Male" />
 
                 </LinearLayout>
-            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/black"
-            android:gravity="right"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:outlineAmbientShadowColor="@color/black"
-            android:hint="גיל">
-
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:textColor="@color/black"
@@ -178,24 +115,12 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
                 android:textSize="18dp"
-                android:gravity="right"
+                android:gravity="left"
                 android:id="@+id/editTextAge"
                 android:inputType="number"
-                android:background="@android:drawable/dialog_holo_light_frame"
-                />
-        </com.google.android.material.textfield.TextInputLayout >
+                android:hint="Age" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/black"
-            android:gravity="right"
-            android:inputType="textCapSentences"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:outlineAmbientShadowColor="@color/black"
-            android:hint="עיר">
-
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:textColor="@color/black"
@@ -204,23 +129,11 @@
                 android:layout_marginLeft="5dp"
                 android:id="@+id/textInputCity"
                 android:textSize="18dp"
-                android:gravity="right"
+                android:gravity="left"
                 android:inputType="textCapSentences"
-                android:background="@android:drawable/dialog_holo_light_frame"
-                />
+                android:hint="City" />
 
-        </com.google.android.material.textfield.TextInputLayout >
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/black"
-            android:gravity="right"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:outlineAmbientShadowColor="@color/black"
-            android:hint="גובה בסנטימטרים">
-
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:textColor="@color/black"
@@ -228,39 +141,34 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
                 android:textSize="18dp"
-                android:gravity="right"
+                android:gravity="left"
                 android:id="@+id/editTextHeight"
                 android:inputType="number"
-                android:background="@android:drawable/dialog_holo_light_frame"
-                />
+                android:hint="Height"/>
 
-        </com.google.android.material.textfield.TextInputLayout >
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputStatus"
-                style="@style/parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="right"
+                    android:gravity="left"
                     android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/editTextStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:hint="Family Status"
+                        android:textSize="18dp"
+                        android:inputType="textEmailAddress"
+                        android:textColorHint="@color/black"
+                        android:maxLines="1" />
                     <Spinner
                         android:id="@+id/signUp_LSV_Status"
                         android:layout_width="200dp"
+                        android:layout_marginRight="10dp"
                         android:layout_height="wrap_content"></Spinner>
-                    <TextView
-                        android:id="@+id/editTextStatus"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:hint="מצב משפחתי:"
-                        android:inputType="textEmailAddress"
-                        android:maxLines="1" />
-
-
                 </LinearLayout>
-            </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
     </ScrollView>
 
@@ -278,7 +186,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:background="@drawable/login_button_bk2"
-            android:text="המשך" />
+            android:text="Continue" />
 
         <LinearLayout
             android:id="@+id/points"

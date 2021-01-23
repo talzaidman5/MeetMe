@@ -16,11 +16,12 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
-        tools:replace="android:supportsRtl,android:allowBackup"
-        android:theme="@style/Theme.MeetMe">
-        <activity android:name=".MyProfileActivity"></activity>
+        android:theme="@style/Theme.MeetMe"
+        tools:replace="android:supportsRtl,android:allowBackup">
+        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".MyProfileActivity" />
         <activity android:name=".AboutActivity" />
-        <activity android:name=".ChatActivity1" />
+        <activity android:name=".ChatActivity" />
         <activity
             android:name=".Fragment.Fragment_signUp_first"
             tools:ignore="Instantiatable" />

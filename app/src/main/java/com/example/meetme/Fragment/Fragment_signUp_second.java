@@ -37,7 +37,6 @@ public class Fragment_signUp_second extends Fragment {
     private CheckBox InterestingInFemale, InterestingInMale;
     private Button signUp_BTN_continue;
     private EditText editTextInterestingInHeight;
-    private Slider editTextDistance;
     private boolean checkDetails = false;
     private Boolean statusMale = false, statusFemale = false;
     private float distance;
@@ -48,19 +47,6 @@ public class Fragment_signUp_second extends Fragment {
         findViews(view);
 
         initSpinner();
-        editTextDistance.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
-            @Override
-            public void onStartTrackingTouch(@NonNull Slider slider) {
-             distance = slider.getValue();
-                distance2.setText((int)(distance)+"");
-            }
-
-            @Override
-            public void onStopTrackingTouch(@NonNull Slider slider) {
-                distance = slider.getValue();
-                distance2.setText((int)(distance)+"");
-            }
-        });
         signUp_BTN_artist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +62,7 @@ public class Fragment_signUp_second extends Fragment {
             public void onClick(View v) {
                 if (signUp_BTN_bake.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.bake).getConstantState())) {
                     signUp_BTN_bake.setBackgroundResource(R.drawable.bake_color);
-                    hobbiesToUser.add(SignUpActivity.Hobbies.BACK);
+                    hobbiesToUser.add(SignUpActivity.Hobbies.BAKE);
                 } else
                     signUp_BTN_bake.setBackgroundResource(R.drawable.bake);
             }
@@ -197,8 +183,6 @@ public class Fragment_signUp_second extends Fragment {
         signUp_LSV_maxAge = view.findViewById(R.id.signUp_LSV_maxAge);
         InterestingInFemale = view.findViewById(R.id.InterestingInFemale);
         InterestingInMale = view.findViewById(R.id.InterestingInMen);
-        distance2 = view.findViewById(R.id.distance2);
-        editTextDistance = view.findViewById(R.id.editTextDistance);
         editTextInterestingInHeight = view.findViewById(R.id.editTextInterestingInHeight);
     }
 

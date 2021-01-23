@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.meetme.ChatActivity1;
+import com.example.meetme.ChatActivity;
 import com.example.meetme.Entity.User;
 import com.example.meetme.R;
 import com.squareup.picasso.Picasso;
@@ -54,7 +54,7 @@ public class UserChat_Adapter extends RecyclerView.Adapter<UserChat_Adapter.View
         holder.chat_LBL_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, ChatActivity1.class);
+                Intent intent = new Intent(mContext, ChatActivity.class);
                 intent.putExtra("id", user.getId());
                 intent.putExtra("name", user.getFirstName());
                 intent.putExtra("image", user.getMainImage().toString());

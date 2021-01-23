@@ -28,7 +28,6 @@
                 android:id="@+id/myProfile_IMG_profileImage"
                 android:scaleType="centerInside"
                 android:src="@drawable/profile" />
-
         </RelativeLayout>
 
         <TextView
@@ -43,7 +42,6 @@
             android:textColor="#000000"
             android:textSize="32sp" />
 
-
         <TextView
             android:id="@+id/myProfile_TXT_address"
             android:layout_width="wrap_content"
@@ -56,7 +54,7 @@
             android:textColor="#000000"
             android:textSize="14sp" />
 
-        <ImageView
+        <Button
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
@@ -64,8 +62,8 @@
             android:layout_marginTop="15dp"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_settings" />
-
+            android:id="@+id/myProfile_BTN_settings"
+            android:background="@drawable/ic_settings" />
     </RelativeLayout>
 
     <LinearLayout
@@ -107,9 +105,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="13sp" />
-
             </LinearLayout>
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -146,9 +142,7 @@
                     android:textSize="13sp" />
 
             </LinearLayout>
-
         </RelativeLayout>
-
     </LinearLayout>
 
 <ScrollView
@@ -172,13 +166,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="left"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="כתובת מייל"
+                    android:text="Mail address"
                     android:textColor="#000000"
                     android:textSize="13sp" />
 
@@ -196,22 +191,19 @@
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp"
                     android:background="#BFBFBF" />
-
             </LinearLayout>
-
-
-
+            
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:gravity="right"
+                android:gravity="left"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="גיל"
+                    android:text="Age"
                     android:textColor="#000000"
                     android:textSize="13sp" />
 
@@ -219,7 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="גיל שלך"
+                    android:text="Your age"
                     android:id="@+id/myProfile_TXT_age"
                     android:textColor="#000000"
                     android:textSize="18sp" />
@@ -236,13 +228,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:gravity="right"
+                android:gravity="left"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="מגדר"
+                    android:text="Gender"
                     android:textColor="#000000"
                     android:textSize="13sp" />
 
@@ -250,7 +242,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="מגדר"
+                    android:text="Gender"
                     android:id="@+id/myProfile_TXT_gender"
                     android:textColor="#000000"
                     android:textSize="18sp" />
@@ -266,13 +258,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:gravity="right"
+                android:gravity="left"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="גובה"
+                    android:text="Height"
                     android:textColor="#000000"
                     android:textSize="13sp" />
 
@@ -281,7 +273,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="גובה"
+                    android:text="Height"
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
@@ -297,13 +289,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:gravity="right"
+                android:gravity="left"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="מעוניין ב"
+                    android:text="Interested in"
                     android:textColor="#000000"
                     android:textSize="13sp" />
 
@@ -311,7 +303,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="מגדר"
+                    android:text="Gender"
                     android:id="@+id/login_EDT_interestingInGender"
                     android:textColor="#000000"
                     android:textSize="18sp" />

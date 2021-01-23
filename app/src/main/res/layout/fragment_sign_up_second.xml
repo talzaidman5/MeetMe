@@ -9,30 +9,43 @@
     tools:context=".Fragment.Fragment_signUp_second">
 
     <TextView
-        style="@style/headerTextPrimary"
-        android:gravity="center"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:id="@+id/title"
-        android:textColor="@color/gray2"
-        android:text="העדפות אישיות"></TextView>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputInterestingIn"
-        android:layout_below="@+id/title"
-        style="@style/parent"
-        android:gravity="right">
+        android:textColor="@color/black"
+        android:text="Personal preferences"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"></TextView>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:id="@+id/textInputInterestingIn"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="15dp">
 
+            <TextView
+                android:id="@+id/editTextInterestingIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="Interested in"
+                android:layout_marginRight="11dp"
+                android:textSize="18dp"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="#000000" />
             <CheckBox
                 android:id="@+id/InterestingInFemale"
                 style="@style/modifiedEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="אישה" />
+                android:textSize="18dp"
+                android:text="Female" />
 
             <CheckBox
                 android:id="@+id/InterestingInMen"
@@ -40,32 +53,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="30dp"
-                android:text="גבר" />
+                android:textSize="18dp"
+                android:text="Male" />
 
-            <TextView
-                android:id="@+id/editTextInterestingIn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:hint="מעוניין ב:"
-                android:layout_marginRight="11dp"
-                android:inputType="text"
-                android:maxLines="1"
-                android:textColor="#000000" />
         </LinearLayout>
-    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:gravity="right"
+        android:gravity="left"
+        android:layout_marginLeft="5dp"
         android:id="@+id/hobbies"
         android:layout_below="@+id/textInputInterestingIn"
         android:orientation="horizontal">
-
-
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="11dp"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:text="Yours hobbies"></TextView>
         <ImageButton
             android:id="@+id/signUp_BTN_artist"
             android:layout_width="30dp"
@@ -100,21 +108,14 @@
             android:layout_height="30dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/bake" />
-
-        <TextView
-            style="@style/modifiedEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="11dp"
-            android:text="תחביבים: "></TextView>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="50dp"
-        android:gravity="right"
+        android:layout_marginLeft="132dp"
+        android:gravity="left"
         android:layout_below="@+id/hobbies"
         android:id="@+id/hobbies2"
         android:orientation="horizontal">
@@ -132,19 +133,28 @@
             android:background="@drawable/guitar" />
     </LinearLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputMinMaxAge"
-        style="@style/parent"
-        android:layout_below="@+id/hobbies2"
-        android:layout_marginTop="10dp">
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:id="@+id/textInputMinMaxAge"
+            android:layout_below="@+id/hobbies2"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-
+            <TextView
+                android:id="@+id/editTextMinAge"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:text="Age range:"
+                android:layout_gravity="right"
+                android:textSize="18dp"
+                android:inputType="textEmailAddress"
+                android:layout_marginRight="11dp"
+                android:maxLines="1"
+                android:textColor="@color/black"></TextView>
             <Spinner
                 android:id="@+id/signUp_LSV_minAge"
                 android:layout_width="120dp"
@@ -153,92 +163,29 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="עד"
-                android:textSize="14dp"></TextView>
+                android:text="-"
+                android:textSize="18dp"
+                android:textColor="@color/black"></TextView>
 
             <Spinner
                 android:id="@+id/signUp_LSV_maxAge"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"></Spinner>
+</LinearLayout>
 
-            <TextView
-                android:id="@+id/editTextMinAge"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:hint="טווח גילאים:"
-                android:layout_gravity="right"
-                android:inputType="textEmailAddress"
-                android:layout_marginRight="11dp"
-                android:maxLines="1" />
-        </LinearLayout>
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/black"
-        android:gravity="right"
-        android:layout_marginTop="5dp"
-        android:layout_below="@id/textInputMinMaxAge"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:id="@+id/editTextDistance1"
-        android:hint="מרחק מקסימלי">
-
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:text="0"
-            android:textSize="18dp"
-            android:id="@+id/distance2"
-            android:gravity="center"
-            android:textColor="@color/black"></TextView>
-
-        <com.google.android.material.slider.Slider
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextDistance"
-            android:valueFrom="0.0"
-            android:valueTo="30.0">
-        </com.google.android.material.slider.Slider>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="מרחק רצוי:"
-            android:textSize="15dp"
-            android:layout_marginRight="8dp"
-            android:textColor="@color/black"></TextView>
-    </LinearLayout>
-
-
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/black"
-        android:gravity="right"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:outlineAmbientShadowColor="#000000"
-        android:layout_below="@+id/editTextDistance1"
-        android:hint="גובה רצוי">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:textColor="@color/black"
             android:textColorHint="@color/black"
-            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="5dp"
             android:textSize="18dp"
             android:id="@+id/editTextInterestingInHeight"
             android:inputType="number"
-            android:gravity="right"
-            android:background="@android:drawable/dialog_holo_light_frame"
-            />
+            android:gravity="left"
+            android:layout_below="@id/textInputMinMaxAge"
+            android:hint="Desired height" />
 
-    </com.google.android.material.textfield.TextInputLayout >
 
 
     <RelativeLayout
@@ -246,16 +193,15 @@
         android:layout_height="80dp"
         android:id="@+id/bottomLin"
         android:layout_alignParentBottom="true">
-
         <Button
             android:id="@+id/signUp_BTN_end"
             android:layout_width="110dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:background="@drawable/login_button_bk2"
-            android:text="המשך" />
+            android:text="Continue" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

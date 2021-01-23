@@ -15,6 +15,7 @@ import com.example.meetme.Adapter.Adapter_User;
 import com.example.meetme.MainActivity;
 import com.example.meetme.R;
 import com.example.meetme.Entity.User;
+import com.example.meetme.SignUpActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -29,9 +30,7 @@ public class MatchingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_matching, container, false);
-        // Inflate the layout for this fragment
         matching_LST_news = view.findViewById(R.id.fragmentMatching_LST_news);
-//        matching_LST_news.setHasFixedSize(true);
         matching_LST_news.setLayoutManager(new LinearLayoutManager(getContext()));
         allUsers = new ArrayList<>();
 
@@ -63,9 +62,18 @@ public class MatchingFragment extends Fragment {
             if (userTemp.getPersonGender().equals(user.getPersonPreferenceGender()) &&
                     userTemp.getHeight().equals(user.getPreferenceHeight()) &&
                     user.getPersonGender().equals(userTemp.getPersonPreferenceGender()) &&
-                    user.getHeight().equals(userTemp.getPreferenceHeight()))
+                    user.getHeight().equals(userTemp.getPreferenceHeight()) && checkHobbies(user,userTemp))
                 allUsers.add(userTemp);
         }
         return allUsers;
+    }
+
+    private boolean checkHobbies(User user, User userTemp) {
+
+        for (SignUpActivity.Hobbies hobbies: user.getHobbies()) {
+            if(userTemp.getHobbies().contains(hobbies))
+                return true;
+        }
+        return false;
     }
 }
