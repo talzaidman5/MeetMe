@@ -56,7 +56,6 @@ public class ChatActivity extends AppCompatActivity {
 
     private MessageAdapter messageAdapter;
     private List<Chat> mChat;
-
     private RecyclerView allMessages;
 
     private User currentUser;

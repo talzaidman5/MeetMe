@@ -34,6 +34,7 @@ public class ChatFragment extends Fragment {
 
     private UserChat_Adapter adapterUser;
     private List<User> mUsers;
+    public static int numOfChats;
 
     FirebaseUser fuser;
     DatabaseReference reference;
@@ -64,7 +65,9 @@ public class ChatFragment extends Fragment {
                     else if(chat.getReceiver().equals(fuser.getUid()))
                         usersList.add(chat.getSender());
                 }
+                numOfChats = usersList.size();
                 readChats();
+
             }
 
             @Override

@@ -45,7 +45,6 @@ public class MatchingActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private StorageReference storageReference;
     private ArrayList<User> users;
-    private Button logout;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,15 +67,10 @@ public class MatchingActivity extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.matching_tabLayout);
         ViewPager viewPager = findViewById(R.id.matching_viewPager);
-        logout = findViewById(R.id.logout);
-        logout.setOnClickListener(view -> {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MatchingActivity.this,MainActivity.class));
-                finish();
-        });
+
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragment(new MatchingFragment(), "התאמות");
-        viewPagerAdapter.addFragment(new ChatFragment(),"שיחות");
+        viewPagerAdapter.addFragment(new MatchingFragment(), "Matchings");
+        viewPagerAdapter.addFragment(new ChatFragment(),"Conversation");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.gray1)));
         tabLayout.setupWithViewPager(viewPager);

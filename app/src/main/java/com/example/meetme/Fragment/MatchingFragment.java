@@ -25,6 +25,7 @@ public class MatchingFragment extends Fragment {
     private RecyclerView matching_LST_news;
     private Adapter_User adapterUser;
     private ArrayList<User> allUsers;
+    public static int numberOfMatching;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,6 +40,7 @@ public class MatchingFragment extends Fragment {
 
         if (user != null) {
             allUsers = readAdaptUsers(user);
+            numberOfMatching = allUsers.size();
             adapterUser = new Adapter_User(getContext(), allUsers);
             matching_LST_news.setItemAnimator(new DefaultItemAnimator());
             matching_LST_news.setAdapter(adapterUser);

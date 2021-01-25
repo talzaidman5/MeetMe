@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.meetme.Entity.User;
+import com.example.meetme.Fragment.ChatFragment;
+import com.example.meetme.Fragment.MatchingFragment;
 import com.example.meetme.utils.Photos;
 import com.example.meetme.utils.PhotosController;
 import com.example.mylibrary.MainActivityLibrary;
@@ -31,9 +33,11 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MyProfileActivity extends AppCompatActivity {
     private TextView myProfile_TXT_mail, myProfile_TXT_age, myProfile_TXT_name, myProfile_TXT_city, myProfile_TXT_height, myProfile_TXT_gender,
-            login_EDT_interestingInGender;
+            login_EDT_interestingInGender,myProfile_numberOfMatching,myProfile_numberOfChats;
     private Button myProfile_BTN_settings;
     private ImageView myProfile_IMG_profileImage;
     private StorageReference storageReference;
@@ -63,7 +67,8 @@ public class MyProfileActivity extends AppCompatActivity {
                 login_EDT_interestingInGender.setText(R.string.female);
             else
                 login_EDT_interestingInGender.setText(R.string.male);
-
+            myProfile_numberOfMatching.setText(MatchingFragment.numberOfMatching+"");
+            myProfile_numberOfChats.setText(ChatFragment.numOfChats+"");
 
             storageReference.child(user.getEmail()).child("profile").getDownloadUrl()
                     .addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -98,6 +103,8 @@ public class MyProfileActivity extends AppCompatActivity {
         myProfile_TXT_gender = findViewById(R.id.myProfile_TXT_gender);
         login_EDT_interestingInGender = findViewById(R.id.login_EDT_interestingInGender);
         myProfile_BTN_settings = findViewById(R.id.myProfile_BTN_settings);
+        myProfile_numberOfMatching = findViewById(R.id.myProfile_numberOfMatching);
+        myProfile_numberOfChats = findViewById(R.id.myProfile_numberOfChats);
 
     }
 

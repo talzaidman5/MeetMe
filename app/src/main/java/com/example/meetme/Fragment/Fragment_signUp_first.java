@@ -175,16 +175,16 @@ public class Fragment_signUp_first extends Fragment {
             checkDetails = false;
         }
         if (editTextCity.getText().toString().matches("")) {
-            editTextCity.setError("אנא הקלד שם");
+            editTextCity.setError("Please enter your city name");
             checkDetails = false;
         } else {
             if (!checkIsAlpha(editTextCity.getText().toString())) {
                 checkDetails = false;
-                editTextCity.setError("Please enter your city");
+                editTextCity.setError("City name is only letters");
             }
         }
         if (editTextCity.getText().toString().length() < 2) {
-            editTextCity.setError("The name of the city is at least two letters");
+            editTextCity.setError("The city name is at least two letters");
             checkDetails = false;
         }
 

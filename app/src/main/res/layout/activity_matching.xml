@@ -35,7 +35,7 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/matching_profileImage"
-                android:foregroundGravity="center"
+                android:layout_marginLeft="30dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp">
             </de.hdodenhof.circleimageview.CircleImageView>
@@ -58,19 +58,10 @@
         android:id="@+id/matching_viewPager"
         android:layout_below="@id/matching_AppBar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/logout">
+        android:layout_height="wrap_content">
 
     </androidx.viewpager.widget.ViewPager>
 
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/logout"
-    android:text="Logout"
-    android:layout_marginLeft="7dp"
-    android:layout_alignParentBottom="true">
-</Button>
 
 
 </RelativeLayout>

@@ -98,13 +98,13 @@ public class LoginActivity extends AppCompatDialogFragment {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(getContext(), "הסיסמא נשלחה למייל שהזנת", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "The password was sent to your email", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getContext(), "המייל שהוזן שגוי", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "The email entered is incorrect", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatDialogFragment {
                             Intent intent = new Intent(LoginActivity.this.getContext(), MatchingActivity.class);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(getContext(), "שגיאה באחד הנתונים!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Error!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
