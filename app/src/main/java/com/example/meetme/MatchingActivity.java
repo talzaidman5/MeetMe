@@ -86,7 +86,8 @@ public class MatchingActivity extends AppCompatActivity {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         User user = returnUserFromMail(currentUser.getEmail());
         getImageFromStorage(this.profileImage,user);
-        getActionBar().setDisplayShowTitleEnabled(false);
+        getActionBar().setDisplayShowTitleEnabled(true);
+        getActionBar().setTitle("Hello " + user.getFirstName());
         getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.gray2)));
         getActionBar().setDisplayHomeAsUpEnabled(false);
     }

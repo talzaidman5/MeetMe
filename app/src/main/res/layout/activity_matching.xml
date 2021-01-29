@@ -24,15 +24,6 @@
             android:theme="@style/Base.CardView"
             app:popupTheme="@style/TextAppearance.AppCompat.Widget.PopupMenu.Small">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/matching_title"
-                android:text="ההתאמות שלך"
-                android:textColor="@color/white"
-                android:textDirection="firstStrong"
-                ></TextView>
-
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/matching_profileImage"
                 android:foregroundGravity="center"
