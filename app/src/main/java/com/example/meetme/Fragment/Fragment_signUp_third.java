@@ -156,7 +156,7 @@ public class Fragment_signUp_third extends Fragment {
 
     private void uploadImages() {
         progressDialog = new ProgressDialog(getContext());
-        progressDialog.setTitle("טוען...");
+        progressDialog.setTitle("Loading...");
         progressDialog.show();
         for (ImageView img : this.images.keySet()) {
             if (this.images.get(img) != null) {
@@ -199,7 +199,7 @@ public class Fragment_signUp_third extends Fragment {
                     @Override
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                         double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                        progressDialog.setMessage("הועלה " + (int) progress + "%");
+                        progressDialog.setMessage("Uploaded " + (int) progress + "%");
                         ProgressBar progressBar = new ProgressBar(getContext(), null, android.R.attr.progressBarStyleSmall);
                         progressDialog.setView(progressBar);
                     }

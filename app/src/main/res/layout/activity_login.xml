@@ -65,14 +65,13 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content" />
 
-        <com.google.android.material.button.MaterialButton
+        <TextView
             style="@style/parent"
             android:textAlignment="center"
             android:textStyle="bold"
               android:id="@+id/login_BTN_signUp"
             android:textColor="@color/primaryTextColor"
             android:text="Do not have an account? Sign up"
-            android:background="@drawable/login_button_bk2"
             android:onClick="viewRegisterClicked"
             android:layout_marginTop="25dp"
             android:gravity="center_horizontal" />

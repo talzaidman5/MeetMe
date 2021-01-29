@@ -3,14 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#808080"
     tools:context=".Fragment.ChatFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragmentChat_chats"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
     </androidx.recyclerview.widget.RecyclerView>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NO CHATS.. "
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:id="@+id/fragmentChat_TXT"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/fragmentChat_chats">
+    </TextView>
 </RelativeLayout>

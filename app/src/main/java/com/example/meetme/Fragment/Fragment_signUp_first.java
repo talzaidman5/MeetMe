@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,13 +102,14 @@ public class Fragment_signUp_first extends Fragment {
     }
 
     private void openNextSignUpPage(String uid) {
+        Uri uri = null;
         user = new User(uid, editTextFirstName.getText().toString(),  signUp_EDT_LastName.getText().toString(),
                 editTextAge.getText().toString(),
                 checkGender(), editTextCity.getText().toString()
                 , null, 0, 0, null,
                 editTextEmail.getText().toString(),
                 editTextPassword.getText().toString(), 0,
-                editTextHeight.getText().toString(), "0");
+                editTextHeight.getText().toString(), "0",uri);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
 
@@ -166,9 +169,11 @@ public class Fragment_signUp_first extends Fragment {
             editTextHeight.setError("Height length at least three letters");
             checkDetails = false;
         }
-        if (editTextHeight.getText().toString().charAt(0)!= '1'|| editTextHeight.getText().toString().charAt(0)!= '2') {
-            editTextHeight.setError("Improper height");
-            checkDetails = false;
+        if(!(editTextHeight.getText().toString().length()==0)) {
+            if (editTextHeight.getText().toString().charAt(0) != '1' && editTextHeight.getText().toString().charAt(0) != '2') {
+                editTextHeight.setError("Improper height");
+                checkDetails = false;
+            }
         }
         if (!checkIsIfNumber(editTextHeight.getText().toString())) {
             editTextHeight.setError("Please enter only numbers");

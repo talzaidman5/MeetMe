@@ -24,12 +24,11 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
                 android:textSize="18dp"
-                android:inputType="textCapSentences"
+                android:inputType="textCapWords"
                 android:gravity="left"
                 android:hint="First name"
                 android:id="@+id/editTextFirstName" />
@@ -37,7 +36,6 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"

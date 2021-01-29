@@ -33,8 +33,8 @@ import com.google.firebase.database.ValueEventListener;
 public class LoginActivity extends AppCompatDialogFragment {
     private View view;
     private EditText login_EDT_Email, login_EDT_Password;
-    private Button cirLoginButton, login_BTN_signUp;
-    private TextView viewForgotPassword;
+    private Button cirLoginButton ;
+    private TextView viewForgotPassword,login_BTN_signUp;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("Users");
 
@@ -121,6 +121,7 @@ public class LoginActivity extends AppCompatDialogFragment {
                         if (task.isSuccessful()) {
                             Intent intent = new Intent(LoginActivity.this.getContext(), MatchingActivity.class);
                             startActivity(intent);
+                            dismiss();
                         } else {
                             Toast.makeText(getContext(), "Error!", Toast.LENGTH_SHORT).show();
                         }

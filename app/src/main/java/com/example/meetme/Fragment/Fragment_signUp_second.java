@@ -40,7 +40,6 @@ public class Fragment_signUp_second extends Fragment {
     private boolean checkDetails = false;
     private Boolean statusMale = false, statusFemale = false;
     private float distance;
-    private TextView distance2;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up_second, container, false);
@@ -205,27 +204,19 @@ public class Fragment_signUp_second extends Fragment {
 
     private boolean checkAllDetails() {
          checkDetails = true;
-        if(signUp_LSV_minAge.getSelectedItem().equals("מינימלי")){
+        if(signUp_LSV_minAge.getSelectedItem().equals("Minimum")){
             checkDetails = false;
         }
-        if(signUp_LSV_minAge.getSelectedItem().equals("מקסימלי")){
+        if(signUp_LSV_maxAge.getSelectedItem().equals("Maximum")){
             checkDetails = false;
         }
-//        if (editTextDistance.getText().toString().matches("")) {
-//            editTextDistance.setError("אנא הקלד מרחק");
-//            checkDetails = false;
-//        } else {
-//            if (!checkIsIfNumber(editTextDistance.getText().toString())) {
-//                checkDetails = false;
-//                editTextDistance.setError("הקלד רק מספרים");
-//            }
-//        }
+
         if (editTextInterestingInHeight.getText().toString().matches("")) {
-            editTextInterestingInHeight.setError("אנא הקלד מרחק");
+            editTextInterestingInHeight.setError("Please type a height");
             checkDetails = false;
         }
         if(!checkIsIfNumber(editTextInterestingInHeight.getText().toString())) {
-            editTextInterestingInHeight.setError("אנא הקלד רק מספרים");
+            editTextInterestingInHeight.setError("Please type only numbers");
             checkDetails = false;
         }
         return checkDetails;

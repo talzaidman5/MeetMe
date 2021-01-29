@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.meetme.Entity.User;
 import com.example.meetme.Fragment.ChatFragment;
 import com.example.meetme.Fragment.MatchingFragment;
@@ -39,7 +40,7 @@ public class MyProfileActivity extends AppCompatActivity {
     private TextView myProfile_TXT_mail, myProfile_TXT_age, myProfile_TXT_name, myProfile_TXT_city, myProfile_TXT_height, myProfile_TXT_gender,
             login_EDT_interestingInGender,myProfile_numberOfMatching,myProfile_numberOfChats;
     private Button myProfile_BTN_settings;
-    private ImageView myProfile_IMG_profileImage;
+    private CircleImageView myProfile_IMG_profileImage;
     private StorageReference storageReference;
     private FirebaseStorage storage;
 
@@ -74,8 +75,12 @@ public class MyProfileActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            user.setMainImage(uri);
-                            Picasso.get().load(uri).into(myProfile_IMG_profileImage);
+                            myProfile_IMG_profileImage.setImageResource(android.R.color.transparent);
+                            Glide.with(MyProfileActivity.this)
+                                    .load(uri)
+                                    .circleCrop()
+                                    .into(myProfile_IMG_profileImage);
+//                            Picasso.get().load(uri).into(myProfile_IMG_profileImage);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -128,7 +133,7 @@ public class MyProfileActivity extends AppCompatActivity {
                         strings.add(photos.getUrls()[i]);
                     }
                     MainActivityLibrary.initImages(MyProfileActivity.this);
-                    MainActivityLibrary.changeTitle("choose your background photo");
+                    MainActivityLibrary.changeTitle("choose your chat background photo");
                     MainActivityLibrary.changeButtonText("Back");
                     MainActivityLibrary.numberOfImageInRow(1, 570, 570);
                     MainActivityLibrary.openAlbum(MyProfileActivity.this, strings, new MainActivityLibrary.OnImageClickedCallBack() {

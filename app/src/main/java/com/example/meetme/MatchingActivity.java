@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -43,6 +44,7 @@ public class MatchingActivity extends AppCompatActivity {
     private CircleImageView profileImage;
     private FirebaseStorage storage;
     private Toolbar toolbar;
+    private TextView matching_title;
     private StorageReference storageReference;
     private ArrayList<User> users;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -57,6 +59,7 @@ public class MatchingActivity extends AppCompatActivity {
 
 
         profileImage = findViewById(R.id.matching_profileImage);
+        matching_title = findViewById(R.id.matching_title);
         toolbar = findViewById(R.id.matching_Toolbar);
         setActionBar(toolbar);
 
@@ -70,14 +73,18 @@ public class MatchingActivity extends AppCompatActivity {
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragment(new MatchingFragment(), "Matchings");
-        viewPagerAdapter.addFragment(new ChatFragment(),"Conversation");
+        viewPagerAdapter.addFragment(new ChatFragment(),"Chats");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.gray1)));
         tabLayout.setupWithViewPager(viewPager);
 
+
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         User user = returnUserFromMail(currentUser.getEmail());
         getImageFromStorage(this.profileImage,user);
+        if(user!=null)
+          matching_title.setText(user.getFirstName().toUpperCase());
+
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.gray2)));
         getActionBar().setDisplayHomeAsUpEnabled(false);

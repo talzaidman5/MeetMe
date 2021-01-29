@@ -7,12 +7,17 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.meetme.Adapter.Adapter_User;
 import com.example.meetme.MainActivity;
+import com.example.meetme.MatchingActivity;
 import com.example.meetme.R;
 import com.example.meetme.Entity.User;
 import com.example.meetme.SignUpActivity;
@@ -26,12 +31,15 @@ public class MatchingFragment extends Fragment {
     private Adapter_User adapterUser;
     private ArrayList<User> allUsers;
     public static int numberOfMatching;
-
+    public LinearLayout linearLayout1;
+    public LinearLayout linearLayout;
+    private TextView fragmentChat_TXT;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_matching, container, false);
         matching_LST_news = view.findViewById(R.id.fragmentMatching_LST_news);
+        fragmentChat_TXT = view.findViewById(R.id.fragmentChat_TXT);
         matching_LST_news.setLayoutManager(new LinearLayoutManager(getContext()));
         allUsers = new ArrayList<>();
 
@@ -40,11 +48,16 @@ public class MatchingFragment extends Fragment {
 
         if (user != null) {
             allUsers = readAdaptUsers(user);
-            numberOfMatching = allUsers.size();
+            if(allUsers.size()!=0){
+                Log.d("ptt","enter");
+                numberOfMatching = allUsers.size();
             adapterUser = new Adapter_User(getContext(), allUsers);
             matching_LST_news.setItemAnimator(new DefaultItemAnimator());
             matching_LST_news.setAdapter(adapterUser);
+                fragmentChat_TXT.setText("");
+            }
         }
+
         return view;
     }
 

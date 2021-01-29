@@ -119,7 +119,7 @@ public class ChatActivity extends AppCompatActivity {
                     sendMessage(firebaseUser.getUid(), chatUserId, msg);
                     hideKeyboard();
                 } else {
-                    Toast.makeText(ChatActivity.this, "לא ניתן לשלוח הודעה ריקה", Toast.LENGTH_SHORT);
+                    Toast.makeText(ChatActivity.this, "An empty message could not be sent", Toast.LENGTH_SHORT);
                 }
                 editText.setText("");
             }
