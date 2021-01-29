@@ -42,7 +42,7 @@
         android:layout_below="@id/activity_main_BTN_signUp"
         android:layout_marginTop="15dp"
         android:background="@drawable/login_button_bk2"
-        android:text="אודות"></Button>
+        android:text="About"></Button>
 
 
 </RelativeLayout>

@@ -100,15 +100,24 @@ public class MatchingActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_logout:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MatchingActivity.this,MainActivity.class));
-                finish();
+                logout();
                 return true;
             case R.id.menu_profile:
                 startActivity(new Intent(MatchingActivity.this,MyProfileActivity.class));
                 return true;
         }
         return false;
+    }
+
+    public void logout(){
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(MatchingActivity.this,MainActivity.class));
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        logout();
     }
 
     private void getImageFromStorage(ImageView image, User user) {

@@ -77,6 +77,7 @@ public class MatchingFragment extends Fragment {
             if (userTemp.getPersonGender().equals(user.getPersonPreferenceGender()) &&
                     userTemp.getHeight().equals(user.getPreferenceHeight()) &&
                     user.getPersonGender().equals(userTemp.getPersonPreferenceGender()) &&
+                    !user.getId().equals(userTemp.getId())&&
                     user.getHeight().equals(userTemp.getPreferenceHeight()) && checkHobbies(user,userTemp))
                 allUsers.add(userTemp);
         }

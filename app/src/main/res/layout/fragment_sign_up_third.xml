@@ -112,7 +112,7 @@
 
         <Button
             android:id="@+id/signUp_BTN_end"
-            android:layout_width="110dp"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"

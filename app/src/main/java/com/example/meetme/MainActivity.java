@@ -62,6 +62,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        activity_main_BTN_about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initFirebase() {
