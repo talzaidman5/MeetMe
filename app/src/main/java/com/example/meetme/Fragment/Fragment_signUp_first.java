@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +81,6 @@ public class Fragment_signUp_first extends Fragment {
 
     public void registerUser() {
         if (checkAllDetails()) {
-
             String email = editTextEmail.getText().toString();
             String password = editTextPassword.getText().toString();
             MainActivity.mFireBaseAuth.createUserWithEmailAndPassword(email, password)
@@ -91,7 +92,7 @@ public class Fragment_signUp_first extends Fragment {
                                 openNextSignUpPage(uid);
                             } else {
                                 if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                    Toast.makeText(getContext(), "המייל שהזנת כבר קיים", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getContext(), "This email is already exists", Toast.LENGTH_LONG).show();
                                 } else
                                     Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             }
@@ -101,13 +102,14 @@ public class Fragment_signUp_first extends Fragment {
     }
 
     private void openNextSignUpPage(String uid) {
+        Uri uri = null;
         user = new User(uid, editTextFirstName.getText().toString(),  signUp_EDT_LastName.getText().toString(),
                 editTextAge.getText().toString(),
                 checkGender(), editTextCity.getText().toString()
                 , null, 0, 0, null,
                 editTextEmail.getText().toString(),
                 editTextPassword.getText().toString(), 0,
-                editTextHeight.getText().toString(), "0");
+                editTextHeight.getText().toString(), "0",uri);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
 
@@ -116,73 +118,78 @@ public class Fragment_signUp_first extends Fragment {
         ft.replace(R.id.main_signUp_fragment, fragment);
         ft.addToBackStack(null);
         ft.commit();
-
     }
 
 
     private boolean checkAllDetails() {
         checkDetails = true;
         if (editTextEmail.getText().toString().matches("")) {
-            editTextEmail.setError("אנא הקלד כתובת מייל");
+            editTextEmail.setError("Please enter an email address");
             checkDetails = false;
         }
       
         if (editTextPassword.getText().toString().matches("")) {
-            editTextPassword.setError("אנא הקלד סיסמא");
+            editTextPassword.setError("Please enter an password");
             checkDetails = false;
         }
         if (editTextPassword.getText().toString().length() < 6) {
-            editTextPassword.setError("אורך הסיסמא צריך להיות לפחות 6 תווים");
+            editTextPassword.setError("The password should be at least 6 characters");
             checkDetails = false;
         }
         if (editTextAge.getText().toString().equals("")) {
-            editTextAge.setError("אנא הקלד את גילך");
+            editTextAge.setError("Please enter your age");
             checkDetails = false;
         }
         if (editTextHeight.getText().toString().equals("")) {
-            editTextHeight.setError("אנא הקלד את גילך");
+            editTextHeight.setError("Please enter your height");
             checkDetails = false;
         }
         if (!checkIsIfNumber(editTextAge.getText().toString())) {
-            editTextAge.setError("אנא הקלד את גילך במספרים בלבד");
+            editTextAge.setError("Please enter your age in numbers only");
             checkDetails = false;
         }
         if (editTextFirstName.getText().toString().matches("")) {
-            editTextFirstName.setError("אנא הקלד שם");
+            editTextFirstName.setError("Please enter your name");
             checkDetails = false;
         }
         if (!checkIsAlpha(editTextFirstName.getText().toString())) {
             checkDetails = false;
-            editTextFirstName.setError("הקלד רק אותיות");
+            editTextFirstName.setError("Type only letters");
         }
         if (signUp_EDT_LastName.getText().toString().matches("")) {
-            signUp_EDT_LastName.setError("אנא הקלד שם");
+            signUp_EDT_LastName.setError("Please enter your last name");
             checkDetails = false;
         }
         if (!checkIsAlpha(signUp_EDT_LastName.getText().toString())) {
             checkDetails = false;
-            signUp_EDT_LastName.setError("הקלד רק אותיות");
+            signUp_EDT_LastName.setError("Type only letters");
         }
 
-        if (editTextHeight.getText().toString().length() < 2) {
-            editTextHeight.setError("אורך הגובה לפחות שתי אותיות");
+        if (editTextHeight.getText().toString().length() < 3) {
+            editTextHeight.setError("Height length at least three letters");
             checkDetails = false;
         }
+        if(!(editTextHeight.getText().toString().length()==0)) {
+            if (editTextHeight.getText().toString().charAt(0) != '1' && editTextHeight.getText().toString().charAt(0) != '2') {
+                editTextHeight.setError("Improper height");
+                checkDetails = false;
+            }
+        }
         if (!checkIsIfNumber(editTextHeight.getText().toString())) {
-            editTextHeight.setError("אנא הקלד רק מספרים");
+            editTextHeight.setError("Please enter only numbers");
             checkDetails = false;
         }
         if (editTextCity.getText().toString().matches("")) {
-            editTextCity.setError("אנא הקלד שם");
+            editTextCity.setError("Please enter your city name");
             checkDetails = false;
         } else {
             if (!checkIsAlpha(editTextCity.getText().toString())) {
                 checkDetails = false;
-                editTextCity.setError("הקלד רק אותיות");
+                editTextCity.setError("City name is only letters");
             }
         }
         if (editTextCity.getText().toString().length() < 2) {
-            editTextCity.setError("אורך שם העיר לפחות שתי אותיות");
+            editTextCity.setError("The city name is at least two letters");
             checkDetails = false;
         }
 

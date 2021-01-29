@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -43,9 +44,9 @@ public class MatchingActivity extends AppCompatActivity {
     private CircleImageView profileImage;
     private FirebaseStorage storage;
     private Toolbar toolbar;
+    private TextView matching_title;
     private StorageReference storageReference;
     private ArrayList<User> users;
-    private Button logout;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,36 +59,33 @@ public class MatchingActivity extends AppCompatActivity {
 
 
         profileImage = findViewById(R.id.matching_profileImage);
+        matching_title = findViewById(R.id.matching_title);
         toolbar = findViewById(R.id.matching_Toolbar);
         setActionBar(toolbar);
 
         if (MainActivity.allClients != null)
             users = MainActivity.allClients.getAllClientsInDB();
         else
-            Toast.makeText(MatchingActivity.this, "אין נתונים", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MatchingActivity.this, "No data", Toast.LENGTH_SHORT).show();
 
         TabLayout tabLayout = findViewById(R.id.matching_tabLayout);
         ViewPager viewPager = findViewById(R.id.matching_viewPager);
-        logout = findViewById(R.id.logout);
-        logout.setOnClickListener(view -> {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MatchingActivity.this,MainActivity.class));
-                finish();
-//            Intent intent = new Intent(MatchingActivity.this, MyProfileActivity.class);
-//            startActivity(intent);
-        });
+
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragment(new MatchingFragment(), "התאמות");
-        viewPagerAdapter.addFragment(new ChatFragment(),"שיחות");
+        viewPagerAdapter.addFragment(new MatchingFragment(), "Matchings");
+        viewPagerAdapter.addFragment(new ChatFragment(),"Chats");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.gray1)));
         tabLayout.setupWithViewPager(viewPager);
 
+
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         User user = returnUserFromMail(currentUser.getEmail());
         getImageFromStorage(this.profileImage,user);
-        getActionBar().setDisplayShowTitleEnabled(true);
-        getActionBar().setTitle("Hello " + user.getFirstName());
+        if(user!=null)
+          matching_title.setText(user.getFirstName().toUpperCase());
+
+        getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.gray2)));
         getActionBar().setDisplayHomeAsUpEnabled(false);
     }
@@ -105,6 +103,9 @@ public class MatchingActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(MatchingActivity.this,MainActivity.class));
                 finish();
+                return true;
+            case R.id.menu_profile:
+                startActivity(new Intent(MatchingActivity.this,MyProfileActivity.class));
                 return true;
         }
         return false;

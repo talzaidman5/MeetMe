@@ -8,12 +8,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/headerTextPrimary"
         android:layout_marginTop="10dp"
         android:layout_alignParentTop="true"
         android:id="@+id/title"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:gravity="center"
         android:textSize="30dp"
-        android:text="צור חשבון חדש" />
+        android:text="Sign Up" />
 
     <FrameLayout
         android:layout_width="match_parent"

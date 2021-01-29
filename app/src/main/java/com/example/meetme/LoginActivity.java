@@ -33,8 +33,8 @@ import com.google.firebase.database.ValueEventListener;
 public class LoginActivity extends AppCompatDialogFragment {
     private View view;
     private EditText login_EDT_Email, login_EDT_Password;
-    private Button cirLoginButton, login_BTN_signUp;
-    private TextView viewForgotPassword;
+    private Button cirLoginButton ;
+    private TextView viewForgotPassword,login_BTN_signUp;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("Users");
 
@@ -98,13 +98,13 @@ public class LoginActivity extends AppCompatDialogFragment {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(getContext(), "הסיסמא נשלחה למייל שהזנת", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "The password was sent to your email", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getContext(), "המייל שהוזן שגוי", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "The email entered is incorrect", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -121,8 +121,9 @@ public class LoginActivity extends AppCompatDialogFragment {
                         if (task.isSuccessful()) {
                             Intent intent = new Intent(LoginActivity.this.getContext(), MatchingActivity.class);
                             startActivity(intent);
+                            dismiss();
                         } else {
-                            Toast.makeText(getContext(), "שגיאה באחד הנתונים!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Error!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

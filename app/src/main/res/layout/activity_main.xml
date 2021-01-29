@@ -22,7 +22,7 @@
     android:id="@+id/activity_main_BTN_login"
     android:background="@drawable/login_button_bk2"
     android:layout_marginTop="15dp"
-    android:text="התחברות">
+    android:text="Login">
 </Button>
 
     <Button
@@ -33,7 +33,7 @@
         android:layout_below="@id/activity_main_BTN_login"
         android:background="@drawable/login_button_bk2"
         android:layout_marginTop="15dp"
-        android:text="משתמש חדש"></Button>
+        android:text="Sign Up"></Button>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

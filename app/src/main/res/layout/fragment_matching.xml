@@ -11,6 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp" >
 
+    </androidx.recyclerview.widget.RecyclerView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NO MATCHINGS.. "
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:id="@+id/fragmentChat_TXT"
+        android:layout_below="@id/fragmentMatching_LST_news">
+    </TextView>
 </RelativeLayout>

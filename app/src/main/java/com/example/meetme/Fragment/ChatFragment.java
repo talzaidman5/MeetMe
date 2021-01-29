@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.meetme.Adapter.Adapter_User;
 import com.example.meetme.Adapter.UserChat_Adapter;
@@ -34,7 +35,8 @@ public class ChatFragment extends Fragment {
 
     private UserChat_Adapter adapterUser;
     private List<User> mUsers;
-
+    public static int numOfChats;
+    private TextView fragmentChat_TXT;
     FirebaseUser fuser;
     DatabaseReference reference;
 
@@ -46,6 +48,7 @@ public class ChatFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
         chats = view.findViewById(R.id.fragmentChat_chats);
+        fragmentChat_TXT = view.findViewById(R.id.fragmentChat_TXT);
         chats.setHasFixedSize(true);
         chats.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -64,7 +67,9 @@ public class ChatFragment extends Fragment {
                     else if(chat.getReceiver().equals(fuser.getUid()))
                         usersList.add(chat.getSender());
                 }
+                numOfChats = usersList.size();
                 readChats();
+
             }
 
             @Override
@@ -97,8 +102,11 @@ public class ChatFragment extends Fragment {
                         }
                     }
                 }
-                adapterUser = new UserChat_Adapter(getContext(),mUsers);
-                chats.setAdapter(adapterUser);
+                if(mUsers.size()!=0) {
+                    adapterUser = new UserChat_Adapter(getContext(), mUsers);
+                    chats.setAdapter(adapterUser);
+                    fragmentChat_TXT.setText("");
+                }
             }
 
             @Override

@@ -18,7 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.meetme.ChatActivity1;
+import com.example.meetme.ChatActivity;
 import com.example.meetme.Entity.User;
 import com.example.meetme.R;
 import com.example.mylibrary.MainActivityLibrary;
@@ -83,7 +83,7 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mHolder.list_for_all_BTN_openChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ChatActivity1.class);
+                Intent intent = new Intent(context, ChatActivity.class);
                 intent.putExtra("id", user.getId());
                 intent.putExtra("name", user.getFirstName());
                 intent.putExtra("image", user.getMainImage().toString());
@@ -131,10 +131,10 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private void openImagesPage(User user) {
         MainActivityLibrary.initImages((Activity) context);
-        MainActivityLibrary.changeTitle("התמונות של "+user.getFirstName());
-        MainActivityLibrary.changeButtonText("חזור");
+        MainActivityLibrary.changeTitle("The pictures of "+user.getFirstName());
+        MainActivityLibrary.changeButtonText("Back");
         MainActivityLibrary.numberOfImageInRow(1,570,570);
-        MainActivityLibrary.openAlbum((Activity) context,allImages);
+        MainActivityLibrary.openAlbum((Activity) context,allImages, null);
     }
 
 

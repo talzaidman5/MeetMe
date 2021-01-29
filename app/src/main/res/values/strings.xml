@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">MeetMe</string>
     <string-array name="status" formatted="false" translatable="false">
-        <item>רווק/ה</item>
-        <item>גרוש/ה</item>
-        <item>גרוש/ה +</item>
+        <item>Single</item>
+        <item>Divorcee</item>
+        <item>Divorcee+</item>
     </string-array>
     <string-array name="minAge" formatted="false" translatable="false">
-        <item>מינימלי</item>
+        <item>Minimum</item>
         <item>18</item>
         <item>19</item>
         <item>20</item>
@@ -32,7 +32,7 @@
         <item>40</item>
     </string-array>
     <string-array name="maxAge" formatted="false" translatable="false">
-        <item>מקסימלי</item>
+        <item>Minimum</item>
         <item>18</item>
         <item>19</item>
         <item>20</item>
@@ -58,8 +58,8 @@
         <item>40</item>
     </string-array>
     <string name="input_placeholder">Write a message</string>
-    <string name="female">אישה</string>
-    <string name="male">גבר</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

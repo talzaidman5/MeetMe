@@ -34,7 +34,7 @@ public class User{
 
 
     public User(String id, String firstName,String lastName, String age, Gender personGender, String city, ArrayList<SignUpActivity.Hobbies> hobbies, int minAge,
-                int maxAge, Gender personPreferenceGender,String email, String password,int distance, String height, String preferenceHeight) {
+                int maxAge, Gender personPreferenceGender,String email, String password,int distance, String height, String preferenceHeight, Uri uri) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
@@ -50,6 +50,7 @@ public class User{
         this.distance = distance;
         this.height = height;
         this.preferenceHeight = preferenceHeight;
+        this.mainImage = uri;
     }
     public User(){}
     public String getFirstName() {
