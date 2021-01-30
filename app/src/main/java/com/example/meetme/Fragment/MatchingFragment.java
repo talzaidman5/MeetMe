@@ -34,6 +34,7 @@ public class MatchingFragment extends Fragment {
     public LinearLayout linearLayout1;
     public LinearLayout linearLayout;
     private TextView fragmentChat_TXT;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,12 +49,12 @@ public class MatchingFragment extends Fragment {
 
         if (user != null) {
             allUsers = readAdaptUsers(user);
-            if(allUsers.size()!=0){
-                Log.d("ptt","enter");
+            if (allUsers.size() != 0) {
+                Log.d("ptt", "enter");
                 numberOfMatching = allUsers.size();
-            adapterUser = new Adapter_User(getContext(), allUsers);
-            matching_LST_news.setItemAnimator(new DefaultItemAnimator());
-            matching_LST_news.setAdapter(adapterUser);
+                adapterUser = new Adapter_User(getContext(), allUsers);
+                matching_LST_news.setItemAnimator(new DefaultItemAnimator());
+                matching_LST_news.setAdapter(adapterUser);
                 fragmentChat_TXT.setText("");
             }
         }
@@ -62,7 +63,7 @@ public class MatchingFragment extends Fragment {
     }
 
     private User returnUserFromMail(String currentUserEmail) {
-        if(MainActivity.allClients!=null) {
+        if (MainActivity.allClients != null) {
             for (User userTemp : MainActivity.allClients.getAllClientsInDB()) {
                 if (userTemp.getEmail().equals(currentUserEmail))
                     return userTemp;
@@ -75,12 +76,12 @@ public class MatchingFragment extends Fragment {
         ArrayList<User> allUsers = new ArrayList<>();
         for (User userTemp : MainActivity.allClients.getAllClientsInDB()) {
             if (userTemp.getPersonGender().equals(user.getPersonPreferenceGender()) &&
-                    user.getMinAge()<= Integer.parseInt(userTemp.getAge())&& user.getMaxAge() >= Integer.parseInt(userTemp.getAge())&&
-                    Integer.parseInt(userTemp.getHeight())>=Integer.parseInt(user.getPreferenceHeight()) &&
+                    user.getMinAge() <= Integer.parseInt(userTemp.getAge()) && user.getMaxAge() >= Integer.parseInt(userTemp.getAge()) &&
+                    Integer.parseInt(userTemp.getHeight()) >= Integer.parseInt(user.getPreferenceHeight()) &&
                     user.getPersonGender().equals(userTemp.getPersonPreferenceGender()) &&
-                    !user.getId().equals(userTemp.getId())&&
-                    Integer.parseInt(user.getHeight())>=Integer.parseInt(userTemp.getPreferenceHeight()) && checkHobbies(user,userTemp) &&
-                    userTemp.getMinAge() <= Integer.parseInt(user.getAge())&& userTemp.getMaxAge() >= Integer.parseInt(user.getAge())
+                    !user.getId().equals(userTemp.getId()) &&
+                    Integer.parseInt(user.getHeight()) >= Integer.parseInt(userTemp.getPreferenceHeight()) && checkHobbies(user, userTemp) &&
+                    userTemp.getMinAge() <= Integer.parseInt(user.getAge()) && userTemp.getMaxAge() >= Integer.parseInt(user.getAge())
             )
                 allUsers.add(userTemp);
         }
@@ -89,8 +90,8 @@ public class MatchingFragment extends Fragment {
 
     private boolean checkHobbies(User user, User userTemp) {
 
-        for (SignUpActivity.Hobbies hobbies: user.getHobbies()) {
-            if(userTemp.getHobbies().contains(hobbies))
+        for (SignUpActivity.Hobbies hobbies : user.getHobbies()) {
+            if (userTemp.getHobbies().contains(hobbies))
                 return true;
         }
         return false;

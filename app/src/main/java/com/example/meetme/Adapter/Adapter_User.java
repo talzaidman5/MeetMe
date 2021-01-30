@@ -43,10 +43,6 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private ArrayList<User> articles;
     private FirebaseStorage storage;
     private StorageReference storageReference;
-    private Bitmap bitmap;
-    ArrayList<String> allImages = new ArrayList<>();
-
-    private int imagesLoadIndex = 0;
     private int numOfImages;
 
     public Adapter_User(Context context, ArrayList<User> articles) {
@@ -74,7 +70,7 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         ViewHolder_For_All mHolder = (ViewHolder_For_All) holder;
-        getImagesUrls(user.getEmail());
+        getImagesUrls(user.getEmail(), mHolder.article_images_list);
         mHolder.article_LBL_title.setText(user.getFirstName());
         mHolder.article_LBL_subTitle.setText(user.getAge() + "");
         mHolder.article_LBL_city.setText(user.getCity());
@@ -88,25 +84,24 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             intent.putExtra("email", user.getEmail());
             context.startActivity(intent);
         });
-        mHolder.article_IMG_imageProfile.setOnClickListener(view -> openImagesPage(user, allImages));
+        mHolder.article_IMG_imageProfile.setOnClickListener(view -> openImagesPage(user, mHolder.article_images_list));
     }
 
-    public void getImagesUrls(String userEmail) {
+    public void getImagesUrls(String userEmail, ArrayList<String> images_list) {
         StorageReference reference = storageReference.child(userEmail);
-        reference.listAll().addOnSuccessListener(listResult -> readImagesFromStorage(listResult));
+        reference.listAll().addOnSuccessListener(listResult -> readImagesFromStorage(listResult, images_list));
     }
 
-    private void readImagesFromStorage(ListResult listResult) {
+    private void readImagesFromStorage(ListResult listResult, ArrayList<String> images_list) {
         numOfImages = listResult.getItems().size();
         for(int i = 0 ; i < numOfImages ; i++){
-            loadOneImage(listResult.getItems().get(i));
+            loadOneImage(listResult.getItems().get(i), images_list);
         }
     }
 
-    private void loadOneImage(StorageReference storageReference) {
+    private void loadOneImage(StorageReference storageReference, ArrayList<String> images_list) {
         storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
-            allImages.add(uri.toString());
-            imagesLoadIndex+=1;
+            images_list.add(uri.toString());
         });
     }
 
@@ -152,10 +147,12 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         public TextView article_LBL_subTitle;
         public Button list_for_all_BTN_openChat;
         public ProgressBar article_PRB_progressBar1;
+        public ArrayList<String> article_images_list;
 
         public ViewHolder_For_All(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
+            article_images_list = new ArrayList<>();
             article_IMG_imageProfile = itemView.findViewById(R.id.article_IMG_imageProfile);
             article_LBL_title = itemView.findViewById(R.id.article_LBL_title);
             article_LBL_subTitle = itemView.findViewById(R.id.article_LBL_subTitle);

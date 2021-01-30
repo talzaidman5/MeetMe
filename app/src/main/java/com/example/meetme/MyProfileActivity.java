@@ -124,27 +124,24 @@ public class MyProfileActivity extends AppCompatActivity {
     }
 
     private void downloadPhotos() {
-        new PhotosController().fetchAllPhotos(new PhotosController.CallBack_Photos() {
-            @Override
-            public void photos(Photos photos) {
-                if (photos != null) {
-                    ArrayList<String> strings = new ArrayList<>();
-                    for (int i = 0; i < photos.getUrls().length; i++) {
-                        strings.add(photos.getUrls()[i]);
+        new PhotosController().fetchAllPhotos(photos -> {
+            if (photos != null) {
+                ArrayList<String> strings = new ArrayList<>();
+                for (int i = 0; i < photos.getUrls().length; i++) {
+                    strings.add(photos.getUrls()[i]);
+                }
+                MainActivityLibrary.initImages(MyProfileActivity.this);
+                MainActivityLibrary.changeTitle("choose your chat background photo");
+                MainActivityLibrary.changeButtonText("Back");
+                MainActivityLibrary.numberOfImageInRow(1, 570, 570);
+                MainActivityLibrary.openAlbum(MyProfileActivity.this, strings, new MainActivityLibrary.OnImageClickedCallBack() {
+                    @Override
+                    public void onImageClicked(ImageView image, String imageUrl) {
+                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("backgroundImageUrl", imageUrl).apply();
                     }
-                    MainActivityLibrary.initImages(MyProfileActivity.this);
-                    MainActivityLibrary.changeTitle("choose your chat background photo");
-                    MainActivityLibrary.changeButtonText("Back");
-                    MainActivityLibrary.numberOfImageInRow(1, 570, 570);
-                    MainActivityLibrary.openAlbum(MyProfileActivity.this, strings, new MainActivityLibrary.OnImageClickedCallBack() {
-                        @Override
-                        public void onImageClicked(ImageView image, String imageUrl) {
-                            PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("backgroundImageUrl", imageUrl).apply();
-                        }
-                    });
-                } else
-                    Log.d("pttt", "Photos empty");
-            }
+                });
+            } else
+                Log.d("pttt", "Photos empty");
         });
     }
 }

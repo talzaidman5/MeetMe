@@ -95,7 +95,7 @@ public class ChatActivity extends AppCompatActivity {
         chatUserEmail = intent.getStringExtra("email");
         setBackgroundColor();
         getActionBar().setDisplayShowTitleEnabled(true);
-        getActionBar().setTitle(chatUserName);
+        getActionBar().setTitle(chatUserName.toUpperCase());
         getActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

@@ -50,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
         activity_main_BTN_login = findViewById(R.id.activity_main_BTN_login);
         activity_main_BTN_signUp= findViewById(R.id.activity_main_BTN_signUp);
         activity_main_BTN_about= findViewById(R.id.activity_main_BTN_about);
+        activity_main_BTN_signUp.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+            startActivity(intent);
+        });
+        activity_main_BTN_about.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void initFirebase() {
@@ -77,26 +85,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initOnClickListeners(){
-        activity_main_BTN_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userExists();
-            }
-        });
-        activity_main_BTN_signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
-        });
-        activity_main_BTN_about.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
-                startActivity(intent);
-            }
-        });
+        activity_main_BTN_login.setOnClickListener(v -> userExists());
         setButtonsOnClickListeners = true;
     }
 
