@@ -75,10 +75,13 @@ public class MatchingFragment extends Fragment {
         ArrayList<User> allUsers = new ArrayList<>();
         for (User userTemp : MainActivity.allClients.getAllClientsInDB()) {
             if (userTemp.getPersonGender().equals(user.getPersonPreferenceGender()) &&
-                    userTemp.getHeight().equals(user.getPreferenceHeight()) &&
+                    user.getMinAge()<= Integer.parseInt(userTemp.getAge())&& user.getMaxAge() >= Integer.parseInt(userTemp.getAge())&&
+                    Integer.parseInt(userTemp.getHeight())>=Integer.parseInt(user.getPreferenceHeight()) &&
                     user.getPersonGender().equals(userTemp.getPersonPreferenceGender()) &&
                     !user.getId().equals(userTemp.getId())&&
-                    user.getHeight().equals(userTemp.getPreferenceHeight()) && checkHobbies(user,userTemp))
+                    Integer.parseInt(user.getHeight())>=Integer.parseInt(userTemp.getPreferenceHeight()) && checkHobbies(user,userTemp) &&
+                    userTemp.getMinAge() <= Integer.parseInt(user.getAge())&& userTemp.getMaxAge() >= Integer.parseInt(user.getAge())
+            )
                 allUsers.add(userTemp);
         }
         return allUsers;

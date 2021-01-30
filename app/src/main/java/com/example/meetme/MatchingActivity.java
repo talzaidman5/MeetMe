@@ -88,6 +88,8 @@ public class MatchingActivity extends AppCompatActivity {
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.gray2)));
         getActionBar().setDisplayHomeAsUpEnabled(false);
+
+        profileImage.setOnClickListener(v -> startActivity(new Intent(MatchingActivity.this,MyProfileActivity.class)));
     }
 
     @Override

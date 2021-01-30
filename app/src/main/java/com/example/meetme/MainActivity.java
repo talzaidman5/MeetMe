@@ -33,6 +33,7 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity {
     public static FirebaseAuth mFireBaseAuth;
     private FirebaseDatabase database;
+    private boolean setButtonsOnClickListeners = false;
     private DatabaseReference myRef;
     private FirebaseUser firebaseUser;
     private Button activity_main_BTN_login, activity_main_BTN_signUp,activity_main_BTN_about;
@@ -49,6 +50,33 @@ public class MainActivity extends AppCompatActivity {
         activity_main_BTN_login = findViewById(R.id.activity_main_BTN_login);
         activity_main_BTN_signUp= findViewById(R.id.activity_main_BTN_signUp);
         activity_main_BTN_about= findViewById(R.id.activity_main_BTN_about);
+    }
+
+    private void initFirebase() {
+        mFireBaseAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Users");
+    }
+
+    private void readFromDB() {
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                allClients = dataSnapshot.getValue(AllClients.class);
+                if (!setButtonsOnClickListeners)
+                    initOnClickListeners();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+            }
+        });
+    }
+
+    private void initOnClickListeners(){
         activity_main_BTN_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,28 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    private void initFirebase() {
-        mFireBaseAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Users");
-    }
-
-    private void readFromDB() {
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                allClients = dataSnapshot.getValue(AllClients.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-            }
-        });
+        setButtonsOnClickListeners = true;
     }
 
     private void userExists() {

@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meetme.ChatActivity;
 import com.example.meetme.Entity.User;
+import com.example.meetme.MainActivity;
 import com.example.meetme.R;
 import com.example.mylibrary.MainActivityLibrary;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -42,7 +43,6 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private ArrayList<User> articles;
     private FirebaseStorage storage;
     private StorageReference storageReference;
-    FirebaseUser currentUser;
     private Bitmap bitmap;
     ArrayList<String> allImages = new ArrayList<>();
 
@@ -74,79 +74,57 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         ViewHolder_For_All mHolder = (ViewHolder_For_All) holder;
+        getImagesUrls(user.getEmail());
         mHolder.article_LBL_title.setText(user.getFirstName());
         mHolder.article_LBL_subTitle.setText(user.getAge() + "");
         mHolder.article_LBL_city.setText(user.getCity());
         mHolder.article_PRB_progressBar1.setVisibility(View.VISIBLE);
-        this.currentUser = FirebaseAuth.getInstance().getCurrentUser();
         this.getImageFromStorage(mHolder.article_IMG_imageProfile, user, mHolder.article_PRB_progressBar1);
-        mHolder.list_for_all_BTN_openChat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ChatActivity.class);
-                intent.putExtra("id", user.getId());
-                intent.putExtra("name", user.getFirstName());
-                intent.putExtra("image", user.getMainImage().toString());
-                intent.putExtra("email", user.getEmail());
-                context.startActivity(intent);
-            }
+        mHolder.list_for_all_BTN_openChat.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ChatActivity.class);
+            intent.putExtra("id", user.getId());
+            intent.putExtra("name", user.getFirstName());
+            intent.putExtra("image", user.getMainImage().toString());
+            intent.putExtra("email", user.getEmail());
+            context.startActivity(intent);
         });
-        mHolder.article_IMG_imageProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getImagesUrls(user);
-            }
-        });
+        mHolder.article_IMG_imageProfile.setOnClickListener(view -> openImagesPage(user, allImages));
     }
 
-    public void getImagesUrls(User user) {
-        final StorageReference reference = storageReference.child(user.getEmail());
-        reference.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-            @Override
-            public void onSuccess(ListResult listResult) {
-                readImagesFromStorage(listResult,user);
-            }
-        });
+    public void getImagesUrls(String userEmail) {
+        StorageReference reference = storageReference.child(userEmail);
+        reference.listAll().addOnSuccessListener(listResult -> readImagesFromStorage(listResult));
     }
 
-    private void readImagesFromStorage(ListResult listResult, User user) {
+    private void readImagesFromStorage(ListResult listResult) {
         numOfImages = listResult.getItems().size();
         for(int i = 0 ; i < numOfImages ; i++){
-            loadOneImage(listResult.getItems().get(i),user);
+            loadOneImage(listResult.getItems().get(i));
         }
     }
 
-    private void loadOneImage(StorageReference storageReference,User user) {
-        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                allImages.add(uri.toString());
-                imagesLoadIndex+=1;
-                if (imagesLoadIndex == numOfImages){
-                    openImagesPage(user);
-                }
-            }
+    private void loadOneImage(StorageReference storageReference) {
+        storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
+            allImages.add(uri.toString());
+            imagesLoadIndex+=1;
         });
     }
 
-    private void openImagesPage(User user) {
+    private void openImagesPage(User user, ArrayList<String> imagesList) {
         MainActivityLibrary.initImages((Activity) context);
-        MainActivityLibrary.changeTitle("The pictures of "+user.getFirstName());
+        MainActivityLibrary.changeTitle("Pictures Of "+user.getFirstName());
         MainActivityLibrary.changeButtonText("Back");
         MainActivityLibrary.numberOfImageInRow(1,570,570);
-        MainActivityLibrary.openAlbum((Activity) context,allImages, null);
+        MainActivityLibrary.openAlbum((Activity) context,imagesList, null);
     }
 
 
     private void getImageFromStorage(ImageView image, User user, ProgressBar progressBar) {
-        storageReference.child(user.getEmail()).child("profile").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        user.setMainImage(uri);
-                        Picasso.get().load(uri).into(image);
-                        progressBar.setVisibility(View.INVISIBLE);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+        storageReference.child(user.getEmail()).child("profile").getDownloadUrl().addOnSuccessListener(uri -> {
+            user.setMainImage(uri);
+            Picasso.get().load(uri).into(image);
+            progressBar.setVisibility(View.INVISIBLE);
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
             }
@@ -167,7 +145,7 @@ public class Adapter_User extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return FEMALE;
     }
 
-    static class ViewHolder_For_All extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder_For_All extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageView article_IMG_imageProfile;
         public TextView article_LBL_title, article_LBL_city;
